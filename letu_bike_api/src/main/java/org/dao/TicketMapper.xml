@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.dao.TicketMapper" >
+  <resultMap id="BaseResultMap" type="org.entity.dto.Ticket" >
+    <id column="ticket_id" property="ticketId" jdbcType="BIGINT" />
+    <result column="ticket_name" property="ticketName" jdbcType="VARCHAR" />
+    <result column="ticket_validity_start_time" property="ticketValidityStartTime" jdbcType="TIMESTAMP" />
+    <result column="ticket_validity_end_time" property="ticketValidityEndTime" jdbcType="TIMESTAMP" />
+    <result column="ticket_create_time" property="ticketCreateTime" jdbcType="TIMESTAMP" />
+    <result column="ticket_state" property="ticketState" jdbcType="INTEGER" />
+    <result column="ticket_redeem_code" property="ticketRedeemCode" jdbcType="VARCHAR" />
+    <result column="ticket_redeem_image" property="ticketRedeemImage" jdbcType="VARCHAR" />
+    <result column="ticket_channel_id" property="ticketChannelId" jdbcType="BIGINT" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ticket_id, ticket_name, ticket_validity_start_time, ticket_validity_end_time, ticket_create_time, 
+    ticket_state, ticket_redeem_code, ticket_redeem_image, ticket_channel_id
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="org.entity.dto.TicketExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from ticket
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="limitStart != null and limitStart>=0" >
+      limit #{limitStart} , #{limitEnd}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from ticket
+    where ticket_id = #{ticketId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from ticket
+    where ticket_id = #{ticketId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="org.entity.dto.TicketExample" >
+    delete from ticket
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="org.entity.dto.Ticket" >
+    insert into ticket (ticket_id, ticket_name, ticket_validity_start_time, 
+      ticket_validity_end_time, ticket_create_time, 
+      ticket_state, ticket_redeem_code, ticket_redeem_image, 
+      ticket_channel_id)
+    values (#{ticketId,jdbcType=BIGINT}, #{ticketName,jdbcType=VARCHAR}, #{ticketValidityStartTime,jdbcType=TIMESTAMP}, 
+      #{ticketValidityEndTime,jdbcType=TIMESTAMP}, #{ticketCreateTime,jdbcType=TIMESTAMP}, 
+      #{ticketState,jdbcType=INTEGER}, #{ticketRedeemCode,jdbcType=VARCHAR}, #{ticketRedeemImage,jdbcType=VARCHAR}, 
+      #{ticketChannelId,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="org.entity.dto.Ticket" >
+    insert into ticket
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="ticketId != null" >
+        ticket_id,
+      </if>
+      <if test="ticketName != null" >
+        ticket_name,
+      </if>
+      <if test="ticketValidityStartTime != null" >
+        ticket_validity_start_time,
+      </if>
+      <if test="ticketValidityEndTime != null" >
+        ticket_validity_end_time,
+      </if>
+      <if test="ticketCreateTime != null" >
+        ticket_create_time,
+      </if>
+      <if test="ticketState != null" >
+        ticket_state,
+      </if>
+      <if test="ticketRedeemCode != null" >
+        ticket_redeem_code,
+      </if>
+      <if test="ticketRedeemImage != null" >
+        ticket_redeem_image,
+      </if>
+      <if test="ticketChannelId != null" >
+        ticket_channel_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="ticketId != null" >
+        #{ticketId,jdbcType=BIGINT},
+      </if>
+      <if test="ticketName != null" >
+        #{ticketName,jdbcType=VARCHAR},
+      </if>
+      <if test="ticketValidityStartTime != null" >
+        #{ticketValidityStartTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ticketValidityEndTime != null" >
+        #{ticketValidityEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ticketCreateTime != null" >
+        #{ticketCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ticketState != null" >
+        #{ticketState,jdbcType=INTEGER},
+      </if>
+      <if test="ticketRedeemCode != null" >
+        #{ticketRedeemCode,jdbcType=VARCHAR},
+      </if>
+      <if test="ticketRedeemImage != null" >
+        #{ticketRedeemImage,jdbcType=VARCHAR},
+      </if>
+      <if test="ticketChannelId != null" >
+        #{ticketChannelId,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="org.entity.dto.TicketExample" resultType="java.lang.Integer" >
+    select count(*) from ticket
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update ticket
+    <set >
+      <if test="record.ticketId != null" >
+        ticket_id = #{record.ticketId,jdbcType=BIGINT},
+      </if>
+      <if test="record.ticketName != null" >
+        ticket_name = #{record.ticketName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ticketValidityStartTime != null" >
+        ticket_validity_start_time = #{record.ticketValidityStartTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.ticketValidityEndTime != null" >
+        ticket_validity_end_time = #{record.ticketValidityEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.ticketCreateTime != null" >
+        ticket_create_time = #{record.ticketCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.ticketState != null" >
+        ticket_state = #{record.ticketState,jdbcType=INTEGER},
+      </if>
+      <if test="record.ticketRedeemCode != null" >
+        ticket_redeem_code = #{record.ticketRedeemCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ticketRedeemImage != null" >
+        ticket_redeem_image = #{record.ticketRedeemImage,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ticketChannelId != null" >
+        ticket_channel_id = #{record.ticketChannelId,jdbcType=BIGINT},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update ticket
+    set ticket_id = #{record.ticketId,jdbcType=BIGINT},
+      ticket_name = #{record.ticketName,jdbcType=VARCHAR},
+      ticket_validity_start_time = #{record.ticketValidityStartTime,jdbcType=TIMESTAMP},
+      ticket_validity_end_time = #{record.ticketValidityEndTime,jdbcType=TIMESTAMP},
+      ticket_create_time = #{record.ticketCreateTime,jdbcType=TIMESTAMP},
+      ticket_state = #{record.ticketState,jdbcType=INTEGER},
+      ticket_redeem_code = #{record.ticketRedeemCode,jdbcType=VARCHAR},
+      ticket_redeem_image = #{record.ticketRedeemImage,jdbcType=VARCHAR},
+      ticket_channel_id = #{record.ticketChannelId,jdbcType=BIGINT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="org.entity.dto.Ticket" >
+    update ticket
+    <set >
+      <if test="ticketName != null" >
+        ticket_name = #{ticketName,jdbcType=VARCHAR},
+      </if>
+      <if test="ticketValidityStartTime != null" >
+        ticket_validity_start_time = #{ticketValidityStartTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ticketValidityEndTime != null" >
+        ticket_validity_end_time = #{ticketValidityEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ticketCreateTime != null" >
+        ticket_create_time = #{ticketCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ticketState != null" >
+        ticket_state = #{ticketState,jdbcType=INTEGER},
+      </if>
+      <if test="ticketRedeemCode != null" >
+        ticket_redeem_code = #{ticketRedeemCode,jdbcType=VARCHAR},
+      </if>
+      <if test="ticketRedeemImage != null" >
+        ticket_redeem_image = #{ticketRedeemImage,jdbcType=VARCHAR},
+      </if>
+      <if test="ticketChannelId != null" >
+        ticket_channel_id = #{ticketChannelId,jdbcType=BIGINT},
+      </if>
+    </set>
+    where ticket_id = #{ticketId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.entity.dto.Ticket" >
+    update ticket
+    set ticket_name = #{ticketName,jdbcType=VARCHAR},
+      ticket_validity_start_time = #{ticketValidityStartTime,jdbcType=TIMESTAMP},
+      ticket_validity_end_time = #{ticketValidityEndTime,jdbcType=TIMESTAMP},
+      ticket_create_time = #{ticketCreateTime,jdbcType=TIMESTAMP},
+      ticket_state = #{ticketState,jdbcType=INTEGER},
+      ticket_redeem_code = #{ticketRedeemCode,jdbcType=VARCHAR},
+      ticket_redeem_image = #{ticketRedeemImage,jdbcType=VARCHAR},
+      ticket_channel_id = #{ticketChannelId,jdbcType=BIGINT}
+    where ticket_id = #{ticketId,jdbcType=BIGINT}
+  </update>
+</mapper>

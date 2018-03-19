@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.dao.ExceptionsMapper" >
+  <resultMap id="BaseResultMap" type="org.entity.dto.Exceptions" >
+    <id column="exception_id" property="exceptionId" jdbcType="BIGINT" />
+    <result column="exception_user_id" property="exceptionUserId" jdbcType="BIGINT" />
+    <result column="exception_admin_id" property="exceptionAdminId" jdbcType="BIGINT" />
+    <result column="exception_type" property="exceptionType" jdbcType="INTEGER" />
+    <result column="exception_result" property="exceptionResult" jdbcType="INTEGER" />
+    <result column="exception_remark" property="exceptionRemark" jdbcType="VARCHAR" />
+    <result column="exception_user_bikestate" property="exceptionUserBikestate" jdbcType="INTEGER" />
+    <result column="exception_bikestate" property="exceptionBikestate" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    exception_id, exception_user_id, exception_admin_id, exception_type, exception_result, 
+    exception_remark, exception_user_bikestate, exception_bikestate
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="org.entity.dto.ExceptionsExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from exceptions
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="limitStart != null and limitStart>=0" >
+      limit #{limitStart} , #{limitEnd}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from exceptions
+    where exception_id = #{exceptionId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from exceptions
+    where exception_id = #{exceptionId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="org.entity.dto.ExceptionsExample" >
+    delete from exceptions
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="org.entity.dto.Exceptions" >
+    insert into exceptions (exception_id, exception_user_id, exception_admin_id, 
+      exception_type, exception_result, exception_remark, 
+      exception_user_bikestate, exception_bikestate
+      )
+    values (#{exceptionId,jdbcType=BIGINT}, #{exceptionUserId,jdbcType=BIGINT}, #{exceptionAdminId,jdbcType=BIGINT}, 
+      #{exceptionType,jdbcType=INTEGER}, #{exceptionResult,jdbcType=INTEGER}, #{exceptionRemark,jdbcType=VARCHAR}, 
+      #{exceptionUserBikestate,jdbcType=INTEGER}, #{exceptionBikestate,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="org.entity.dto.Exceptions" >
+    insert into exceptions
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="exceptionId != null" >
+        exception_id,
+      </if>
+      <if test="exceptionUserId != null" >
+        exception_user_id,
+      </if>
+      <if test="exceptionAdminId != null" >
+        exception_admin_id,
+      </if>
+      <if test="exceptionType != null" >
+        exception_type,
+      </if>
+      <if test="exceptionResult != null" >
+        exception_result,
+      </if>
+      <if test="exceptionRemark != null" >
+        exception_remark,
+      </if>
+      <if test="exceptionUserBikestate != null" >
+        exception_user_bikestate,
+      </if>
+      <if test="exceptionBikestate != null" >
+        exception_bikestate,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="exceptionId != null" >
+        #{exceptionId,jdbcType=BIGINT},
+      </if>
+      <if test="exceptionUserId != null" >
+        #{exceptionUserId,jdbcType=BIGINT},
+      </if>
+      <if test="exceptionAdminId != null" >
+        #{exceptionAdminId,jdbcType=BIGINT},
+      </if>
+      <if test="exceptionType != null" >
+        #{exceptionType,jdbcType=INTEGER},
+      </if>
+      <if test="exceptionResult != null" >
+        #{exceptionResult,jdbcType=INTEGER},
+      </if>
+      <if test="exceptionRemark != null" >
+        #{exceptionRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="exceptionUserBikestate != null" >
+        #{exceptionUserBikestate,jdbcType=INTEGER},
+      </if>
+      <if test="exceptionBikestate != null" >
+        #{exceptionBikestate,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="org.entity.dto.ExceptionsExample" resultType="java.lang.Integer" >
+    select count(*) from exceptions
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update exceptions
+    <set >
+      <if test="record.exceptionId != null" >
+        exception_id = #{record.exceptionId,jdbcType=BIGINT},
+      </if>
+      <if test="record.exceptionUserId != null" >
+        exception_user_id = #{record.exceptionUserId,jdbcType=BIGINT},
+      </if>
+      <if test="record.exceptionAdminId != null" >
+        exception_admin_id = #{record.exceptionAdminId,jdbcType=BIGINT},
+      </if>
+      <if test="record.exceptionType != null" >
+        exception_type = #{record.exceptionType,jdbcType=INTEGER},
+      </if>
+      <if test="record.exceptionResult != null" >
+        exception_result = #{record.exceptionResult,jdbcType=INTEGER},
+      </if>
+      <if test="record.exceptionRemark != null" >
+        exception_remark = #{record.exceptionRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.exceptionUserBikestate != null" >
+        exception_user_bikestate = #{record.exceptionUserBikestate,jdbcType=INTEGER},
+      </if>
+      <if test="record.exceptionBikestate != null" >
+        exception_bikestate = #{record.exceptionBikestate,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update exceptions
+    set exception_id = #{record.exceptionId,jdbcType=BIGINT},
+      exception_user_id = #{record.exceptionUserId,jdbcType=BIGINT},
+      exception_admin_id = #{record.exceptionAdminId,jdbcType=BIGINT},
+      exception_type = #{record.exceptionType,jdbcType=INTEGER},
+      exception_result = #{record.exceptionResult,jdbcType=INTEGER},
+      exception_remark = #{record.exceptionRemark,jdbcType=VARCHAR},
+      exception_user_bikestate = #{record.exceptionUserBikestate,jdbcType=INTEGER},
+      exception_bikestate = #{record.exceptionBikestate,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="org.entity.dto.Exceptions" >
+    update exceptions
+    <set >
+      <if test="exceptionUserId != null" >
+        exception_user_id = #{exceptionUserId,jdbcType=BIGINT},
+      </if>
+      <if test="exceptionAdminId != null" >
+        exception_admin_id = #{exceptionAdminId,jdbcType=BIGINT},
+      </if>
+      <if test="exceptionType != null" >
+        exception_type = #{exceptionType,jdbcType=INTEGER},
+      </if>
+      <if test="exceptionResult != null" >
+        exception_result = #{exceptionResult,jdbcType=INTEGER},
+      </if>
+      <if test="exceptionRemark != null" >
+        exception_remark = #{exceptionRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="exceptionUserBikestate != null" >
+        exception_user_bikestate = #{exceptionUserBikestate,jdbcType=INTEGER},
+      </if>
+      <if test="exceptionBikestate != null" >
+        exception_bikestate = #{exceptionBikestate,jdbcType=INTEGER},
+      </if>
+    </set>
+    where exception_id = #{exceptionId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.entity.dto.Exceptions" >
+    update exceptions
+    set exception_user_id = #{exceptionUserId,jdbcType=BIGINT},
+      exception_admin_id = #{exceptionAdminId,jdbcType=BIGINT},
+      exception_type = #{exceptionType,jdbcType=INTEGER},
+      exception_result = #{exceptionResult,jdbcType=INTEGER},
+      exception_remark = #{exceptionRemark,jdbcType=VARCHAR},
+      exception_user_bikestate = #{exceptionUserBikestate,jdbcType=INTEGER},
+      exception_bikestate = #{exceptionBikestate,jdbcType=INTEGER}
+    where exception_id = #{exceptionId,jdbcType=BIGINT}
+  </update>
+</mapper>

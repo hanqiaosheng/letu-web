@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="UTF-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+<meta name="viewport"
+	content="initial-scale=1, width=device-width, maximum-scale=1, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-touch-fullscreen" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="format-detection" content="telephone=no">
+<meta name="format-detection" content="address=no">
+<meta name="screen-orientation" content="portrait">
+<meta name="x5-orientation" content="portrait">
+<title>开锁中</title>
+
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+		<div id="useBike" style="display: none">
+			<div class="weui_cells weui_cells_radius marginlr">
+				<div class="weui_cell">
+					<div class="weui_cell_hd">
+						<label class="weui-label">车辆编号</label>
+					</div>
+					<div class="weui_cell_bd weui_cell_primary" id="vbikeCode"></div>
+					<input type="hidden" name="bikeCode" id="bikeCode">
+				</div>
+				<div class="weui_cell weui_check_label">
+					<div class="weui_cell_hd">
+						<label class="weui-label">租赁价格</label>
+					</div>
+					<div class="weui_cell_bd weui_cell_primary" id="rentMoney"></div>
+				</div>
+
+				<div class="weui_cell weui_check_label">
+					<div class="weui_cell_hd">
+						<label class="weui-label">押金</label>
+					</div>
+					<div class="weui_cell_bd weui_cell_primary" id="bikeDeposit"></div>
+				</div>
+
+				<div class="weui_cell weui_check_label">
+					<div class="weui_cell_hd">
+						<label class="weui-label">保险金额</label>
+					</div>
+					<div class="weui_cell_bd weui_cell_primary">0.2元</div>
+				</div>
+			</div>
+			<div class="surebtn">
+				<a class="btn margin-top-20">用车</a>
+			</div>
+		</div>
+
+		<div class="usedTit red" style="display: none" id="eMessage"></div>
+
+
+
+
+
+	<div class="key" style="display: none" id="unlock">
+		<img src="images/bg2.jpg" class="img1 img-size" /> <img
+			src="images/bike.png" class="img2 img-size" />
+		<div class="bar">
+			<span></span>
+		</div>
+		<span class="text">开锁中 50%</span> <img src="images/text2.png"
+			class="img3 img-size" />
+	</div>
+	
+	<script type="text/javascript">
+	var geos=$.getQueryString('geoPoint').split(',');
+	var lnglat = new AMap.LngLat(geos[0],geos[1]);
+	var bikeLnglat;
+	function getStatesFn(){
+// 		if(lnglat.distance(bikeLnglat)<5000000){//限制用车距离,单位、米
+			rentBtn();
+// 		}else{
+// 			 $.alert("在车辆附近才可以用车哦~~",true,function(){
+//              },50000,{className:'ui-alert',width:300});
+// 		}
+	}
+		$('#vbikeCode').html($.getQueryString('bikeCode'));
+		$('#bikeCode').val($.getQueryString('bikeCode'));
+		$.ajax({
+			type : "post",
+			url : url+'/bikeRent/checkBike.action',
+			data : "bikeCode=" + $.getQueryString('bikeCode'),
+			dataType : 'json',
+			success : function(data) {
+				if (data.code == 1){
+					$('#rentMoney').html(data.data.rentMoney + "元1小时");
+					$('#bikeDeposit').html(data.data.bikeDeposit+ "元");
+					bikeLnglat=new AMap.LngLat(data.data.bike.bikeLongitude,data.data.bike.bikeAtitude);
+					$('#unlock').show();
+					rentBtn();
+				}
+				else{
+					$('#eMessage').html(data.message);
+					$('#eMessage').show();
+				}
+			},
+			error:function(data){
+				reLogin(data);
+			}
+		});
+		
+		function rentBtn(){
+			$.ajax({
+				timeout : 20000,
+				type : "post",
+				url : url+'/bikeRent/rentBtn.action',
+				data : "bikeCode=" + $.getQueryString('bikeCode'),
+				dataType : 'json',
+				success : function(data) {
+					if(data.message=="success"){
+					    window.location.href=url+"/html/bikeUsing.html?rentId="+data.data.bikeRentInfo.rentInfoId;
+					}else if(data.message=="fail"){//失败
+						$.alert("开锁失败，该车可能有故障，请选择其它车租赁或稍后再试",true,function(){
+							window.location.href=url+"/html/watchbike.html";
+			             },5000,{className:'ui-alert',width:300});
+					}else if(data.code==3){//未支付
+						$.alert(data.message,true,function(){
+			             },5000,{className:'ui-alert',width:300});
+						window.location.href=url+"/html/bikeUsing.html?rentId="+data.data.bikeRentInfo.rentInfoId;
+					}else if(data.code==4){	//有未完成租赁时候，跳转至未完成的页面
+						$.alert(data.message,true,function(){
+			             },5000,{className:'ui-alert',width:300});
+						window.location.href=url+"/html/bikeEnd.html?rentId="+data.data.bikeRentInfo.rentInfoId;
+					}else if(data.code==6){		//押金不够
+						$.alert(data.message,true,function(){
+			             },5000,{className:'ui-alert',width:300});
+						window.location.href=url+"/html/deposit.html?modelsCode="+data.data.models.modelsCode+"&deposit="+data.data.deposit+"&bikeDeposit="+data.data.bikeDeposit;
+						//有未完成租赁时候，跳转至未完成的页面
+					}else{
+						$.alert(data.message,true,function(){
+			             },5000,{className:'ui-alert',width:300});
+					}
+				},
+				complete : function(XMLHttpRequest,status){ //请求完成后最终执行参数
+				　　　　if(status=='timeout'){//超时,status还有success,error等值的情况
+				       $.alert("开锁失败，该车可能有故障，请选择其它车租赁或稍后再试",true,function(){
+				    	   window.location.href=url+"/html/watchbike.html";
+	                   },5000,{className:'ui-alert',width:300});
+				　　　　}
+				},
+				error:function(data){
+					reLogin(data);
+				}
+			});
+		}
+	</script>
+</body>
+</html>

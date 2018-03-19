@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="viewport" content="initial-scale=1, width=device-width, maximum-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-touch-fullscreen" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="format-detection" content="address=no">
+    <meta name="screen-orientation" content="portrait">
+    <meta name="x5-orientation" content="portrait">
+    <title>客服中心</title>
+    <link rel="stylesheet" href="font/iconfont.css">
+    <link rel="stylesheet" href="css/animate.min.css">
+    <link rel="stylesheet" href="css/base.css">
+    <script type="text/javascript" src="js/zepto.min.js"></script>
+    <link rel="stylesheet" href="js/dialog.css">
+    <script type="text/javascript" src="js/dialog.js"></script>
+    <script type="text/javascript" src="js/iscroll.js"></script>
+    <link rel="stylesheet" href="js/swiper-3.2.7.min.css">
+    <script type="text/javascript" src="js/swiper-3.2.7.jquery.min.js"></script>
+    <script type="text/javascript" src="js/path.js"></script>
+    <script type="text/javascript" src="js/mobile.js"></script>
+    <script type="text/javascript" src="js/usercenter.js"></script>
+    <script type="text/javascript" src="js/jweixin-1.0.0.js"></script>
+    <script type="text/javascript" src="js/exif.js"></script>
+    <script type="text/javascript" src="js/megapix-image.js"></script>
+</head>
+
+<body>
+  <div class="g-body">
+     	<form method="post" class="g-form" data-posturl="/feedBack/subFeedBack.action" enctype="multipart/form-data" data-gotourl="journey_detail.html?platform=h5/#/user" data-dialogmes="系统已收到您的反馈，请等待结果">
+                        <div class="weui_cells">
+                            <div class="weui_cell">
+                                <select class="weui_select" name="feedbackTypeId" data-group-state="false" id="types"> 
+                                    <option value="">请选择反馈类型</option>
+                                </select>
+                                <span class="r-con active"></span>
+                            </div>
+                            <div class="weui_cell" id="IsHide">
+                                <div class="weui_cell_bd weui_cell_primary">
+                                    <input class="weui_input" type="text" name="bikeCode" placeholder="请输入自行车编号"  id="bikeCode">
+
+                                </div>
+                                <a class="btn-def" id="feedbackScan">扫一扫</a>
+                            </div>
+                            <div class="weui_cell">
+                                <div class="weui_cell_bd weui_cell_primary">
+                                    <textarea class="weui_textarea" placeholder="请输入反馈内容" rows="3"  data-group-state="false" name="feedbackContent" id="feedbackContent"></textarea>
+                                    <div class="weui_textarea_counter"><span>0</span>/200</div>
+                                </div>
+                            </div>
+                            <div class="weui_cell">
+                                <div class="weui_cell_hd"><label class="weui-label">上传图片</label></div>
+
+                                <div class="picList flex-box">
+                                    
+                                    <div class="add-image pic">
+                                        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAIAAAD/gAIDAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyJpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNiAoV2luZG93cykiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6MUVGM0RDQzNBM0Q1MTFFNjk5NjZFQjA0RTg3MTNFNEYiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6MUVGM0RDQzRBM0Q1MTFFNjk5NjZFQjA0RTg3MTNFNEYiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDoxRUYzRENDMUEzRDUxMUU2OTk2NkVCMDRFODcxM0U0RiIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDoxRUYzRENDMkEzRDUxMUU2OTk2NkVCMDRFODcxM0U0RiIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PghGHKgAAAEaSURBVHja7NjLaoQwGIDReiNo9P0f0DdQvC3UGRhw1zaU0g5yvlUWWciR/JBkfd9/KK0cASxYsGDBgoUAFixYsGDBQgALFixYsGAhgAULFixYsBDAggULFixYCGDB+u/Kt/qacRyP43itY4xlWcL6tG3b9n1/rZumcQzNLFiCBQsWLFiwBAvWne6GwzCkbLtu0c+macrz7/9lXddVVd0Ka1mWH1yqU7aFEBxDM8vMSinGmLJtnufzPK9hlDKziqK4G1bbtinb1nW9Hv/+cnI7hrBgwYIFS7BgwYIFy0X6fQohXO9/WZbB+qqu6xxDMwuWYMGCBQsWLMGCBQsWLFiCBQsWLFiwBAsWLFiwYAkWLFiwYMESrN/pIcAAkDQt1f48xLUAAAAASUVORK5CYII="/>
+                                    </div>
+                                    <input type="file" id="file" class="file" >
+                                </div>
+                            </div>
+                        </div>
+                        <div class="surebtn">
+                            <a id="check" class="btn margin-top-20">提交</a>
+                        </div>
+                    </form>
+                   <div style="text-align: center;margin-top: 50px;font-size: 20px"><label><a href="tel://0571-56231981" >联系客服 0571-56231981</a></label></div>
+  </div>
+	 <script>
+	 var flag=true;
+	$.ajax({
+	       url : url+"/feedBack/types.action",
+	       async : false,  
+	       type : "post", 
+	       dataType:"json",
+	       beforeSend : function() {
+	           //alert("before");
+	       },
+	       success : function(data) {
+	    	   $.each(data.data.types, function(i, dataDet) {
+	       		$('#types').append("<option value='"+dataDet.dataDetId+"'>"+dataDet.dataDetVal+"</option>");
+	           });
+	       },
+         error:function(data){
+             reLogin(data);
+         }
+	   }); 
+
+
+	$("#types").change(function(){
+		   var type = $("#types").val();
+		   if(type==25||type==26){
+			   $("#IsHide").hide();
+		   }else{
+			   $("#IsHide").show();
+		   }
+	})
+ 
+	 $("#check").click(function(){
+		 var bikeCode = $("#bikeCode").val();
+		 var types = $("#types").val();
+		 var feedbackContent = $("#feedbackContent").val();
+		 if(types==""){
+			 $.alert("请选择反馈类型",true,function(){
+	         },5000,{className:'ui-alert',width:300});
+			 return;
+		 }
+		 if(types==22||types==23||types==24){
+			 if(bikeCode==""){
+				 $.alert("请输入车辆编号",true,function(){
+		         },5000,{className:'ui-alert',width:300});
+				 return;
+			 }
+			 $.ajax({
+				 type:'post',
+				 url:url+"/feedBack/checkBikeCode.action",
+				 async : false,  
+				 data:'bikeCode='+bikeCode,
+				 success:function(data){
+					 if(data.message=="fail"){
+						 flag = false;
+					 }else if(data.message=="success"){
+						 flag = true;
+					 }
+				 }
+			 })
+			 if(!flag){
+				 $.alert("无该车辆编号",true,function(){
+		         },5000,{className:'ui-alert',width:300}); 
+				 return;
+			 }
+		 }
+		 if(feedbackContent==""){
+			 $.alert("请输入反馈内容",true,function(){
+	         },5000,{className:'ui-alert',width:300});
+			 return;
+		 }
+		 
+		 rule.getStatesFn();
+	 })
+    
+    $(function() {
+        $(".add-image").click(function() {
+            $("#file").click()
+        })
+        $('.picList').on({click:function(){
+        	$(this).parent().remove();
+        	if($(".pic").length<=3){
+        		$('.add-image').show()
+        	}
+        }},'.icon-close')
+        $("#file").change(function(e) {
+        	if($(".pic").length==3){
+        		$('.add-image').hide()
+        	}
+            if (e.target.files.length == 0) {
+                return
+            }
+            var file = e.target.files[0];
+            if (!/image\/\w+/.test(file.type)) {
+                $.alert("请确保文件为图像类型");
+                return false;
+            }
+            var reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = function(e) {
+
+                var image = new Image();
+                image.src = this.result;
+                image.onload = function() {
+                    var resized = resizeMe(image);
+                    if(!resized){
+                        return;
+                    }
+                    $(".picList .add-image").before("<div class='pic'><img src='" + resized + "'><input type='hidden' value='"+resized+"' name='file'><i class='icon icon-close'></i></div>")
+                }
+                
+            }
+        })
+    }) 
+     //判断访问终端
+    var browser={
+        versions:function(){
+            var u = navigator.userAgent;
+            return {
+                trident: u.indexOf('Trident') > -1, //IE内核
+                presto: u.indexOf('Presto') > -1, //opera内核
+                webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
+                gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1,//火狐内核
+                mobile: !!u.match(/AppleWebKit.*Mobile.*/), //是否为移动终端
+                ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
+                android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或者uc浏览器
+                iPhone: u.indexOf('iPhone') > -1 , //是否为iPhone或者QQHD浏览器
+                iPad: u.indexOf('iPad') > -1, //是否iPad
+                webApp: u.indexOf('Safari') == -1, //是否web应该程序，没有头部与底部
+                weixin: u.toLowerCase().match(/MicroMessenger/i) == 'micromessenger', //是否微信
+                qq: u.match(/\sQQ/i) == " qq" //是否QQ
+            };
+        }()
+    };
+    //通过canvas截取固定大小（宽度为max_width，高自适应）的图片
+    function resizeMe(img,maxW,maxH,nocheck) {
+        var canvas = document.createElement('canvas');
+        var width = img.width;
+        var height = img.height;
+        var max_width = maxW || 640;
+        var max_height = maxH || 640;
+        var max_size = 300;//k
+        if (width > max_width) {
+            height *= max_width / width;
+            height = Math.round(height);
+            width = max_width;
+        }
+        if(height > max_height){
+            width *= max_height / height;
+            width = Math.round(width);
+            height = max_height;
+        }
+        
+        //将图片放入canvas，并重置canvas大小
+        if(browser.versions.ios || browser.versions.webApp){
+            var mpImg = new MegaPixImage(img);
+            mpImg.render(canvas, { width: width, height: height});
+        }else{
+            canvas.width = width;
+            canvas.height = height;
+            var ctx = canvas.getContext("2d");
+            ctx.drawImage(img, 0, 0, width, height);
+        }
+        var res, quality = .7,resSize,ratio = 1;
+        res = canvas.toDataURL("image/jpeg",quality); // 截取canvas对应的jpg图片，并且画质为70%（默认就是70%，可以改变）
+
+        // Android 2.x、Android 4.1.2、4.3 的 toDataURL 不支持jpeg格式；
+        if(res.substr(0,"data:image/png".length) == "data:image/png" || res.substr(0,6) == "data:,"){
+            var encoder = new JPEGEncoder();
+            res = encoder.encode(canvas.getContext("2d").getImageData(0,0,width,height), quality * 100, true);
+        }
+        resSize = Math.ceil(res.length/1024); //k
+        if(resSize > max_size && !nocheck){
+            ratio = Math.ceil(Math.sqrt(max_size/resSize)*100)/100;
+            if(ratio >= .9){
+                ratio -= .1;
+            }
+            res = resizeMe(img,max_width*ratio,max_height*ratio,true);
+        }
+        return res;
+    }
+    </script>
+    
+    <script>
+		$("#feedbackScan").click(function(){
+			$.isLoading.show();
+			   var hidstr = "url="+encodeURIComponent(window.location.href);
+			   $.ajax({
+			       url : url+"/bikeRent/scanCode.action",
+			       data:hidstr,
+			       type : "post", 
+			       dataType:"json",
+			       success : function(data) {
+			    	   wx.config({
+			    		      debug: false,
+			    		      appId: data.appId,
+			    		      timestamp: data.timestamp,
+			    		      nonceStr: data.nonceStr,
+			    		      signature: data.signature,
+			    		      jsApiList: [
+			    		        'scanQRCode'
+			    		      ]
+			    		  });
+			    	   $.isLoading.hide();
+			    	   wx.ready(function () {
+			    		   wx.scanQRCode({
+				    		    needResult: 1, // 默认为0，扫描结果由微信处理，1则直接返回扫描结果，
+				    		    scanType: ["qrCode","barCode"], // 可以指定扫二维码还是一维码，默认二者都有
+				    		    success: function (res) {
+				    		    var result = res.resultStr; // 当needResult 为 1 时，扫码返回的结果
+				    		    var results=[];
+				    		    results=result.split("?bike=",2);
+				    		    if(results[1]!=undefined){
+				    		    	 $('#bikeCode').val(results[1]);
+				    		    }else{
+				    		    	$.alert("您扫码的二维码有误，请您选择正确的二维码",true,function(){
+						             },5000,{className:'ui-alert',width:300});
+				    		    	
+				    		    }
+				    		}
+				    		});
+			    	   }); 
+			       },
+		            error:function(data){
+		                reLogin(data);
+		            }
+			   }); 
+		})
+
+
+	</script>
+
+</body>
+
+</html>

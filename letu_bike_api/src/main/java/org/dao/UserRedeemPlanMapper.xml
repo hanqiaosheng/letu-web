@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.dao.UserRedeemPlanMapper" >
+  <resultMap id="BaseResultMap" type="org.entity.dto.UserRedeemPlan" >
+    <id column="user_redeem_plan_id" property="userRedeemPlanId" jdbcType="BIGINT" />
+    <result column="urp_user_id" property="urpUserId" jdbcType="BIGINT" />
+    <result column="urp_redeem_plan_id" property="urpRedeemPlanId" jdbcType="BIGINT" />
+    <result column="urp_create_time" property="urpCreateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <resultMap id="BaseUnionResultMap" type="org.entity.dto.UserRedeemPlan" extends="BaseResultMap">
+    <association property="user" javaType="org.entity.dto.User">
+	    <id column="user_id" property="userId" jdbcType="BIGINT" />
+	    <result column="user_account_id" property="userAccountId" jdbcType="BIGINT" />
+	    <result column="user_nickname" property="userNickname" jdbcType="VARCHAR" />
+	    <result column="user_tel" property="userTel" jdbcType="VARCHAR" />
+	    <result column="user_idcard" property="userIdcard" jdbcType="VARCHAR" />
+	    <result column="user_realname" property="userRealname" jdbcType="VARCHAR" />
+	    <result column="user_profile_image" property="userProfileImage" jdbcType="VARCHAR" />
+	    <result column="user_gender" property="userGender" jdbcType="INTEGER" />
+	    <result column="user_openId" property="userOpenid" jdbcType="VARCHAR" />
+	    <result column="user_unionId" property="userUnionid" jdbcType="VARCHAR" />
+	    <result column="user_state" property="userState" jdbcType="INTEGER" />
+	    <result column="user_createtime" property="userCreatetime" jdbcType="TIMESTAMP" />
+	    <result column="user_logintime" property="userLogintime" jdbcType="TIMESTAMP" />
+	    <result column="user_usetime" property="userUsetime" jdbcType="INTEGER" />
+	    <result column="user_use_distance" property="userUseDistance" jdbcType="INTEGER" />
+	    <result column="user_channel_id" property="userChannelId" jdbcType="BIGINT" />
+	    <result column="user_isblacklist" property="userIsblacklist" jdbcType="SMALLINT" />
+	    <result column="user_defriend_time" property="userDefriendTime" jdbcType="TIMESTAMP" />
+	    <result column="user_token" property="userToken" jdbcType="VARCHAR" />
+	    <result column="user_small_openId" property="userSmallOpenid" jdbcType="VARCHAR" />
+	    <result column="user_session_key" property="userSessionKey" jdbcType="VARCHAR" />
+	    <result column="user_vipexpirationdate" property="userVipexpirationdate" jdbcType="TIMESTAMP" />
+	    <result column="user_lastusebiketime" property="userLastusebiketime" jdbcType="TIMESTAMP" />
+	    <result column="user_fistusebiketime" property="userFistusebiketime" jdbcType="TIMESTAMP" />
+	    <result column="user_fistusebikeid" property="userFistusebikeid" jdbcType="BIGINT" />
+	    <result column="user_birthday" property="userBirthday" jdbcType="TIMESTAMP" />
+	    <result column="user_total_calorie" property="userTotalCalorie" jdbcType="DOUBLE" />
+	    <result column="user_total_distance" property="userTotalDistance" jdbcType="DOUBLE" />
+	    <result column="user_total_ride_time" property="userTotalRideTime" jdbcType="DOUBLE" />
+	    <result column="user_level" property="userLevel" jdbcType="INTEGER" />
+	    <result column="user_grade" property="userGrade" jdbcType="INTEGER" />
+	    <result column="user_total_grade" property="userTotalGrade" jdbcType="INTEGER" />
+	    <result column="user_use_grade" property="userUseGrade" jdbcType="INTEGER" />
+    </association>
+    <association property="redeemPlan" javaType="org.entity.dto.RedeemPlan">
+	    <id column="plan_id" property="planId" jdbcType="BIGINT" />
+	    <result column="plan_name" property="planName" jdbcType="VARCHAR" />
+	    <result column="plan_create_time" property="planCreateTime" jdbcType="TIMESTAMP" />
+	    <result column="plan_redeem_code" property="planRedeemCode" jdbcType="VARCHAR" />
+	    <result column="plan_redeem_nums" property="planRedeemNums" jdbcType="INTEGER" />
+	    <result column="plan_coupon_plan_id" property="planCouponPlanId" jdbcType="BIGINT" />
+	    <result column="plan_online_time" property="planOnlineTime" jdbcType="TIMESTAMP" />
+	    <result column="plan_offline_time" property="planOfflineTime" jdbcType="TIMESTAMP" />
+	    <result column="plan_state" property="planState" jdbcType="INTEGER" />
+	    <result column="plan_surplus_nums" property="planSurplusNums" jdbcType="INTEGER" />
+	    <result column="plan_reserve_online_time" property="planReserveOnlineTime" jdbcType="TIMESTAMP" />
+	    <result column="plan_reserve_offline_time" property="planReserveOfflineTime" jdbcType="TIMESTAMP" />
+	    <result column="plan_type" property="planType" jdbcType="INTEGER" />
+    </association>
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    user_redeem_plan_id, urp_user_id, urp_redeem_plan_id, urp_create_time
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="org.entity.dto.UserRedeemPlanExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from user_redeem_plan
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="limitStart != null and limitStart>=0" >
+      limit #{limitStart} , #{limitEnd}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from user_redeem_plan
+    where user_redeem_plan_id = #{userRedeemPlanId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from user_redeem_plan
+    where user_redeem_plan_id = #{userRedeemPlanId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="org.entity.dto.UserRedeemPlanExample" >
+    delete from user_redeem_plan
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="org.entity.dto.UserRedeemPlan" >
+    insert into user_redeem_plan (user_redeem_plan_id, urp_user_id, urp_redeem_plan_id, 
+      urp_create_time)
+    values (#{userRedeemPlanId,jdbcType=BIGINT}, #{urpUserId,jdbcType=BIGINT}, #{urpRedeemPlanId,jdbcType=BIGINT}, 
+      #{urpCreateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="org.entity.dto.UserRedeemPlan" >
+    insert into user_redeem_plan
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="userRedeemPlanId != null" >
+        user_redeem_plan_id,
+      </if>
+      <if test="urpUserId != null" >
+        urp_user_id,
+      </if>
+      <if test="urpRedeemPlanId != null" >
+        urp_redeem_plan_id,
+      </if>
+      <if test="urpCreateTime != null" >
+        urp_create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="userRedeemPlanId != null" >
+        #{userRedeemPlanId,jdbcType=BIGINT},
+      </if>
+      <if test="urpUserId != null" >
+        #{urpUserId,jdbcType=BIGINT},
+      </if>
+      <if test="urpRedeemPlanId != null" >
+        #{urpRedeemPlanId,jdbcType=BIGINT},
+      </if>
+      <if test="urpCreateTime != null" >
+        #{urpCreateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="org.entity.dto.UserRedeemPlanExample" resultType="java.lang.Integer" >
+    select count(*) from user_redeem_plan
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update user_redeem_plan
+    <set >
+      <if test="record.userRedeemPlanId != null" >
+        user_redeem_plan_id = #{record.userRedeemPlanId,jdbcType=BIGINT},
+      </if>
+      <if test="record.urpUserId != null" >
+        urp_user_id = #{record.urpUserId,jdbcType=BIGINT},
+      </if>
+      <if test="record.urpRedeemPlanId != null" >
+        urp_redeem_plan_id = #{record.urpRedeemPlanId,jdbcType=BIGINT},
+      </if>
+      <if test="record.urpCreateTime != null" >
+        urp_create_time = #{record.urpCreateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update user_redeem_plan
+    set user_redeem_plan_id = #{record.userRedeemPlanId,jdbcType=BIGINT},
+      urp_user_id = #{record.urpUserId,jdbcType=BIGINT},
+      urp_redeem_plan_id = #{record.urpRedeemPlanId,jdbcType=BIGINT},
+      urp_create_time = #{record.urpCreateTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="org.entity.dto.UserRedeemPlan" >
+    update user_redeem_plan
+    <set >
+      <if test="urpUserId != null" >
+        urp_user_id = #{urpUserId,jdbcType=BIGINT},
+      </if>
+      <if test="urpRedeemPlanId != null" >
+        urp_redeem_plan_id = #{urpRedeemPlanId,jdbcType=BIGINT},
+      </if>
+      <if test="urpCreateTime != null" >
+        urp_create_time = #{urpCreateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where user_redeem_plan_id = #{userRedeemPlanId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.entity.dto.UserRedeemPlan" >
+    update user_redeem_plan
+    set urp_user_id = #{urpUserId,jdbcType=BIGINT},
+      urp_redeem_plan_id = #{urpRedeemPlanId,jdbcType=BIGINT},
+      urp_create_time = #{urpCreateTime,jdbcType=TIMESTAMP}
+    where user_redeem_plan_id = #{userRedeemPlanId,jdbcType=BIGINT}
+  </update>
+  
+  <select id="selectUnionByExample" resultMap="BaseUnionResultMap" parameterType="org.entity.dto.UserRedeemPlanExample" >
+    select * from user_redeem_plan urp left join user u on urp.urp_user_id = u.user_id
+                                       left join redeem_plan rp on urp.urp_redeem_plan_id = plan_id
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="limitStart != null and limitStart>=0" >
+      limit #{limitStart} , #{limitEnd}
+    </if>
+  </select>
+  <select id="countUnionByExample" parameterType="org.entity.dto.UserRedeemPlanExample" resultType="java.lang.Integer" >
+    select count(*) from user_redeem_plan urp left join user u on urp.urp_user_id = u.user_id
+                              left join redeem_plan rp on urp.urp_redeem_plan_id = plan_id
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+</mapper>

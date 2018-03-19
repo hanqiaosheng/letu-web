@@ -1,0 +1,370 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.dao.RedeemPlanMapper" >
+  <resultMap id="BaseResultMap" type="org.entity.dto.RedeemPlan" >
+    <id column="plan_id" property="planId" jdbcType="BIGINT" />
+    <result column="plan_name" property="planName" jdbcType="VARCHAR" />
+    <result column="plan_create_time" property="planCreateTime" jdbcType="TIMESTAMP" />
+    <result column="plan_redeem_code" property="planRedeemCode" jdbcType="VARCHAR" />
+    <result column="plan_redeem_nums" property="planRedeemNums" jdbcType="INTEGER" />
+    <result column="plan_coupon_plan_id" property="planCouponPlanId" jdbcType="BIGINT" />
+    <result column="plan_online_time" property="planOnlineTime" jdbcType="TIMESTAMP" />
+    <result column="plan_offline_time" property="planOfflineTime" jdbcType="TIMESTAMP" />
+    <result column="plan_state" property="planState" jdbcType="INTEGER" />
+    <result column="plan_surplus_nums" property="planSurplusNums" jdbcType="INTEGER" />
+    <result column="plan_reserve_online_time" property="planReserveOnlineTime" jdbcType="TIMESTAMP" />
+    <result column="plan_reserve_offline_time" property="planReserveOfflineTime" jdbcType="TIMESTAMP" />
+    <result column="plan_type" property="planType" jdbcType="INTEGER" />
+  </resultMap>
+  <resultMap id="BaseUnionResultMap" type="org.entity.dto.RedeemPlan" extends="BaseResultMap">
+    <association property="couponPlan" javaType="org.entity.dto.CouponPlan">
+        <id column="coupon_plan_id" property="couponPlanId" jdbcType="BIGINT" />
+	    <result column="coupon_plan_name" property="couponPlanName" jdbcType="VARCHAR" />
+	    <result column="coupon_plan_create_time" property="couponPlanCreateTime" jdbcType="TIMESTAMP" />
+	    <result column="coupon_plan_state" property="couponPlanState" jdbcType="INTEGER" />
+    </association>
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    plan_id, plan_name, plan_create_time, plan_redeem_code, plan_redeem_nums, plan_coupon_plan_id, 
+    plan_online_time, plan_offline_time, plan_state, plan_surplus_nums, plan_reserve_online_time, 
+    plan_reserve_offline_time, plan_type
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="org.entity.dto.RedeemPlanExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from redeem_plan
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="limitStart != null and limitStart>=0" >
+      limit #{limitStart} , #{limitEnd}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from redeem_plan
+    where plan_id = #{planId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from redeem_plan
+    where plan_id = #{planId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="org.entity.dto.RedeemPlanExample" >
+    delete from redeem_plan
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="org.entity.dto.RedeemPlan" >
+    insert into redeem_plan (plan_id, plan_name, plan_create_time, 
+      plan_redeem_code, plan_redeem_nums, plan_coupon_plan_id, 
+      plan_online_time, plan_offline_time, plan_state, 
+      plan_surplus_nums, plan_reserve_online_time, 
+      plan_reserve_offline_time, plan_type)
+    values (#{planId,jdbcType=BIGINT}, #{planName,jdbcType=VARCHAR}, #{planCreateTime,jdbcType=TIMESTAMP}, 
+      #{planRedeemCode,jdbcType=VARCHAR}, #{planRedeemNums,jdbcType=INTEGER}, #{planCouponPlanId,jdbcType=BIGINT}, 
+      #{planOnlineTime,jdbcType=TIMESTAMP}, #{planOfflineTime,jdbcType=TIMESTAMP}, #{planState,jdbcType=INTEGER}, 
+      #{planSurplusNums,jdbcType=INTEGER}, #{planReserveOnlineTime,jdbcType=TIMESTAMP}, 
+      #{planReserveOfflineTime,jdbcType=TIMESTAMP}, #{planType,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="org.entity.dto.RedeemPlan" >
+    insert into redeem_plan
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="planId != null" >
+        plan_id,
+      </if>
+      <if test="planName != null" >
+        plan_name,
+      </if>
+      <if test="planCreateTime != null" >
+        plan_create_time,
+      </if>
+      <if test="planRedeemCode != null" >
+        plan_redeem_code,
+      </if>
+      <if test="planRedeemNums != null" >
+        plan_redeem_nums,
+      </if>
+      <if test="planCouponPlanId != null" >
+        plan_coupon_plan_id,
+      </if>
+      <if test="planOnlineTime != null" >
+        plan_online_time,
+      </if>
+      <if test="planOfflineTime != null" >
+        plan_offline_time,
+      </if>
+      <if test="planState != null" >
+        plan_state,
+      </if>
+      <if test="planSurplusNums != null" >
+        plan_surplus_nums,
+      </if>
+      <if test="planReserveOnlineTime != null" >
+        plan_reserve_online_time,
+      </if>
+      <if test="planReserveOfflineTime != null" >
+        plan_reserve_offline_time,
+      </if>
+      <if test="planType != null" >
+        plan_type,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="planId != null" >
+        #{planId,jdbcType=BIGINT},
+      </if>
+      <if test="planName != null" >
+        #{planName,jdbcType=VARCHAR},
+      </if>
+      <if test="planCreateTime != null" >
+        #{planCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="planRedeemCode != null" >
+        #{planRedeemCode,jdbcType=VARCHAR},
+      </if>
+      <if test="planRedeemNums != null" >
+        #{planRedeemNums,jdbcType=INTEGER},
+      </if>
+      <if test="planCouponPlanId != null" >
+        #{planCouponPlanId,jdbcType=BIGINT},
+      </if>
+      <if test="planOnlineTime != null" >
+        #{planOnlineTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="planOfflineTime != null" >
+        #{planOfflineTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="planState != null" >
+        #{planState,jdbcType=INTEGER},
+      </if>
+      <if test="planSurplusNums != null" >
+        #{planSurplusNums,jdbcType=INTEGER},
+      </if>
+      <if test="planReserveOnlineTime != null" >
+        #{planReserveOnlineTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="planReserveOfflineTime != null" >
+        #{planReserveOfflineTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="planType != null" >
+        #{planType,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="org.entity.dto.RedeemPlanExample" resultType="java.lang.Integer" >
+    select count(*) from redeem_plan
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update redeem_plan
+    <set >
+      <if test="record.planId != null" >
+        plan_id = #{record.planId,jdbcType=BIGINT},
+      </if>
+      <if test="record.planName != null" >
+        plan_name = #{record.planName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.planCreateTime != null" >
+        plan_create_time = #{record.planCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.planRedeemCode != null" >
+        plan_redeem_code = #{record.planRedeemCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.planRedeemNums != null" >
+        plan_redeem_nums = #{record.planRedeemNums,jdbcType=INTEGER},
+      </if>
+      <if test="record.planCouponPlanId != null" >
+        plan_coupon_plan_id = #{record.planCouponPlanId,jdbcType=BIGINT},
+      </if>
+      <if test="record.planOnlineTime != null" >
+        plan_online_time = #{record.planOnlineTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.planOfflineTime != null" >
+        plan_offline_time = #{record.planOfflineTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.planState != null" >
+        plan_state = #{record.planState,jdbcType=INTEGER},
+      </if>
+      <if test="record.planSurplusNums != null" >
+        plan_surplus_nums = #{record.planSurplusNums,jdbcType=INTEGER},
+      </if>
+      <if test="record.planReserveOnlineTime != null" >
+        plan_reserve_online_time = #{record.planReserveOnlineTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.planReserveOfflineTime != null" >
+        plan_reserve_offline_time = #{record.planReserveOfflineTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.planType != null" >
+        plan_type = #{record.planType,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update redeem_plan
+    set plan_id = #{record.planId,jdbcType=BIGINT},
+      plan_name = #{record.planName,jdbcType=VARCHAR},
+      plan_create_time = #{record.planCreateTime,jdbcType=TIMESTAMP},
+      plan_redeem_code = #{record.planRedeemCode,jdbcType=VARCHAR},
+      plan_redeem_nums = #{record.planRedeemNums,jdbcType=INTEGER},
+      plan_coupon_plan_id = #{record.planCouponPlanId,jdbcType=BIGINT},
+      plan_online_time = #{record.planOnlineTime,jdbcType=TIMESTAMP},
+      plan_offline_time = #{record.planOfflineTime,jdbcType=TIMESTAMP},
+      plan_state = #{record.planState,jdbcType=INTEGER},
+      plan_surplus_nums = #{record.planSurplusNums,jdbcType=INTEGER},
+      plan_reserve_online_time = #{record.planReserveOnlineTime,jdbcType=TIMESTAMP},
+      plan_reserve_offline_time = #{record.planReserveOfflineTime,jdbcType=TIMESTAMP},
+      plan_type = #{record.planType,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="org.entity.dto.RedeemPlan" >
+    update redeem_plan
+    <set >
+      <if test="planName != null" >
+        plan_name = #{planName,jdbcType=VARCHAR},
+      </if>
+      <if test="planCreateTime != null" >
+        plan_create_time = #{planCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="planRedeemCode != null" >
+        plan_redeem_code = #{planRedeemCode,jdbcType=VARCHAR},
+      </if>
+      <if test="planRedeemNums != null" >
+        plan_redeem_nums = #{planRedeemNums,jdbcType=INTEGER},
+      </if>
+      <if test="planCouponPlanId != null" >
+        plan_coupon_plan_id = #{planCouponPlanId,jdbcType=BIGINT},
+      </if>
+      <if test="planOnlineTime != null" >
+        plan_online_time = #{planOnlineTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="planOfflineTime != null" >
+        plan_offline_time = #{planOfflineTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="planState != null" >
+        plan_state = #{planState,jdbcType=INTEGER},
+      </if>
+      <if test="planSurplusNums != null" >
+        plan_surplus_nums = #{planSurplusNums,jdbcType=INTEGER},
+      </if>
+      <if test="planReserveOnlineTime != null" >
+        plan_reserve_online_time = #{planReserveOnlineTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="planReserveOfflineTime != null" >
+        plan_reserve_offline_time = #{planReserveOfflineTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="planType != null" >
+        plan_type = #{planType,jdbcType=INTEGER},
+      </if>
+    </set>
+    where plan_id = #{planId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.entity.dto.RedeemPlan" >
+    update redeem_plan
+    set plan_name = #{planName,jdbcType=VARCHAR},
+      plan_create_time = #{planCreateTime,jdbcType=TIMESTAMP},
+      plan_redeem_code = #{planRedeemCode,jdbcType=VARCHAR},
+      plan_redeem_nums = #{planRedeemNums,jdbcType=INTEGER},
+      plan_coupon_plan_id = #{planCouponPlanId,jdbcType=BIGINT},
+      plan_online_time = #{planOnlineTime,jdbcType=TIMESTAMP},
+      plan_offline_time = #{planOfflineTime,jdbcType=TIMESTAMP},
+      plan_state = #{planState,jdbcType=INTEGER},
+      plan_surplus_nums = #{planSurplusNums,jdbcType=INTEGER},
+      plan_reserve_online_time = #{planReserveOnlineTime,jdbcType=TIMESTAMP},
+      plan_reserve_offline_time = #{planReserveOfflineTime,jdbcType=TIMESTAMP},
+      plan_type = #{planType,jdbcType=INTEGER}
+    where plan_id = #{planId,jdbcType=BIGINT}
+  </update>
+  
+   <select id="selectUnionByExample" resultMap="BaseUnionResultMap" parameterType="org.entity.dto.RedeemPlanExample" >
+    select * from redeem_plan rp left join coupon_plan cp on rp.plan_coupon_plan_id = cp.coupon_plan_id
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="limitStart != null and limitStart>=0" >
+      limit #{limitStart} , #{limitEnd}
+    </if>
+  </select>
+  
+  <select id="countUnionByExample" parameterType="org.entity.dto.RedeemPlanExample" resultType="java.lang.Integer" >
+    select count(*) from redeem_plan rp left join coupon_plan cp on rp.plan_coupon_plan_id = cp.coupon_plan_id
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+</mapper>

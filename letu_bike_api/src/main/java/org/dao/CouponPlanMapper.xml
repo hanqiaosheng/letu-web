@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.dao.CouponPlanMapper" >
+  <resultMap id="BaseResultMap" type="org.entity.dto.CouponPlan" >
+    <id column="coupon_plan_id" property="couponPlanId" jdbcType="BIGINT" />
+    <result column="coupon_plan_name" property="couponPlanName" jdbcType="VARCHAR" />
+    <result column="coupon_plan_create_time" property="couponPlanCreateTime" jdbcType="TIMESTAMP" />
+    <result column="coupon_plan_state" property="couponPlanState" jdbcType="INTEGER" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="org.entity.dto.CouponPlan" extends="BaseResultMap" >
+    <result column="coupon_plan_json" property="couponPlanJson" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    coupon_plan_id, coupon_plan_name, coupon_plan_create_time, coupon_plan_state
+  </sql>
+  <sql id="Blob_Column_List" >
+    coupon_plan_json
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="org.entity.dto.CouponPlanExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from coupon_plan
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="org.entity.dto.CouponPlanExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from coupon_plan
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="limitStart != null and limitStart>=0" >
+      limit #{limitStart} , #{limitEnd}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from coupon_plan
+    where coupon_plan_id = #{couponPlanId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from coupon_plan
+    where coupon_plan_id = #{couponPlanId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="org.entity.dto.CouponPlanExample" >
+    delete from coupon_plan
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="org.entity.dto.CouponPlan" >
+    insert into coupon_plan (coupon_plan_id, coupon_plan_name, coupon_plan_create_time, 
+      coupon_plan_state, coupon_plan_json)
+    values (#{couponPlanId,jdbcType=BIGINT}, #{couponPlanName,jdbcType=VARCHAR}, #{couponPlanCreateTime,jdbcType=TIMESTAMP}, 
+      #{couponPlanState,jdbcType=INTEGER}, #{couponPlanJson,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="org.entity.dto.CouponPlan" >
+    insert into coupon_plan
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="couponPlanId != null" >
+        coupon_plan_id,
+      </if>
+      <if test="couponPlanName != null" >
+        coupon_plan_name,
+      </if>
+      <if test="couponPlanCreateTime != null" >
+        coupon_plan_create_time,
+      </if>
+      <if test="couponPlanState != null" >
+        coupon_plan_state,
+      </if>
+      <if test="couponPlanJson != null" >
+        coupon_plan_json,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="couponPlanId != null" >
+        #{couponPlanId,jdbcType=BIGINT},
+      </if>
+      <if test="couponPlanName != null" >
+        #{couponPlanName,jdbcType=VARCHAR},
+      </if>
+      <if test="couponPlanCreateTime != null" >
+        #{couponPlanCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="couponPlanState != null" >
+        #{couponPlanState,jdbcType=INTEGER},
+      </if>
+      <if test="couponPlanJson != null" >
+        #{couponPlanJson,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="org.entity.dto.CouponPlanExample" resultType="java.lang.Integer" >
+    select count(*) from coupon_plan
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update coupon_plan
+    <set >
+      <if test="record.couponPlanId != null" >
+        coupon_plan_id = #{record.couponPlanId,jdbcType=BIGINT},
+      </if>
+      <if test="record.couponPlanName != null" >
+        coupon_plan_name = #{record.couponPlanName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.couponPlanCreateTime != null" >
+        coupon_plan_create_time = #{record.couponPlanCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.couponPlanState != null" >
+        coupon_plan_state = #{record.couponPlanState,jdbcType=INTEGER},
+      </if>
+      <if test="record.couponPlanJson != null" >
+        coupon_plan_json = #{record.couponPlanJson,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update coupon_plan
+    set coupon_plan_id = #{record.couponPlanId,jdbcType=BIGINT},
+      coupon_plan_name = #{record.couponPlanName,jdbcType=VARCHAR},
+      coupon_plan_create_time = #{record.couponPlanCreateTime,jdbcType=TIMESTAMP},
+      coupon_plan_state = #{record.couponPlanState,jdbcType=INTEGER},
+      coupon_plan_json = #{record.couponPlanJson,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update coupon_plan
+    set coupon_plan_id = #{record.couponPlanId,jdbcType=BIGINT},
+      coupon_plan_name = #{record.couponPlanName,jdbcType=VARCHAR},
+      coupon_plan_create_time = #{record.couponPlanCreateTime,jdbcType=TIMESTAMP},
+      coupon_plan_state = #{record.couponPlanState,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="org.entity.dto.CouponPlan" >
+    update coupon_plan
+    <set >
+      <if test="couponPlanName != null" >
+        coupon_plan_name = #{couponPlanName,jdbcType=VARCHAR},
+      </if>
+      <if test="couponPlanCreateTime != null" >
+        coupon_plan_create_time = #{couponPlanCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="couponPlanState != null" >
+        coupon_plan_state = #{couponPlanState,jdbcType=INTEGER},
+      </if>
+      <if test="couponPlanJson != null" >
+        coupon_plan_json = #{couponPlanJson,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where coupon_plan_id = #{couponPlanId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="org.entity.dto.CouponPlan" >
+    update coupon_plan
+    set coupon_plan_name = #{couponPlanName,jdbcType=VARCHAR},
+      coupon_plan_create_time = #{couponPlanCreateTime,jdbcType=TIMESTAMP},
+      coupon_plan_state = #{couponPlanState,jdbcType=INTEGER},
+      coupon_plan_json = #{couponPlanJson,jdbcType=LONGVARCHAR}
+    where coupon_plan_id = #{couponPlanId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.entity.dto.CouponPlan" >
+    update coupon_plan
+    set coupon_plan_name = #{couponPlanName,jdbcType=VARCHAR},
+      coupon_plan_create_time = #{couponPlanCreateTime,jdbcType=TIMESTAMP},
+      coupon_plan_state = #{couponPlanState,jdbcType=INTEGER}
+    where coupon_plan_id = #{couponPlanId,jdbcType=BIGINT}
+  </update>
+</mapper>

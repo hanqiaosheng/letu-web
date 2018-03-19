@@ -1,0 +1,61 @@
+Manifest-Version: 1.0
+Class-Path: . lib/letu_bike_impl_report-0.0.1-SNAPSHOT.jar lib/letu_bi
+ ke_service_report-0.0.1-SNAPSHOT.jar lib/letu_bike_api-0.0.1-SNAPSHOT
+ .jar lib/maven-resources-plugin-3.0.1.jar lib/maven-plugin-api-3.0.ja
+ r lib/sisu-inject-plexus-1.4.2.jar lib/sisu-inject-bean-1.4.2.jar lib
+ /sisu-guice-2.1.7-noaop.jar lib/maven-core-3.0.jar lib/maven-settings
+ -builder-3.0.jar lib/maven-repository-metadata-3.0.jar lib/maven-mode
+ l-builder-3.0.jar lib/aether-impl-1.7.jar lib/aether-spi-1.7.jar lib/
+ aether-api-1.7.jar lib/aether-util-1.7.jar lib/plexus-classworlds-2.2
+ .3.jar lib/plexus-component-annotations-1.5.5.jar lib/plexus-sec-disp
+ atcher-1.3.jar lib/plexus-cipher-1.4.jar lib/maven-artifact-3.0.jar l
+ ib/maven-settings-3.0.jar lib/maven-model-3.0.jar lib/plexus-utils-3.
+ 0.24.jar lib/maven-filtering-3.1.1.jar lib/maven-shared-utils-3.0.0.j
+ ar lib/jsr305-2.0.1.jar lib/plexus-build-api-0.0.7.jar lib/plexus-int
+ erpolation-1.22.jar lib/freemarker-2.3.24-incubating.jar lib/icu4j-3.
+ 4.4.jar lib/shiro-spring-1.2.4.jar lib/shiro-core-1.2.4.jar lib/shiro
+ -web-1.2.4.jar lib/mysql-connector-java-5.1.37.jar lib/c3p0-0.9.1.2.j
+ ar lib/mchange-commons-java-0.2.10.jar lib/spring-web-4.2.5.RELEASE.j
+ ar lib/spring-aop-4.2.5.RELEASE.jar lib/aopalliance-1.0.jar lib/sprin
+ g-beans-4.2.5.RELEASE.jar lib/spring-context-4.2.5.RELEASE.jar lib/sp
+ ring-core-4.2.5.RELEASE.jar lib/spring-tx-4.2.5.RELEASE.jar lib/sprin
+ g-aspects-4.2.5.RELEASE.jar lib/aspectjweaver-1.8.8.jar lib/spring-we
+ bmvc-4.2.5.RELEASE.jar lib/spring-expression-4.2.5.RELEASE.jar lib/sp
+ ring-jdbc-4.2.5.RELEASE.jar lib/spring-webmvc-portlet-4.2.5.RELEASE.j
+ ar lib/spring-context-support-4.2.5.RELEASE.jar lib/spring-instrument
+ -tomcat-4.2.5.RELEASE.jar lib/spring-jms-4.2.5.RELEASE.jar lib/spring
+ -messaging-4.2.5.RELEASE.jar lib/spring-orm-4.2.5.RELEASE.jar lib/spr
+ ing-oxm-4.2.5.RELEASE.jar lib/spring-test-4.2.5.RELEASE.jar lib/sprin
+ g-websocket-4.2.5.RELEASE.jar lib/commons-fileupload-1.3.1.jar lib/co
+ mmons-io-2.2.jar lib/poi-ooxml-3.5-FINAL.jar lib/poi-3.5-FINAL.jar li
+ b/ooxml-schemas-1.0.jar lib/xmlbeans-2.3.0.jar lib/stax-api-1.0.1.jar
+  lib/dom4j-1.6.1.jar lib/xml-apis-1.0.b2.jar lib/commons-lang3-3.2.1.
+ jar lib/commons-httpclient-3.1.jar lib/commons-logging-1.0.4.jar lib/
+ httpmime-4.3.4.jar lib/httpclient-cache-4.3.4.jar lib/commons-codec-1
+ .8.jar lib/fluent-hc-4.3.4.jar lib/httpcore-4.3.2.jar lib/httpclient-
+ 4.3.5.jar lib/jxl-2.6.12.jar lib/mail-1.4.7.jar lib/activation-1.1.ja
+ r lib/cglib-3.2.0.jar lib/asm-5.0.3.jar lib/ant-1.9.4.jar lib/ant-lau
+ ncher-1.9.4.jar lib/aspectjrt-1.8.7.jar lib/javassist-3.12.1.GA.jar l
+ ib/mybatis-3.3.0.jar lib/mybatis-spring-1.2.3.jar lib/json-simple-1.1
+ .1.jar lib/junit-4.10.jar lib/hamcrest-core-1.1.jar lib/jackson-datab
+ ind-2.6.3.jar lib/jackson-annotations-2.6.0.jar lib/jackson-core-2.6.
+ 3.jar lib/json-lib-2.4.jar lib/commons-beanutils-1.8.0.jar lib/common
+ s-collections-3.2.1.jar lib/commons-lang-2.5.jar lib/ezmorph-1.0.6.ja
+ r lib/json-20160212.jar lib/xstream-1.4.8.jar lib/xmlpull-1.1.3.1.jar
+  lib/xpp3_min-1.1.4c.jar lib/jaxen-1.1-beta-9.jar lib/xmlParserAPIs-2
+ .6.2.jar lib/xercesImpl-2.6.2.jar lib/xom-1.0b3.jar lib/xalan-2.6.0.j
+ ar lib/tagsoup-0.9.7.jar lib/jdom-1.1.jar lib/log4j-api-2.0.2.jar lib
+ /log4j-core-2.0.2.jar lib/jedis-2.9.0.jar lib/spring-data-redis-1.7.4
+ .RELEASE.jar lib/spring-data-keyvalue-1.1.4.RELEASE.jar lib/spring-da
+ ta-commons-1.12.4.RELEASE.jar lib/jcl-over-slf4j-1.7.21.jar lib/commo
+ ns-pool2-2.4.2.jar lib/netty-all-5.0.0.Alpha2.jar lib/core-3.1.0.jar 
+ lib/itextpdf-5.4.3.jar lib/itext-asian-5.2.0.jar lib/dubbo-2.5.3.jar 
+ lib/javassist-3.15.0-GA.jar lib/netty-3.2.5.Final.jar lib/zookeeper-3
+ .4.8.jar lib/slf4j-api-1.6.1.jar lib/slf4j-log4j12-1.6.1.jar lib/jlin
+ e-0.9.94.jar lib/netty-3.7.0.Final.jar lib/log4j-1.2.16.jar lib/zkcli
+ ent-0.1.jar
+Build-Jdk: 1.7.0_79
+Built-By: Administrator
+Created-By: Maven Integration for Eclipse
+Main-Class: com.alibaba.dubbo.container.Main
+

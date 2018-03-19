@@ -1,0 +1,407 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.dao.AdminMapper" >
+  <resultMap id="BaseResultMap" type="org.entity.dto.Admin" >
+    <id column="admin_id" property="adminId" jdbcType="BIGINT" />
+    <result column="admin_channel_id" property="adminChannelId" jdbcType="BIGINT" />
+    <result column="admin_username" property="adminUsername" jdbcType="VARCHAR" />
+    <result column="admin_pwd" property="adminPwd" jdbcType="VARCHAR" />
+    <result column="admin_realname" property="adminRealname" jdbcType="VARCHAR" />
+    <result column="admin_tel" property="adminTel" jdbcType="VARCHAR" />
+    <result column="admin_reg_time" property="adminRegTime" jdbcType="DATE" />
+    <result column="admin_state" property="adminState" jdbcType="INTEGER" />
+    <result column="admin_salt" property="adminSalt" jdbcType="VARCHAR" />
+    <result column="admin_district_code" property="adminDistrictCode" jdbcType="VARCHAR" />
+    <result column="admin_create_adminId" property="adminCreateAdminid" jdbcType="BIGINT" />
+    <result column="admin_create_email" property="adminCreateEmail" jdbcType="VARCHAR" />
+    <result column="admin_id_card" property="adminIdCard" jdbcType="VARCHAR" />
+    <result column="open_id" property="openId" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  
+  <resultMap id="BaseUnionResultMap" type="org.entity.dto.Admin"  extends="BaseResultMap">
+      <collection property="roles" ofType="org.entity.dto.Role" >
+      	<id column="role_id" property="roleId" jdbcType="BIGINT" />
+    	<result column="role_name" property="roleName" jdbcType="VARCHAR" />
+    	<result column="role_value" property="roleValue" jdbcType="VARCHAR" />
+    	<result column="role_state" property="roleState" jdbcType="INTEGER" />
+    	<result column="role_createtime" property="roleCreatetime" jdbcType="DATE" />
+    	<result column="role_hasnum" property="roleHasnum" jdbcType="INTEGER" />
+    	<result column="role_updatetime" property="roleUpdatetime" jdbcType="DATE" />
+    	<result column="role_createman" property="roleCreateman" jdbcType="BIGINT" />
+    	<result column="role_description" property="roleDescription" jdbcType="VARCHAR" />
+      </collection>
+  </resultMap>
+  
+  
+  
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    admin_id, admin_channel_id, admin_username, admin_pwd, admin_realname, admin_tel, 
+    admin_reg_time, admin_state, admin_salt, admin_district_code, admin_create_adminId, 
+    admin_create_email,admin_id_card,open_id
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="org.entity.dto.AdminExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from admin
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="limitStart != null and limitStart>=0" >
+      limit #{limitStart} , #{limitEnd}
+    </if>
+  </select>
+  
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from admin
+    where admin_id = #{adminId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from admin
+    where admin_id = #{adminId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="org.entity.dto.AdminExample" >
+    delete from admin
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" useGeneratedKeys="true" keyProperty="adminId" parameterType="org.entity.dto.Admin" >
+    insert into admin (admin_id, admin_channel_id, admin_username, 
+      admin_pwd, admin_realname, admin_tel, 
+      admin_reg_time, admin_state, admin_salt, 
+      admin_district_code, admin_create_adminId, admin_create_email,admin_id_card,open_id
+      )
+    values (#{adminId,jdbcType=BIGINT}, #{adminChannelId,jdbcType=BIGINT}, #{adminUsername,jdbcType=VARCHAR}, 
+      #{adminPwd,jdbcType=VARCHAR}, #{adminRealname,jdbcType=VARCHAR}, #{adminTel,jdbcType=VARCHAR}, 
+      #{adminRegTime,jdbcType=DATE}, #{adminState,jdbcType=INTEGER}, #{adminSalt,jdbcType=VARCHAR}, 
+      #{adminDistrictCode,jdbcType=VARCHAR}, #{adminCreateAdminid,jdbcType=BIGINT}, #{adminCreateEmail,jdbcType=VARCHAR},
+      #{adminIdCard,jdbcType=VARCHAR},#{openId,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" useGeneratedKeys="true" keyProperty="adminId" parameterType="org.entity.dto.Admin" >
+    insert into admin
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="adminId != null" >
+        admin_id,
+      </if>
+      <if test="adminChannelId != null" >
+        admin_channel_id,
+      </if>
+      <if test="adminUsername != null" >
+        admin_username,
+      </if>
+      <if test="adminPwd != null" >
+        admin_pwd,
+      </if>
+      <if test="adminRealname != null" >
+        admin_realname,
+      </if>
+      <if test="adminTel != null" >
+        admin_tel,
+      </if>
+      <if test="adminRegTime != null" >
+        admin_reg_time,
+      </if>
+      <if test="adminState != null" >
+        admin_state,
+      </if>
+      <if test="adminSalt != null" >
+        admin_salt,
+      </if>
+      <if test="adminDistrictCode != null" >
+        admin_district_code,
+      </if>
+      <if test="adminCreateAdminid != null" >
+        admin_create_adminId,
+      </if>
+      <if test="adminCreateEmail != null" >
+        admin_create_email,
+      </if>
+      <if test="adminIdCard != null">
+        admin_id_card,
+      </if>
+      <if test="openId != null">
+        open_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="adminId != null" >
+        #{adminId,jdbcType=BIGINT},
+      </if>
+      <if test="adminChannelId != null" >
+        #{adminChannelId,jdbcType=BIGINT},
+      </if>
+      <if test="adminUsername != null" >
+        #{adminUsername,jdbcType=VARCHAR},
+      </if>
+      <if test="adminPwd != null" >
+        #{adminPwd,jdbcType=VARCHAR},
+      </if>
+      <if test="adminRealname != null" >
+        #{adminRealname,jdbcType=VARCHAR},
+      </if>
+      <if test="adminTel != null" >
+        #{adminTel,jdbcType=VARCHAR},
+      </if>
+      <if test="adminRegTime != null" >
+        #{adminRegTime,jdbcType=DATE},
+      </if>
+      <if test="adminState != null" >
+        #{adminState,jdbcType=INTEGER},
+      </if>
+      <if test="adminSalt != null" >
+        #{adminSalt,jdbcType=VARCHAR},
+      </if>
+      <if test="adminDistrictCode != null" >
+        #{adminDistrictCode,jdbcType=VARCHAR},
+      </if>
+      <if test="adminCreateAdminid != null" >
+        #{adminCreateAdminid,jdbcType=BIGINT},
+      </if>
+      <if test="adminCreateEmail != null" >
+        #{adminCreateEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="adminIdCard != null" >
+        #{adminIdCard,jdbcType=VARCHAR},
+      </if>
+      <if test="openId != null" >
+        #{openId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="org.entity.dto.AdminExample" resultType="java.lang.Integer" >
+    select count(*) from admin
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update admin
+    <set >
+      <if test="record.adminId != null" >
+        admin_id = #{record.adminId,jdbcType=BIGINT},
+      </if>
+      <if test="record.adminChannelId != null" >
+        admin_channel_id = #{record.adminChannelId,jdbcType=BIGINT},
+      </if>
+      <if test="record.adminUsername != null" >
+        admin_username = #{record.adminUsername,jdbcType=VARCHAR},
+      </if>
+      <if test="record.adminPwd != null" >
+        admin_pwd = #{record.adminPwd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.adminRealname != null" >
+        admin_realname = #{record.adminRealname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.adminTel != null" >
+        admin_tel = #{record.adminTel,jdbcType=VARCHAR},
+      </if>
+      <if test="record.adminRegTime != null" >
+        admin_reg_time = #{record.adminRegTime,jdbcType=DATE},
+      </if>
+      <if test="record.adminState != null" >
+        admin_state = #{record.adminState,jdbcType=INTEGER},
+      </if>
+      <if test="record.adminSalt != null" >
+        admin_salt = #{record.adminSalt,jdbcType=VARCHAR},
+      </if>
+      <if test="record.adminDistrictCode != null" >
+        admin_district_code = #{record.adminDistrictCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.adminCreateAdminid != null" >
+        admin_create_adminId = #{record.adminCreateAdminid,jdbcType=BIGINT},
+      </if>
+      <if test="record.adminCreateEmail != null" >
+        admin_create_email = #{record.adminCreateEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="record.adminIdCard != null" >
+        admin_id_card = #{record.adminIdCard,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update admin
+    set admin_id = #{record.adminId,jdbcType=BIGINT},
+      admin_channel_id = #{record.adminChannelId,jdbcType=BIGINT},
+      admin_username = #{record.adminUsername,jdbcType=VARCHAR},
+      admin_pwd = #{record.adminPwd,jdbcType=VARCHAR},
+      admin_realname = #{record.adminRealname,jdbcType=VARCHAR},
+      admin_tel = #{record.adminTel,jdbcType=VARCHAR},
+      admin_reg_time = #{record.adminRegTime,jdbcType=DATE},
+      admin_state = #{record.adminState,jdbcType=INTEGER},
+      admin_salt = #{record.adminSalt,jdbcType=VARCHAR},
+      admin_district_code = #{record.adminDistrictCode,jdbcType=VARCHAR},
+      admin_create_adminId = #{record.adminCreateAdminid,jdbcType=BIGINT},
+      admin_create_email = #{record.adminCreateEmail,jdbcType=VARCHAR},
+      admin_id_card = #{record.adminIdCard,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="org.entity.dto.Admin" >
+    update admin
+    <set >
+      <if test="adminChannelId != null" >
+        admin_channel_id = #{adminChannelId,jdbcType=BIGINT},
+      </if>
+      <if test="adminUsername != null" >
+        admin_username = #{adminUsername,jdbcType=VARCHAR},
+      </if>
+      <if test="adminPwd != null" >
+        admin_pwd = #{adminPwd,jdbcType=VARCHAR},
+      </if>
+      <if test="adminRealname != null" >
+        admin_realname = #{adminRealname,jdbcType=VARCHAR},
+      </if>
+      <if test="adminTel != null" >
+        admin_tel = #{adminTel,jdbcType=VARCHAR},
+      </if>
+      <if test="adminRegTime != null" >
+        admin_reg_time = #{adminRegTime,jdbcType=DATE},
+      </if>
+      <if test="adminState != null" >
+        admin_state = #{adminState,jdbcType=INTEGER},
+      </if>
+      <if test="adminSalt != null" >
+        admin_salt = #{adminSalt,jdbcType=VARCHAR},
+      </if>
+      <if test="adminDistrictCode != null" >
+        admin_district_code = #{adminDistrictCode,jdbcType=VARCHAR},
+      </if>
+      <if test="adminCreateAdminid != null" >
+        admin_create_adminId = #{adminCreateAdminid,jdbcType=BIGINT},
+      </if>
+      <if test="adminCreateEmail != null" >
+        admin_create_email = #{adminCreateEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="adminIdCard != null" >
+        admin_id_card = #{adminIdCard,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where admin_id = #{adminId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.entity.dto.Admin" >
+    update admin
+    set admin_channel_id = #{adminChannelId,jdbcType=BIGINT},
+      admin_username = #{adminUsername,jdbcType=VARCHAR},
+      admin_pwd = #{adminPwd,jdbcType=VARCHAR},
+      admin_realname = #{adminRealname,jdbcType=VARCHAR},
+      admin_tel = #{adminTel,jdbcType=VARCHAR},
+      admin_reg_time = #{adminRegTime,jdbcType=DATE},
+      admin_state = #{adminState,jdbcType=INTEGER},
+      admin_salt = #{adminSalt,jdbcType=VARCHAR},
+      admin_district_code = #{adminDistrictCode,jdbcType=VARCHAR},
+      admin_create_adminId = #{adminCreateAdminid,jdbcType=BIGINT},
+      admin_create_email = #{adminCreateEmail,jdbcType=VARCHAR},
+      admin_id_card = #{adminIdCard,jdbcType=VARCHAR}
+    where admin_id = #{adminId,jdbcType=BIGINT}
+  </update>
+  
+  
+  
+  
+  
+  
+  
+  <select id="selectUnionByExample" useCache="false" resultMap="BaseUnionResultMap" parameterType="org.entity.dto.AdminExample" >
+    select
+    *
+    from admin a left join admin_to_role atr on a.admin_id = atr.admin_id
+    left join role r on atr.role_id = r.role_id
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="limitStart != null and limitStart>=0" >
+      limit #{limitStart} , #{limitEnd}
+    </if>
+  	</select>
+  
+  
+  <select id="selectUnionRoleByPrimaryKey" useCache="false" resultMap="BaseUnionResultMap" parameterType="java.lang.Long" >
+    select
+    *
+    from admin a left join admin_to_role atr on a.admin_id = atr.admin_id
+    left join role r on atr.role_id = r.role_id
+    where a.admin_id = #{adminId,jdbcType=BIGINT}
+  </select>
+  
+  
+  <select id="selectByOpenId" useCache="false" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select * from admin where open_id=#{openId,jdbcType=VARCHAR};
+  </select>
+  
+</mapper>

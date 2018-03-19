@@ -1,0 +1,312 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.dao.RechargeRecordMapper" >
+  <resultMap id="BaseResultMap" type="org.entity.dto.RechargeRecord" >
+    <id column="recharge_id" property="rechargeId" jdbcType="BIGINT" />
+    <result column="recharge_account_id" property="rechargeAccountId" jdbcType="BIGINT" />
+    <result column="recharge_money" property="rechargeMoney" jdbcType="DECIMAL" />
+    <result column="recharge_pay_type" property="rechargePayType" jdbcType="INTEGER" />
+    <result column="recharge_state" property="rechargeState" jdbcType="INTEGER" />
+    <result column="recharge_time" property="rechargeTime" jdbcType="TIMESTAMP" />
+    <result column="recharge_order_id" property="rechargeOrderId" jdbcType="VARCHAR" />
+    <result column="recharge_available_balance" property="rechargeAvailableBalance" jdbcType="DECIMAL" />
+    <result column="recharge_type" property="rechargeType" jdbcType="INTEGER" />
+    <result column="recharge_out_trade_no" property="rechargeOutTradeNo" jdbcType="VARCHAR" />
+    <result column="recharge_channel_id" property="rechargeChannelId" jdbcType="BIGINT" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    recharge_id, recharge_account_id, recharge_money, recharge_pay_type, recharge_state, 
+    recharge_time, recharge_order_id, recharge_available_balance, recharge_type, recharge_out_trade_no, 
+    recharge_channel_id
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="org.entity.dto.RechargeRecordExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from recharge_record
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="limitStart != null and limitStart>=0" >
+      limit #{limitStart} , #{limitEnd}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from recharge_record
+    where recharge_id = #{rechargeId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from recharge_record
+    where recharge_id = #{rechargeId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="org.entity.dto.RechargeRecordExample" >
+    delete from recharge_record
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="org.entity.dto.RechargeRecord" >
+    insert into recharge_record (recharge_id, recharge_account_id, recharge_money, 
+      recharge_pay_type, recharge_state, recharge_time, 
+      recharge_order_id, recharge_available_balance, 
+      recharge_type, recharge_out_trade_no, recharge_channel_id
+      )
+    values (#{rechargeId,jdbcType=BIGINT}, #{rechargeAccountId,jdbcType=BIGINT}, #{rechargeMoney,jdbcType=DECIMAL}, 
+      #{rechargePayType,jdbcType=INTEGER}, #{rechargeState,jdbcType=INTEGER}, #{rechargeTime,jdbcType=TIMESTAMP}, 
+      #{rechargeOrderId,jdbcType=VARCHAR}, #{rechargeAvailableBalance,jdbcType=DECIMAL}, 
+      #{rechargeType,jdbcType=INTEGER}, #{rechargeOutTradeNo,jdbcType=VARCHAR}, #{rechargeChannelId,jdbcType=BIGINT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="org.entity.dto.RechargeRecord" >
+    insert into recharge_record
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="rechargeId != null" >
+        recharge_id,
+      </if>
+      <if test="rechargeAccountId != null" >
+        recharge_account_id,
+      </if>
+      <if test="rechargeMoney != null" >
+        recharge_money,
+      </if>
+      <if test="rechargePayType != null" >
+        recharge_pay_type,
+      </if>
+      <if test="rechargeState != null" >
+        recharge_state,
+      </if>
+      <if test="rechargeTime != null" >
+        recharge_time,
+      </if>
+      <if test="rechargeOrderId != null" >
+        recharge_order_id,
+      </if>
+      <if test="rechargeAvailableBalance != null" >
+        recharge_available_balance,
+      </if>
+      <if test="rechargeType != null" >
+        recharge_type,
+      </if>
+      <if test="rechargeOutTradeNo != null" >
+        recharge_out_trade_no,
+      </if>
+      <if test="rechargeChannelId != null" >
+        recharge_channel_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="rechargeId != null" >
+        #{rechargeId,jdbcType=BIGINT},
+      </if>
+      <if test="rechargeAccountId != null" >
+        #{rechargeAccountId,jdbcType=BIGINT},
+      </if>
+      <if test="rechargeMoney != null" >
+        #{rechargeMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="rechargePayType != null" >
+        #{rechargePayType,jdbcType=INTEGER},
+      </if>
+      <if test="rechargeState != null" >
+        #{rechargeState,jdbcType=INTEGER},
+      </if>
+      <if test="rechargeTime != null" >
+        #{rechargeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="rechargeOrderId != null" >
+        #{rechargeOrderId,jdbcType=VARCHAR},
+      </if>
+      <if test="rechargeAvailableBalance != null" >
+        #{rechargeAvailableBalance,jdbcType=DECIMAL},
+      </if>
+      <if test="rechargeType != null" >
+        #{rechargeType,jdbcType=INTEGER},
+      </if>
+      <if test="rechargeOutTradeNo != null" >
+        #{rechargeOutTradeNo,jdbcType=VARCHAR},
+      </if>
+      <if test="rechargeChannelId != null" >
+        #{rechargeChannelId,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="org.entity.dto.RechargeRecordExample" resultType="java.lang.Integer" >
+    select count(*) from recharge_record
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update recharge_record
+    <set >
+      <if test="record.rechargeId != null" >
+        recharge_id = #{record.rechargeId,jdbcType=BIGINT},
+      </if>
+      <if test="record.rechargeAccountId != null" >
+        recharge_account_id = #{record.rechargeAccountId,jdbcType=BIGINT},
+      </if>
+      <if test="record.rechargeMoney != null" >
+        recharge_money = #{record.rechargeMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="record.rechargePayType != null" >
+        recharge_pay_type = #{record.rechargePayType,jdbcType=INTEGER},
+      </if>
+      <if test="record.rechargeState != null" >
+        recharge_state = #{record.rechargeState,jdbcType=INTEGER},
+      </if>
+      <if test="record.rechargeTime != null" >
+        recharge_time = #{record.rechargeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.rechargeOrderId != null" >
+        recharge_order_id = #{record.rechargeOrderId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.rechargeAvailableBalance != null" >
+        recharge_available_balance = #{record.rechargeAvailableBalance,jdbcType=DECIMAL},
+      </if>
+      <if test="record.rechargeType != null" >
+        recharge_type = #{record.rechargeType,jdbcType=INTEGER},
+      </if>
+      <if test="record.rechargeOutTradeNo != null" >
+        recharge_out_trade_no = #{record.rechargeOutTradeNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.rechargeChannelId != null" >
+        recharge_channel_id = #{record.rechargeChannelId,jdbcType=BIGINT},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update recharge_record
+    set recharge_id = #{record.rechargeId,jdbcType=BIGINT},
+      recharge_account_id = #{record.rechargeAccountId,jdbcType=BIGINT},
+      recharge_money = #{record.rechargeMoney,jdbcType=DECIMAL},
+      recharge_pay_type = #{record.rechargePayType,jdbcType=INTEGER},
+      recharge_state = #{record.rechargeState,jdbcType=INTEGER},
+      recharge_time = #{record.rechargeTime,jdbcType=TIMESTAMP},
+      recharge_order_id = #{record.rechargeOrderId,jdbcType=VARCHAR},
+      recharge_available_balance = #{record.rechargeAvailableBalance,jdbcType=DECIMAL},
+      recharge_type = #{record.rechargeType,jdbcType=INTEGER},
+      recharge_out_trade_no = #{record.rechargeOutTradeNo,jdbcType=VARCHAR},
+      recharge_channel_id = #{record.rechargeChannelId,jdbcType=BIGINT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="org.entity.dto.RechargeRecord" >
+    update recharge_record
+    <set >
+      <if test="rechargeAccountId != null" >
+        recharge_account_id = #{rechargeAccountId,jdbcType=BIGINT},
+      </if>
+      <if test="rechargeMoney != null" >
+        recharge_money = #{rechargeMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="rechargePayType != null" >
+        recharge_pay_type = #{rechargePayType,jdbcType=INTEGER},
+      </if>
+      <if test="rechargeState != null" >
+        recharge_state = #{rechargeState,jdbcType=INTEGER},
+      </if>
+      <if test="rechargeTime != null" >
+        recharge_time = #{rechargeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="rechargeOrderId != null" >
+        recharge_order_id = #{rechargeOrderId,jdbcType=VARCHAR},
+      </if>
+      <if test="rechargeAvailableBalance != null" >
+        recharge_available_balance = #{rechargeAvailableBalance,jdbcType=DECIMAL},
+      </if>
+      <if test="rechargeType != null" >
+        recharge_type = #{rechargeType,jdbcType=INTEGER},
+      </if>
+      <if test="rechargeOutTradeNo != null" >
+        recharge_out_trade_no = #{rechargeOutTradeNo,jdbcType=VARCHAR},
+      </if>
+      <if test="rechargeChannelId != null" >
+        recharge_channel_id = #{rechargeChannelId,jdbcType=BIGINT},
+      </if>
+    </set>
+    where recharge_id = #{rechargeId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.entity.dto.RechargeRecord" >
+    update recharge_record
+    set recharge_account_id = #{rechargeAccountId,jdbcType=BIGINT},
+      recharge_money = #{rechargeMoney,jdbcType=DECIMAL},
+      recharge_pay_type = #{rechargePayType,jdbcType=INTEGER},
+      recharge_state = #{rechargeState,jdbcType=INTEGER},
+      recharge_time = #{rechargeTime,jdbcType=TIMESTAMP},
+      recharge_order_id = #{rechargeOrderId,jdbcType=VARCHAR},
+      recharge_available_balance = #{rechargeAvailableBalance,jdbcType=DECIMAL},
+      recharge_type = #{rechargeType,jdbcType=INTEGER},
+      recharge_out_trade_no = #{rechargeOutTradeNo,jdbcType=VARCHAR},
+      recharge_channel_id = #{rechargeChannelId,jdbcType=BIGINT}
+    where recharge_id = #{rechargeId,jdbcType=BIGINT}
+  </update>
+</mapper>

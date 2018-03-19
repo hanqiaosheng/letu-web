@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.dao.RentPriceMapper" >
+  <resultMap id="BaseResultMap" type="org.entity.dto.RentPrice" >
+    <id column="rent_price_id" property="rentPriceId" jdbcType="BIGINT" />
+    <result column="rent_price_type" property="rentPriceType" jdbcType="INTEGER" />
+    <result column="rent_free_time" property="rentFreeTime" jdbcType="INTEGER" />
+    <result column="rent_price_option" property="rentPriceOption" jdbcType="INTEGER" />
+    <result column="rent_price_models_id" property="rentPriceModelsId" jdbcType="BIGINT" />
+    <result column="rent_price_max" property="rentPriceMax" jdbcType="DOUBLE" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="org.entity.dto.RentPrice" extends="BaseResultMap" >
+    <result column="rent_price" property="rentPrice" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    rent_price_id, rent_price_type, rent_free_time, rent_price_option, rent_price_models_id, 
+    rent_price_max
+  </sql>
+  <sql id="Blob_Column_List" >
+    rent_price
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="org.entity.dto.RentPriceExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from rent_price
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="org.entity.dto.RentPriceExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from rent_price
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="limitStart != null and limitStart>=0" >
+      limit #{limitStart} , #{limitEnd}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from rent_price
+    where rent_price_id = #{rentPriceId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from rent_price
+    where rent_price_id = #{rentPriceId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="org.entity.dto.RentPriceExample" >
+    delete from rent_price
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="org.entity.dto.RentPrice" >
+    insert into rent_price (rent_price_id, rent_price_type, rent_free_time, 
+      rent_price_option, rent_price_models_id, rent_price_max, 
+      rent_price)
+    values (#{rentPriceId,jdbcType=BIGINT}, #{rentPriceType,jdbcType=INTEGER}, #{rentFreeTime,jdbcType=INTEGER}, 
+      #{rentPriceOption,jdbcType=INTEGER}, #{rentPriceModelsId,jdbcType=BIGINT}, #{rentPriceMax,jdbcType=DOUBLE}, 
+      #{rentPrice,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="org.entity.dto.RentPrice" >
+    insert into rent_price
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="rentPriceId != null" >
+        rent_price_id,
+      </if>
+      <if test="rentPriceType != null" >
+        rent_price_type,
+      </if>
+      <if test="rentFreeTime != null" >
+        rent_free_time,
+      </if>
+      <if test="rentPriceOption != null" >
+        rent_price_option,
+      </if>
+      <if test="rentPriceModelsId != null" >
+        rent_price_models_id,
+      </if>
+      <if test="rentPriceMax != null" >
+        rent_price_max,
+      </if>
+      <if test="rentPrice != null" >
+        rent_price,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="rentPriceId != null" >
+        #{rentPriceId,jdbcType=BIGINT},
+      </if>
+      <if test="rentPriceType != null" >
+        #{rentPriceType,jdbcType=INTEGER},
+      </if>
+      <if test="rentFreeTime != null" >
+        #{rentFreeTime,jdbcType=INTEGER},
+      </if>
+      <if test="rentPriceOption != null" >
+        #{rentPriceOption,jdbcType=INTEGER},
+      </if>
+      <if test="rentPriceModelsId != null" >
+        #{rentPriceModelsId,jdbcType=BIGINT},
+      </if>
+      <if test="rentPriceMax != null" >
+        #{rentPriceMax,jdbcType=DOUBLE},
+      </if>
+      <if test="rentPrice != null" >
+        #{rentPrice,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="org.entity.dto.RentPriceExample" resultType="java.lang.Integer" >
+    select count(*) from rent_price
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update rent_price
+    <set >
+      <if test="record.rentPriceId != null" >
+        rent_price_id = #{record.rentPriceId,jdbcType=BIGINT},
+      </if>
+      <if test="record.rentPriceType != null" >
+        rent_price_type = #{record.rentPriceType,jdbcType=INTEGER},
+      </if>
+      <if test="record.rentFreeTime != null" >
+        rent_free_time = #{record.rentFreeTime,jdbcType=INTEGER},
+      </if>
+      <if test="record.rentPriceOption != null" >
+        rent_price_option = #{record.rentPriceOption,jdbcType=INTEGER},
+      </if>
+      <if test="record.rentPriceModelsId != null" >
+        rent_price_models_id = #{record.rentPriceModelsId,jdbcType=BIGINT},
+      </if>
+      <if test="record.rentPriceMax != null" >
+        rent_price_max = #{record.rentPriceMax,jdbcType=DOUBLE},
+      </if>
+      <if test="record.rentPrice != null" >
+        rent_price = #{record.rentPrice,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update rent_price
+    set rent_price_id = #{record.rentPriceId,jdbcType=BIGINT},
+      rent_price_type = #{record.rentPriceType,jdbcType=INTEGER},
+      rent_free_time = #{record.rentFreeTime,jdbcType=INTEGER},
+      rent_price_option = #{record.rentPriceOption,jdbcType=INTEGER},
+      rent_price_models_id = #{record.rentPriceModelsId,jdbcType=BIGINT},
+      rent_price_max = #{record.rentPriceMax,jdbcType=DOUBLE},
+      rent_price = #{record.rentPrice,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update rent_price
+    set rent_price_id = #{record.rentPriceId,jdbcType=BIGINT},
+      rent_price_type = #{record.rentPriceType,jdbcType=INTEGER},
+      rent_free_time = #{record.rentFreeTime,jdbcType=INTEGER},
+      rent_price_option = #{record.rentPriceOption,jdbcType=INTEGER},
+      rent_price_models_id = #{record.rentPriceModelsId,jdbcType=BIGINT},
+      rent_price_max = #{record.rentPriceMax,jdbcType=DOUBLE}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="org.entity.dto.RentPrice" >
+    update rent_price
+    <set >
+      <if test="rentPriceType != null" >
+        rent_price_type = #{rentPriceType,jdbcType=INTEGER},
+      </if>
+      <if test="rentFreeTime != null" >
+        rent_free_time = #{rentFreeTime,jdbcType=INTEGER},
+      </if>
+      <if test="rentPriceOption != null" >
+        rent_price_option = #{rentPriceOption,jdbcType=INTEGER},
+      </if>
+      <if test="rentPriceModelsId != null" >
+        rent_price_models_id = #{rentPriceModelsId,jdbcType=BIGINT},
+      </if>
+      <if test="rentPriceMax != null" >
+        rent_price_max = #{rentPriceMax,jdbcType=DOUBLE},
+      </if>
+      <if test="rentPrice != null" >
+        rent_price = #{rentPrice,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where rent_price_id = #{rentPriceId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="org.entity.dto.RentPrice" >
+    update rent_price
+    set rent_price_type = #{rentPriceType,jdbcType=INTEGER},
+      rent_free_time = #{rentFreeTime,jdbcType=INTEGER},
+      rent_price_option = #{rentPriceOption,jdbcType=INTEGER},
+      rent_price_models_id = #{rentPriceModelsId,jdbcType=BIGINT},
+      rent_price_max = #{rentPriceMax,jdbcType=DOUBLE},
+      rent_price = #{rentPrice,jdbcType=LONGVARCHAR}
+    where rent_price_id = #{rentPriceId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.entity.dto.RentPrice" >
+    update rent_price
+    set rent_price_type = #{rentPriceType,jdbcType=INTEGER},
+      rent_free_time = #{rentFreeTime,jdbcType=INTEGER},
+      rent_price_option = #{rentPriceOption,jdbcType=INTEGER},
+      rent_price_models_id = #{rentPriceModelsId,jdbcType=BIGINT},
+      rent_price_max = #{rentPriceMax,jdbcType=DOUBLE}
+    where rent_price_id = #{rentPriceId,jdbcType=BIGINT}
+  </update>
+</mapper>

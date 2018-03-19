@@ -1,0 +1,643 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.dao.BikeMapper" >
+  <resultMap id="BaseResultMap" type="org.entity.dto.Bike" >
+    <id column="bike_id" property="bikeId" jdbcType="BIGINT" />
+    <result column="bike_manager_id" property="bikeManagerId" jdbcType="BIGINT" />
+    <result column="bike_admin_id" property="bikeAdminId" jdbcType="BIGINT" />
+    <result column="bike_block_id" property="bikeBlockId" jdbcType="BIGINT" />
+    <result column="bike_code" property="bikeCode" jdbcType="VARCHAR" />
+    <result column="bike_state" property="bikeState" jdbcType="INTEGER" />
+    <result column="bike_del" property="bikeDel" jdbcType="INTEGER" />
+    <result column="bike_address" property="bikeAddress" jdbcType="VARCHAR" />
+    <result column="bike_atitude" property="bikeAtitude" jdbcType="DOUBLE" />
+    <result column="bike_longitude" property="bikeLongitude" jdbcType="DOUBLE" />
+    <result column="bike_rent_num" property="bikeRentNum" jdbcType="INTEGER" />
+    <result column="bike_createtime" property="bikeCreatetime" jdbcType="TIMESTAMP" />
+    <result column="bike_batch_number" property="bikeBatchNumber" jdbcType="VARCHAR" />
+    <result column="bike_lock_id" property="bikeLockId" jdbcType="BIGINT" />
+    <result column="bike_chip_code" property="bikeChipCode" jdbcType="VARCHAR" />
+    <result column="bike_dynamotor_code" property="bikeDynamotorCode" jdbcType="VARCHAR" />
+    <result column="bike_put_time" property="bikePutTime" jdbcType="TIMESTAMP" />
+    <result column="bike_models_id" property="bikeModelsId" jdbcType="BIGINT" />
+    <result column="bike_last_rent_time" property="bikeLastRentTime" jdbcType="TIMESTAMP" />
+    <result column="bike_manager_name" property="bikeManagerName" jdbcType="VARCHAR" />
+    <result column="bike_manager_tel" property="bikeManagerTel" jdbcType="VARCHAR" />
+    <result column="bike_alert" jdbcType="INTEGER" property="bikeAlert" />
+    <result column="bike_fixed_return_id" property="bikeFixedReturnId" jdbcType="BIGINT" />
+    <result column="bike_temporarylocktime" property="bikeTemporarylocktime" jdbcType="TIMESTAMP" />
+    <result column="bike_block" property="bikeBlock" jdbcType="VARCHAR" />
+  </resultMap>
+   <resultMap id="LatLngMap" type="org.entity.dto.LatLng" >
+    <id column="bike_id" property="bikeId" jdbcType="BIGINT" />
+    <result column="bike_atitude" property="lat" jdbcType="DOUBLE" />
+    <result column="bike_longitude" property="lng" jdbcType="DOUBLE" />
+  </resultMap>
+  <resultMap id="BaseUnionResultMap" type="org.entity.dto.Bike" extends="BaseResultMap">
+  <association property="bikeRepair" javaType="org.entity.dto.BikeRepair">
+    <id column="manager_id" property="managerId" jdbcType="BIGINT" />
+    <result column="manager_name" property="managerName" jdbcType="VARCHAR" />
+    <result column="manager_tel" property="managerTel" jdbcType="VARCHAR" />
+    <result column="manager_createtime" property="managerCreatetime" jdbcType="DATE" />
+  </association>
+  <association property="bikeLock" javaType="org.entity.dto.BikeLockInfo">
+    <id column="bike_lock_Id" property="bikeLockId" jdbcType="BIGINT" />
+    <result column="bike_lock_code" property="bikeLockCode" jdbcType="VARCHAR" />
+    <result column="bike_lock_equipment_state" property="bikeLockEquipmentState" jdbcType="INTEGER" />
+    <result column="bike_lock_electricity" property="bikeLockElectricity" jdbcType="VARCHAR" />
+    <result column="bike_lock_sim_code" property="bikeLockSimCode" jdbcType="VARCHAR" />
+    <result column="bike_lock_voltage" property="bikeLockVoltage" jdbcType="DOUBLE" />
+  </association>
+ <association property="models" javaType="org.entity.dto.Models">
+    <id column="models_id" property="modelsId" jdbcType="BIGINT" />
+    <result column="models_code" property="modelsCode" jdbcType="VARCHAR" />
+    <result column="models_name" property="modelsName" jdbcType="VARCHAR" />
+    <result column="models_deposit" property="modelsDeposit" jdbcType="DECIMAL" />
+    <result column="models_content" property="modelsContent" jdbcType="VARCHAR" />
+    <result column="models_state" property="modelsState" jdbcType="INTEGER" />
+    <result column="models_channel_id" property="modelsChannelId" jdbcType="BIGINT" />
+    <result column="models_rent_limit" property="modelsRentLimit" jdbcType="INTEGER" />
+    <result column="models_isfixed_point" property="modelsIsfixedPoint" jdbcType="INTEGER" />
+    <result column="models_fixed_return" property="modelsFixedReturn" jdbcType="VARCHAR" />
+    <result column="models_free_time" property="modelsFreeTime" jdbcType="INTEGER" />
+    <result column="models_inPrice_id" property="modelsInpriceId" jdbcType="BIGINT" />
+    <result column="models_rent_type" property="modelsRentType" jdbcType="INTEGER" />
+    <association property="channel" javaType="org.entity.dto.Channel">
+        <id column="channel_id" property="channelId" jdbcType="BIGINT" />
+	    <result column="channel_name" property="channelName" jdbcType="VARCHAR" />
+	    <result column="channel_charger_name" property="channelChargerName" jdbcType="VARCHAR" />
+	    <result column="channel_charger_tel" property="channelChargerTel" jdbcType="VARCHAR" />
+	    <result column="channel_charger_adminId" property="channelChargerAdminid" jdbcType="BIGINT" />
+	    <result column="channel_state" property="channelState" jdbcType="INTEGER" />
+	    <result column="channel_level" property="channelLevel" jdbcType="INTEGER" />
+	    <result column="channel_parent_id" property="channelParentId" jdbcType="BIGINT" />
+	    <result column="channel_num" property="channelNum" jdbcType="VARCHAR" />
+    </association>
+  </association>
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    bike_id, bike_manager_id, bike_admin_id, bike_block_id, bike_code, bike_state, bike_del, 
+    bike_address, bike_atitude, bike_longitude, bike_rent_num, bike_createtime, bike_batch_number, 
+    bike_lock_id, bike_chip_code, bike_dynamotor_code, bike_put_time, bike_models_id, 
+    bike_last_rent_time, bike_manager_name, bike_manager_tel, bike_alert, bike_fixed_return_id, 
+    bike_temporarylocktime, bike_block
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="org.entity.dto.BikeExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from bike
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="limitStart != null and limitStart>=0" >
+      limit #{limitStart} , #{limitEnd}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from bike
+    where bike_id = #{bikeId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from bike
+    where bike_id = #{bikeId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="org.entity.dto.BikeExample" >
+    delete from bike
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="org.entity.dto.Bike" >
+    insert into bike (bike_id, bike_manager_id, bike_admin_id, 
+      bike_block_id, bike_code, bike_state, 
+      bike_del, bike_address, bike_atitude, 
+      bike_longitude, bike_rent_num, bike_createtime, 
+      bike_batch_number, bike_lock_id, bike_chip_code, 
+      bike_dynamotor_code, bike_put_time, bike_models_id, 
+      bike_last_rent_time, bike_manager_name, bike_manager_tel, 
+      bike_alert, bike_alert, bike_fixed_return_id, bike_temporarylocktime, 
+      bike_block)
+    values (#{bikeId,jdbcType=BIGINT}, #{bikeManagerId,jdbcType=BIGINT}, #{bikeAdminId,jdbcType=BIGINT}, 
+      #{bikeBlockId,jdbcType=BIGINT}, #{bikeCode,jdbcType=VARCHAR}, #{bikeState,jdbcType=INTEGER}, 
+      #{bikeDel,jdbcType=INTEGER}, #{bikeAddress,jdbcType=VARCHAR}, #{bikeAtitude,jdbcType=DOUBLE}, 
+      #{bikeLongitude,jdbcType=DOUBLE}, #{bikeRentNum,jdbcType=INTEGER}, #{bikeCreatetime,jdbcType=TIMESTAMP}, 
+      #{bikeBatchNumber,jdbcType=VARCHAR}, #{bikeLockId,jdbcType=BIGINT}, #{bikeChipCode,jdbcType=VARCHAR}, 
+      #{bikeDynamotorCode,jdbcType=VARCHAR}, #{bikePutTime,jdbcType=TIMESTAMP}, #{bikeModelsId,jdbcType=BIGINT}, 
+      #{bikeLastRentTime,jdbcType=TIMESTAMP}, #{bikeManagerName,jdbcType=VARCHAR}, #{bikeManagerTel,jdbcType=VARCHAR}, 
+      #{bikeAlert,jdbcType=INTEGER}, #{bikeFixedReturnId,jdbcType=BIGINT}, #{bikeTemporarylocktime,jdbcType=TIMESTAMP}, 
+      #{bikeBlock,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="org.entity.dto.Bike" useGeneratedKeys="true" keyProperty="bikeId">
+    insert into bike
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="bikeId != null" >
+        bike_id,
+      </if>
+      <if test="bikeManagerId != null" >
+        bike_manager_id,
+      </if>
+      <if test="bikeAdminId != null" >
+        bike_admin_id,
+      </if>
+      <if test="bikeBlockId != null" >
+        bike_block_id,
+      </if>
+      <if test="bikeCode != null" >
+        bike_code,
+      </if>
+      <if test="bikeState != null" >
+        bike_state,
+      </if>
+      <if test="bikeDel != null" >
+        bike_del,
+      </if>
+      <if test="bikeAddress != null" >
+        bike_address,
+      </if>
+      <if test="bikeAtitude != null" >
+        bike_atitude,
+      </if>
+      <if test="bikeLongitude != null" >
+        bike_longitude,
+      </if>
+      <if test="bikeRentNum != null" >
+        bike_rent_num,
+      </if>
+      <if test="bikeCreatetime != null" >
+        bike_createtime,
+      </if>
+      <if test="bikeBatchNumber != null" >
+        bike_batch_number,
+      </if>
+      <if test="bikeLockId != null" >
+        bike_lock_id,
+      </if>
+      <if test="bikeChipCode != null" >
+        bike_chip_code,
+      </if>
+      <if test="bikeDynamotorCode != null" >
+        bike_dynamotor_code,
+      </if>
+      <if test="bikePutTime != null" >
+        bike_put_time,
+      </if>
+      <if test="bikeModelsId != null" >
+        bike_models_id,
+      </if>
+      <if test="bikeLastRentTime != null" >
+        bike_last_rent_time,
+      </if>
+      <if test="bikeManagerName != null" >
+        bike_manager_name,
+      </if>
+      <if test="bikeManagerTel != null" >
+        bike_manager_tel,
+      </if>
+      <if test="bikeAlert != null">
+        bike_alert,
+      </if>
+      <if test="bikeFixedReturnId != null" >
+        bike_fixed_return_id,
+      </if>
+      <if test="bikeTemporarylocktime != null" >
+        bike_temporarylocktime,
+      </if>
+      <if test="bikeBlock != null" >
+        bike_block,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="bikeId != null" >
+        #{bikeId,jdbcType=BIGINT},
+      </if>
+      <if test="bikeManagerId != null" >
+        #{bikeManagerId,jdbcType=BIGINT},
+      </if>
+      <if test="bikeAdminId != null" >
+        #{bikeAdminId,jdbcType=BIGINT},
+      </if>
+      <if test="bikeBlockId != null" >
+        #{bikeBlockId,jdbcType=BIGINT},
+      </if>
+      <if test="bikeCode != null" >
+        #{bikeCode,jdbcType=VARCHAR},
+      </if>
+      <if test="bikeState != null" >
+        #{bikeState,jdbcType=INTEGER},
+      </if>
+      <if test="bikeDel != null" >
+        #{bikeDel,jdbcType=INTEGER},
+      </if>
+      <if test="bikeAddress != null" >
+        #{bikeAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="bikeAtitude != null" >
+        #{bikeAtitude,jdbcType=DOUBLE},
+      </if>
+      <if test="bikeLongitude != null" >
+        #{bikeLongitude,jdbcType=DOUBLE},
+      </if>
+      <if test="bikeRentNum != null" >
+        #{bikeRentNum,jdbcType=INTEGER},
+      </if>
+      <if test="bikeCreatetime != null" >
+        #{bikeCreatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="bikeBatchNumber != null" >
+        #{bikeBatchNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="bikeLockId != null" >
+        #{bikeLockId,jdbcType=BIGINT},
+      </if>
+      <if test="bikeChipCode != null" >
+        #{bikeChipCode,jdbcType=VARCHAR},
+      </if>
+      <if test="bikeDynamotorCode != null" >
+        #{bikeDynamotorCode,jdbcType=VARCHAR},
+      </if>
+      <if test="bikePutTime != null" >
+        #{bikePutTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="bikeModelsId != null" >
+        #{bikeModelsId,jdbcType=BIGINT},
+      </if>
+      <if test="bikeLastRentTime != null" >
+        #{bikeLastRentTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="bikeManagerName != null" >
+        #{bikeManagerName,jdbcType=VARCHAR},
+      </if>
+      <if test="bikeManagerTel != null" >
+        #{bikeManagerTel,jdbcType=VARCHAR},
+      </if>
+      <if test="bikeAlert != null">
+        #{bikeAlert,jdbcType=INTEGER},
+      </if>
+      <if test="bikeFixedReturnId != null" >
+        #{bikeFixedReturnId,jdbcType=BIGINT},
+      </if>
+      <if test="bikeTemporarylocktime != null" >
+        #{bikeTemporarylocktime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="bikeBlock != null" >
+        #{bikeBlock,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="org.entity.dto.BikeExample" resultType="java.lang.Integer" >
+    select count(*) from bike
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update bike
+    <set >
+      <if test="record.bikeId != null" >
+        bike_id = #{record.bikeId,jdbcType=BIGINT},
+      </if>
+      <if test="record.bikeManagerId != null" >
+        bike_manager_id = #{record.bikeManagerId,jdbcType=BIGINT},
+      </if>
+      <if test="record.bikeAdminId != null" >
+        bike_admin_id = #{record.bikeAdminId,jdbcType=BIGINT},
+      </if>
+      <if test="record.bikeBlockId != null" >
+        bike_block_id = #{record.bikeBlockId,jdbcType=BIGINT},
+      </if>
+      <if test="record.bikeCode != null" >
+        bike_code = #{record.bikeCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bikeState != null" >
+        bike_state = #{record.bikeState,jdbcType=INTEGER},
+      </if>
+      <if test="record.bikeDel != null" >
+        bike_del = #{record.bikeDel,jdbcType=INTEGER},
+      </if>
+      <if test="record.bikeAddress != null" >
+        bike_address = #{record.bikeAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bikeAtitude != null" >
+        bike_atitude = #{record.bikeAtitude,jdbcType=DOUBLE},
+      </if>
+      <if test="record.bikeLongitude != null" >
+        bike_longitude = #{record.bikeLongitude,jdbcType=DOUBLE},
+      </if>
+      <if test="record.bikeRentNum != null" >
+        bike_rent_num = #{record.bikeRentNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.bikeCreatetime != null" >
+        bike_createtime = #{record.bikeCreatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.bikeBatchNumber != null" >
+        bike_batch_number = #{record.bikeBatchNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bikeLockId != null" >
+        bike_lock_id = #{record.bikeLockId,jdbcType=BIGINT},
+      </if>
+      <if test="record.bikeChipCode != null" >
+        bike_chip_code = #{record.bikeChipCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bikeDynamotorCode != null" >
+        bike_dynamotor_code = #{record.bikeDynamotorCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bikePutTime != null" >
+        bike_put_time = #{record.bikePutTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.bikeModelsId != null" >
+        bike_models_id = #{record.bikeModelsId,jdbcType=BIGINT},
+      </if>
+      <if test="record.bikeLastRentTime != null" >
+        bike_last_rent_time = #{record.bikeLastRentTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.bikeManagerName != null" >
+        bike_manager_name = #{record.bikeManagerName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bikeManagerTel != null" >
+        bike_manager_tel = #{record.bikeManagerTel,jdbcType=VARCHAR},
+      </if>
+       <if test="record.bikeAlert != null">
+        bike_alert = #{record.bikeAlert,jdbcType=INTEGER},
+      </if>
+      <if test="record.bikeFixedReturnId != null" >
+        bike_fixed_return_id = #{record.bikeFixedReturnId,jdbcType=BIGINT},
+      </if>
+      <if test="record.bikeTemporarylocktime != null" >
+        bike_temporarylocktime = #{record.bikeTemporarylocktime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.bikeBlock != null" >
+        bike_block = #{record.bikeBlock,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update bike
+    set bike_id = #{record.bikeId,jdbcType=BIGINT},
+      bike_manager_id = #{record.bikeManagerId,jdbcType=BIGINT},
+      bike_admin_id = #{record.bikeAdminId,jdbcType=BIGINT},
+      bike_block_id = #{record.bikeBlockId,jdbcType=BIGINT},
+      bike_code = #{record.bikeCode,jdbcType=VARCHAR},
+      bike_state = #{record.bikeState,jdbcType=INTEGER},
+      bike_del = #{record.bikeDel,jdbcType=INTEGER},
+      bike_address = #{record.bikeAddress,jdbcType=VARCHAR},
+      bike_atitude = #{record.bikeAtitude,jdbcType=DOUBLE},
+      bike_longitude = #{record.bikeLongitude,jdbcType=DOUBLE},
+      bike_rent_num = #{record.bikeRentNum,jdbcType=INTEGER},
+      bike_createtime = #{record.bikeCreatetime,jdbcType=TIMESTAMP},
+      bike_batch_number = #{record.bikeBatchNumber,jdbcType=VARCHAR},
+      bike_lock_id = #{record.bikeLockId,jdbcType=BIGINT},
+      bike_chip_code = #{record.bikeChipCode,jdbcType=VARCHAR},
+      bike_dynamotor_code = #{record.bikeDynamotorCode,jdbcType=VARCHAR},
+      bike_put_time = #{record.bikePutTime,jdbcType=TIMESTAMP},
+      bike_models_id = #{record.bikeModelsId,jdbcType=BIGINT},
+      bike_last_rent_time = #{record.bikeLastRentTime,jdbcType=TIMESTAMP},
+      bike_manager_name = #{record.bikeManagerName,jdbcType=VARCHAR},
+      bike_manager_tel = #{record.bikeManagerTel,jdbcType=VARCHAR},
+      bike_alert = #{record.bikeAlert,jdbcType=INTEGER},
+      bike_fixed_return_id = #{record.bikeFixedReturnId,jdbcType=BIGINT},
+      bike_temporarylocktime = #{record.bikeTemporarylocktime,jdbcType=TIMESTAMP},
+      bike_block = #{record.bikeBlock,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="org.entity.dto.Bike" >
+    update bike
+    <set >
+      <if test="bikeManagerId != null" >
+        bike_manager_id = #{bikeManagerId,jdbcType=BIGINT},
+      </if>
+      <if test="bikeAdminId != null" >
+        bike_admin_id = #{bikeAdminId,jdbcType=BIGINT},
+      </if>
+      <if test="bikeBlockId != null" >
+        bike_block_id = #{bikeBlockId,jdbcType=BIGINT},
+      </if>
+      <if test="bikeCode != null" >
+        bike_code = #{bikeCode,jdbcType=VARCHAR},
+      </if>
+      <if test="bikeState != null" >
+        bike_state = #{bikeState,jdbcType=INTEGER},
+      </if>
+      <if test="bikeDel != null" >
+        bike_del = #{bikeDel,jdbcType=INTEGER},
+      </if>
+      <if test="bikeAddress != null" >
+        bike_address = #{bikeAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="bikeAtitude != null" >
+        bike_atitude = #{bikeAtitude,jdbcType=DOUBLE},
+      </if>
+      <if test="bikeLongitude != null" >
+        bike_longitude = #{bikeLongitude,jdbcType=DOUBLE},
+      </if>
+      <if test="bikeRentNum != null" >
+        bike_rent_num = #{bikeRentNum,jdbcType=INTEGER},
+      </if>
+      <if test="bikeCreatetime != null" >
+        bike_createtime = #{bikeCreatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="bikeBatchNumber != null" >
+        bike_batch_number = #{bikeBatchNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="bikeLockId != null" >
+        bike_lock_id = #{bikeLockId,jdbcType=BIGINT},
+      </if>
+      <if test="bikeChipCode != null" >
+        bike_chip_code = #{bikeChipCode,jdbcType=VARCHAR},
+      </if>
+      <if test="bikeDynamotorCode != null" >
+        bike_dynamotor_code = #{bikeDynamotorCode,jdbcType=VARCHAR},
+      </if>
+      <if test="bikePutTime != null" >
+        bike_put_time = #{bikePutTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="bikeModelsId != null" >
+        bike_models_id = #{bikeModelsId,jdbcType=BIGINT},
+      </if>
+      <if test="bikeLastRentTime != null" >
+        bike_last_rent_time = #{bikeLastRentTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="bikeManagerName != null" >
+        bike_manager_name = #{bikeManagerName,jdbcType=VARCHAR},
+      </if>
+      <if test="bikeManagerTel != null" >
+        bike_manager_tel = #{bikeManagerTel,jdbcType=VARCHAR},
+      </if>
+      <if test="bikeAlert != null">
+        bike_alert = #{bikeAlert,jdbcType=INTEGER},
+      </if>
+      <if test="bikeFixedReturnId != null" >
+        bike_fixed_return_id = #{bikeFixedReturnId,jdbcType=BIGINT},
+      </if>
+      <if test="bikeTemporarylocktime != null" >
+        bike_temporarylocktime = #{bikeTemporarylocktime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="bikeBlock != null" >
+        bike_block = #{bikeBlock,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where bike_id = #{bikeId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.entity.dto.Bike" >
+    update bike
+    set bike_manager_id = #{bikeManagerId,jdbcType=BIGINT},
+      bike_admin_id = #{bikeAdminId,jdbcType=BIGINT},
+      bike_block_id = #{bikeBlockId,jdbcType=BIGINT},
+      bike_code = #{bikeCode,jdbcType=VARCHAR},
+      bike_state = #{bikeState,jdbcType=INTEGER},
+      bike_del = #{bikeDel,jdbcType=INTEGER},
+      bike_address = #{bikeAddress,jdbcType=VARCHAR},
+      bike_atitude = #{bikeAtitude,jdbcType=DOUBLE},
+      bike_longitude = #{bikeLongitude,jdbcType=DOUBLE},
+      bike_rent_num = #{bikeRentNum,jdbcType=INTEGER},
+      bike_createtime = #{bikeCreatetime,jdbcType=TIMESTAMP},
+      bike_batch_number = #{bikeBatchNumber,jdbcType=VARCHAR},
+      bike_lock_id = #{bikeLockId,jdbcType=BIGINT},
+      bike_chip_code = #{bikeChipCode,jdbcType=VARCHAR},
+      bike_dynamotor_code = #{bikeDynamotorCode,jdbcType=VARCHAR},
+      bike_put_time = #{bikePutTime,jdbcType=TIMESTAMP},
+      bike_models_id = #{bikeModelsId,jdbcType=BIGINT},
+      bike_last_rent_time = #{bikeLastRentTime,jdbcType=TIMESTAMP},
+      bike_manager_name = #{bikeManagerName,jdbcType=VARCHAR},
+      bike_manager_tel = #{bikeManagerTel,jdbcType=VARCHAR},
+      bike_alert = #{bikeAlert,jdbcType=INTEGER},
+      bike_fixed_return_id = #{bikeFixedReturnId,jdbcType=BIGINT},
+      bike_temporarylocktime = #{bikeTemporarylocktime,jdbcType=TIMESTAMP},
+      bike_block = #{bikeBlock,jdbcType=VARCHAR}
+    where bike_id = #{bikeId,jdbcType=BIGINT}
+  </update>
+  
+  <select id="selectUnionByExample" resultMap="BaseUnionResultMap" parameterType="org.entity.dto.BikeExample" >
+    select b.*,br.*,bli.*,m.*,c.* from bike b left join bike_repair br on b.bike_manager_id=br.manager_id
+                                left join bike_lock_info bli on b.bike_lock_id = bli.bike_lock_id
+                                left join models m on b.bike_models_id = m.models_id
+                                left join channel c on c.channel_id = m.models_channel_id
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="limitStart != null and limitStart>=0" >
+      limit #{limitStart} , #{limitEnd}
+    </if>
+  </select>
+  
+
+ <select id="selectUnionByPrimaryKey" resultMap="BaseUnionResultMap" parameterType="java.lang.Long" >
+    select b.*,br.*,bli.*,m.*,c.* from bike b left join bike_repair br on b.bike_manager_id=br.manager_id
+                                left join bike_lock_info bli on b.bike_lock_id = bli.bike_lock_id
+                                left join models m on b.bike_models_id = m.models_id
+                                left join channel c on c.channel_id = m.models_channel_id
+    where bike_id = #{bikeId,jdbcType=BIGINT}
+  </select>
+
+
+<select id="countUnionByExample" parameterType="org.entity.dto.BikeExample" resultType="java.lang.Integer" >
+    select count(*) from bike b left join bike_repair br on b.bike_manager_id=br.manager_id
+                                left join bike_lock_info bli on b.bike_lock_id = bli.bike_lock_id
+                                left join models m on b.bike_models_id = m.models_id
+                                left join channel c on c.channel_id = m.models_channel_id
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+
+
+  <select id="selectBikeBatchNumber" resultMap="BaseResultMap" parameterType="org.entity.dto.BikeExample" >
+  SELECT DISTINCT bike_batch_number FROM bike
+  </select>
+  
+  <select id="selectBikesLatLng" resultMap="LatLngMap" parameterType="org.entity.dto.BikeExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    bike_id,bike_atitude,bike_longitude
+    from bike
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="limitStart != null and limitStart>=0" >
+      limit #{limitStart} , #{limitEnd}
+    </if>
+  </select>
+  
+   <select id="selectMaxBatch" resultType="java.lang.String" parameterType="java.lang.Long">
+    select max(bike_batch_number+0) from bike 
+  </select>
+  
+</mapper>

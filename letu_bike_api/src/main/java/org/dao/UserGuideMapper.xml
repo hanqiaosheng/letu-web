@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.dao.UserGuideMapper" >
+  <resultMap id="BaseResultMap" type="org.entity.dto.UserGuide" >
+    <id column="user_guide_id" property="userGuideId" jdbcType="BIGINT" />
+    <result column="user_guide_type" property="userGuideType" jdbcType="VARCHAR" />
+    <result column="user_guide_adminId" property="userGuideAdminid" jdbcType="BIGINT" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="org.entity.dto.UserGuide" extends="BaseResultMap" >
+    <result column="user_guide_content" property="userGuideContent" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    user_guide_id, user_guide_type, user_guide_adminId
+  </sql>
+  <sql id="Blob_Column_List" >
+    user_guide_content
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="org.entity.dto.UserGuideExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from user_guide
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="org.entity.dto.UserGuideExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from user_guide
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="limitStart != null and limitStart>=0" >
+      limit #{limitStart} , #{limitEnd}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from user_guide
+    where user_guide_id = #{userGuideId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from user_guide
+    where user_guide_id = #{userGuideId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="org.entity.dto.UserGuideExample" >
+    delete from user_guide
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="org.entity.dto.UserGuide" >
+    insert into user_guide (user_guide_id, user_guide_type, user_guide_adminId, 
+      user_guide_content)
+    values (#{userGuideId,jdbcType=BIGINT}, #{userGuideType,jdbcType=VARCHAR}, #{userGuideAdminid,jdbcType=BIGINT}, 
+      #{userGuideContent,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="org.entity.dto.UserGuide" >
+    insert into user_guide
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="userGuideId != null" >
+        user_guide_id,
+      </if>
+      <if test="userGuideType != null" >
+        user_guide_type,
+      </if>
+      <if test="userGuideAdminid != null" >
+        user_guide_adminId,
+      </if>
+      <if test="userGuideContent != null" >
+        user_guide_content,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="userGuideId != null" >
+        #{userGuideId,jdbcType=BIGINT},
+      </if>
+      <if test="userGuideType != null" >
+        #{userGuideType,jdbcType=VARCHAR},
+      </if>
+      <if test="userGuideAdminid != null" >
+        #{userGuideAdminid,jdbcType=BIGINT},
+      </if>
+      <if test="userGuideContent != null" >
+        #{userGuideContent,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="org.entity.dto.UserGuideExample" resultType="java.lang.Integer" >
+    select count(*) from user_guide
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update user_guide
+    <set >
+      <if test="record.userGuideId != null" >
+        user_guide_id = #{record.userGuideId,jdbcType=BIGINT},
+      </if>
+      <if test="record.userGuideType != null" >
+        user_guide_type = #{record.userGuideType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userGuideAdminid != null" >
+        user_guide_adminId = #{record.userGuideAdminid,jdbcType=BIGINT},
+      </if>
+      <if test="record.userGuideContent != null" >
+        user_guide_content = #{record.userGuideContent,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update user_guide
+    set user_guide_id = #{record.userGuideId,jdbcType=BIGINT},
+      user_guide_type = #{record.userGuideType,jdbcType=VARCHAR},
+      user_guide_adminId = #{record.userGuideAdminid,jdbcType=BIGINT},
+      user_guide_content = #{record.userGuideContent,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update user_guide
+    set user_guide_id = #{record.userGuideId,jdbcType=BIGINT},
+      user_guide_type = #{record.userGuideType,jdbcType=VARCHAR},
+      user_guide_adminId = #{record.userGuideAdminid,jdbcType=BIGINT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="org.entity.dto.UserGuide" >
+    update user_guide
+    <set >
+      <if test="userGuideType != null" >
+        user_guide_type = #{userGuideType,jdbcType=VARCHAR},
+      </if>
+      <if test="userGuideAdminid != null" >
+        user_guide_adminId = #{userGuideAdminid,jdbcType=BIGINT},
+      </if>
+      <if test="userGuideContent != null" >
+        user_guide_content = #{userGuideContent,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where user_guide_id = #{userGuideId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="org.entity.dto.UserGuide" >
+    update user_guide
+    set user_guide_type = #{userGuideType,jdbcType=VARCHAR},
+      user_guide_adminId = #{userGuideAdminid,jdbcType=BIGINT},
+      user_guide_content = #{userGuideContent,jdbcType=LONGVARCHAR}
+    where user_guide_id = #{userGuideId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.entity.dto.UserGuide" >
+    update user_guide
+    set user_guide_type = #{userGuideType,jdbcType=VARCHAR},
+      user_guide_adminId = #{userGuideAdminid,jdbcType=BIGINT}
+    where user_guide_id = #{userGuideId,jdbcType=BIGINT}
+  </update>
+</mapper>

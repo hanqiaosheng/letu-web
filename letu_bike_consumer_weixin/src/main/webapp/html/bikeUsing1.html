@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="viewport" content="initial-scale=1, width=device-width, maximum-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-touch-fullscreen" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="format-detection" content="address=no">
+    <meta name="screen-orientation" content="portrait">
+    <meta name="x5-orientation" content="portrait">
+    <title>乐途智能骑游</title>
+    <link rel="stylesheet" href="font/iconfont.css">
+    <link rel="stylesheet" href="css/animate.min.css">
+    <link rel="stylesheet" href="css/base.css">
+    <script type="text/javascript" src="js/zepto.min.js"></script>
+    <link rel="stylesheet" href="js/dialog.css">
+    <script type="text/javascript" src="js/dialog.js"></script>
+    <script type="text/javascript" src="js/iscroll.js"></script>
+    <link rel="stylesheet" href="js/swiper-3.2.7.min.css">
+    <script type="text/javascript" src="js/swiper-3.2.7.jquery.min.js"></script>
+    <script type="text/javascript" src="js/path.js"></script>
+    <script type="text/javascript" src="js/mobile.js"></script>
+    <script type="text/javascript" src="js/jweixin-1.0.0.js"></script>
+    <script type="text/javascript" src="https://webapi.amap.com/maps?v=1.3&key=5d6fa7d0648f1101f5174c6bc2eb7e32&plugin=AMap.Geocoder"></script>
+</head>
+
+<body>
+   <div class="g-body">
+   		   <div id="mapContainer"></div>
+		   <div class="watchbox">
+		        <div class="tit flex-box"><i class="icon-locationfill"></i><span id="address"></span></div>
+		        <ul class="info flex-box">
+		            <li><p class="p1"><span id="distance"></span>米</p><p class="p2">车辆距离</p></li>
+		            <li><p class="p1"><span id="walkTime"></span>分钟</p><p class="p2">预计到达时间</p></li>
+		        </ul>
+				<div style="display:none" id="appointing">
+		        </div>
+		    </div>
+       		<div id="rentState" class="usedTit green">正在租赁</div>
+            <div class="weui_cells weui_cells_radius weui_cells_auto marginlr">
+               <a class="weui_cell" href="" id="toMap">
+               	<input type="hidden" name="bikeRentId" id="rentId" value="">
+               	<input type="hidden" name="rentPlanId" id="planId" value="">
+               	
+                    <div class="weui_cell_hd"><label class="weui-label">起始地点</label></div>
+                    <div class="weui_cell_bd weui_cell_ft" id="sAddress">
+                    </div>
+                </a>
+                <div class="weui_cell weui_check_label">
+                    <div class="weui_cell_hd"><label class="weui-label">起始时间</label></div>
+                    <div class="weui_cell_bd weui_cell_primary" id="sTime">
+                    </div>
+                </div>
+                <div class="weui_cell weui_check_label">
+                    <div class="weui_cell_hd"><label class="weui-label">行驶时间</label></div>
+                    <div class="weui_cell_bd weui_cell_primary" id="rideTime">
+                    </div>
+                </div>
+                <div class="weui_cell weui_check_label">
+                    <div class="weui_cell_hd"><label class="weui-label">预计费用</label></div>
+                    <div class="weui_cell_bd weui_cell_primary" id="money">
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="surebtn inlinebtn flex-box">
+                <a id="bikeState" class="btn margin-top-30" onclick="temporary(this)">临时上锁</a><a class="btn btn-danger margin-top-30" onclick="endTravel()">结束行程</a>
+            </div>
+   </div>
+
+   <script type="text/javascript">
+	
+   	var sTime;
+   	var rideTime;
+   	var perMoney;
+   	var lnglatXY;
+   	var bikeCode;
+   	var bikeState  = $.getQueryString('bikeState');
+	$('#rentId').val($.getQueryString('rentId'));
+// 	$.alert($('#rentId').val());
+   	if(1==bikeState){  //临时上锁
+   		$("#bikeState").html("继续骑行");
+   		$("#bikeState").attr("onclick","continueRent(this)");
+   		$("#rentState").html("临时锁定中...");
+   	}
+   	if(2==bikeState){  //租赁中
+   		$("#bikeState").html("临时上锁");
+   		$("#bikeState").attr("onclick","temporary(this)");
+   		$("#rentState").html("正在租赁");
+   	}
+   	
+   	
+  	$.isLoading.show();
+  	
+  	
+	//定时器自动添加时间 变化金额
+	function setMoneyAndTime(rentMoney){
+   		rideTime=Math.ceil(((new Date()-sTime)/60000));
+		$('#rideTime').html(rideTime+"分钟");
+		if(rideTime>3){//超过5分钟
+			var hour =  parseInt(rideTime/60);
+			var leftTime = rideTime%60;
+			if(0!=leftTime){
+				hour++;
+			}
+			$('#money').html(rentMoney*hour+"元");
+		}else{
+			$('#money').html(rentMoney+"元");
+		}
+		//$('#money').html(perMoney*(parseInt(rideTime/60)+1)+"元");
+	 }
+	
+	$.ajax({
+		type : "post",
+		url : url+'/bikeRent/renting.action?rentInfoId='+$('#rentId').val(),
+		dataType : 'json',
+		success : function(data) {
+			if (data.message =="success"){
+				
+				bikeState = data.data.bike.bikeState;
+				if(1==bikeState){  //临时上锁
+					$("#bikeState").html("继续骑行");
+			   		$("#bikeState").attr("onclick","continueRent(this)");
+			   		$("#rentState").html("临时锁定中...");
+			   	}
+			   	if(2==bikeState){  //租赁中
+			   		$("#bikeState").html("临时上锁");
+			   		$("#bikeState").attr("onclick","temporary(this)");
+			   		$("#rentState").html("正在租赁");
+			   	}
+				
+				sTime=data.data.rentInfo.rentStarttime;
+				$('#sTime').html(new Date(sTime).format('yyyy-MM-dd hh:mm'));
+				rideTime=Number(Math.ceil(((new Date()-sTime)/60000)));
+				$('#rideTime').html(rideTime+"分钟");
+				if(rideTime>5){//超过5分钟
+					var hour =  parseInt(rideTime/60);
+					var leftTime = rideTime%60;
+					if(0!=leftTime){
+						hour++;
+					}
+					$('#money').html(data.data.rentMoney*hour+"元");
+				}else{
+				 	$('#money').html(data.data.rentMoney+"元");
+				}
+		/*		var money = (data.data.rentMoney*rideTime);
+				if(money==0)
+				$('#money').html(data.data.rentMoney);
+				else
+					$('#money').html(money);*/
+				lnglatXY=[data.data.rentInfo.rentStartlng,data.data.rentInfo.rentStartlat];
+				regeocoder();
+				$('#toMap').attr("href",url+"/html/map.html?Lng="+data.data.rentInfo.rentStartlng+"&Lat="+data.data.rentInfo.rentStartlat);
+				$('#planId').val(data.data.rentInfo.rentPlanId);
+
+				//定时器自动添加时间 变化金额
+				var timer=self.setInterval("setMoneyAndTime("+data.data.rentMoney+")",60000);
+				bikeCode = data.data.bike.bikeCode;
+				//初始化Socket
+// 				initWebSocket();
+			}else if (data.message =="订单已支付"){
+				$.alert("该订单已结束，可继续租赁骑行！",true,function(){
+					window.location.href=url+"/html/watchbike.html";
+	             },5000,{className:'ui-alert',width:300});
+			}
+			else if (data.message =="行程已结束"){
+				$.alert("行程已结束，请前往支付！",true,function(){
+				window.location.href=url+"/html/bikeEnd.html?rentId="+$('#rentId').val();
+	             },5000,{className:'ui-alert',width:300});
+			}
+			$.isLoading.hide();
+		},
+		error:function(data){
+			reLogin(data);
+		}
+	});
+	
+	function initWebSocket(){
+		//websocket连接后台
+		var  wsServer = websocketUrl+'webSocketServer.socket'; 
+		   var  websocket ;
+		   if('WebSocket' in window){
+		      websocket = new WebSocket(wsServer); 
+		   }
+		    websocket.onopen = function (evt) { onOpen(evt) }; 
+		    websocket.onclose = function (evt) { onClose(evt) }; 
+		    websocket.onmessage = function (evt) { onMessage(evt) }; 
+		    websocket.onerror = function (evt) { onError(evt) }; 
+		    function onOpen(evt) { 
+		       console.log("Connected to WebSocket server."); 
+		       websocket.send("weixin,"+bikeCode);
+		    } 
+		    function onClose(evt) { 
+		       console.log("Disconnected"); 
+		    } 
+		    function onMessage(evt) { 
+		    	$.isLoading.hide();
+		    	//临时还车
+		 	  	if(evt.data.indexOf("success,2,")!=-1){
+		 	  		$("#bikeState").html("继续骑行");
+					$("#bikeState").attr("onclick","continueRent(this)");
+					$("#rentState").html("临时锁定中...");
+		 	  	}else if(evt.data.indexOf("success,3,")!=-1){
+		 	  		//继续骑行
+		 	  		$("#bikeState").html("临时上锁");
+					$("#bikeState").attr("onclick","temporary(this)");
+					$("#rentState").html("正在租赁");
+		 	  	}else if(evt.data.indexOf("success,4,")!=-1){
+		 	  		//结束行程
+		 	  		var dataArr = evt.data.split(",");
+					window.location.href=url+"/html/bikeEnd.html?rentId="+dataArr[2];
+		 	  	}
+		     	if(evt.data=='4' || evt.data=='5'){
+					$.alert("关锁失败，车锁受阻，请确保车辆插销未被阻挡再关锁",true,function(){
+		             },5000,{className:'ui-alert',width:300});
+		     	}
+		     	if(evt.data=='3'|| evt.data=='1'){
+		     		$.alert("关锁失败，该车可能有故障，请选择稍后再试或联系客服人员",true,function(){
+		             },5000,{className:'ui-alert',width:300});
+		     	}
+		    } 
+		    function onError(evt) { 
+		       console.log('Error occured: ' + evt.data); 
+		    }
+	}
+    
+    function regeocoder() {  //逆地理编码
+    	
+        var geocoder = new AMap.Geocoder({
+            radius: 1000,
+            extensions: "base"
+        });        
+        geocoder.getAddress(lnglatXY, function(status, result) {
+            if (status === 'complete' && result.info === 'OK') {
+                geocoder_CallBack(result);
+            }else{
+            	$('#sAddress').html("无法获取地址");
+            }
+        });        
+    }
+    function geocoder_CallBack(data) {
+//     	alert(data.regeocode.formattedAddress);
+//         var address = data.regeocode.formattedAddress.split("市",2)[1]; //返回地址描述
+        $('#sAddress').html(data.regeocode.formattedAddress);
+    }
+    function getStatesFn(){
+	}
+    
+    
+    //临时上锁
+	function temporary(obj){
+		$.confirm("请确保车辆处于静止状态、插销未被阻挡再关锁",[{'yes':'确定'},{'no':'取消'}],function(type){
+			if(type=='yes'){
+				//初始化Socket
+				initWebSocket();
+				$.isLoading.show("关锁中...",true);
+				$.ajax({
+					timeout : 20000,
+					type : "post",
+					url : url+'/bikeRent/temporary.action',
+					data :"rentInfoId="+$('#rentId').val(),
+					dataType : 'json',
+					success : function(data) {
+						if(data.code==0){
+							$.isLoading.hide();
+							$.alert("关锁失败，车辆出现故障请稍后再试",true,function(){
+			                   },5000,{className:'ui-alert',width:300});
+						}else if(data.code==1){
+// 							$(obj).html("继续骑行");
+// 							$(obj).attr("onclick","continueRent(this)");
+// 							$("#rentState").html("临时锁定中...");
+						}else if(data.code==3){//订单已结束
+							$.isLoading.hide();
+							$.alert(data.message,true,function(){
+								window.location.href=url+"/html/watchbike.html";
+			                   },5000,{className:'ui-alert',width:300});
+						}else if(data.code==4){//该行程已结束，跳往支付页面
+							$.isLoading.hide();
+							$.alert("行程已结束，立即支付",true,function(){
+								window.location.href=url+"/html/bikeEnd.html?rentId="+data.data.rentInfoId;
+				             },5000,{className:'ui-alert',width:300});
+						}
+						
+					},
+					complete : function(XMLHttpRequest,status){ //请求完成后最终执行参数
+					　　　　if(status=='timeout'){//超时,status还有success,error等值的情况
+					 　　　　　$.isLoading.hide();
+					       $.alert("关锁失败，请稍后再试",true,function(){
+		                   },5000,{className:'ui-alert',width:300});
+					　　　　}
+					},
+					error:function(data){
+						reLogin(data);
+					}
+				});	
+				this.hide();
+			}else if(type=="no"){
+				this.hide();
+			}
+			
+        },{width:300});
+	}
+    
+	 //继续骑行
+	function continueRent(obj){
+		//初始化Socket
+		initWebSocket();
+		$.isLoading.show("开锁中...",true);
+		$.ajax({
+			timeout : 20000,
+			type : "post",
+			url : url+'/bikeRent/continueBike.action',
+			data :"rentInfoId="+$('#rentId').val(),
+			dataType : 'json',
+			success : function(data) {
+				if(data.code==0){
+					$.isLoading.hide();
+					$.alert("开锁失败，车辆出现故障请稍后再试",true,function(){
+	                   },5000,{className:'ui-alert',width:300});
+				}else if(data.code==1){
+// 					$(obj).html("临时上锁");
+// 					$(obj).attr("onclick","temporary(this)");
+// 					$("#rentState").html("正在租赁");
+				}else if(data.code==3){//订单已结束
+					$.isLoading.hide();
+					$.alert(data.message,true,function(){
+						window.location.href=url+"/html/watchbike.html";
+	                   },5000,{className:'ui-alert',width:300});
+				}else if(data.code==4){//该行程已结束，跳往支付页面
+					$.isLoading.hide();
+					$.alert("行程已结束，立即支付",true,function(){
+						window.location.href=url+"/html/bikeEnd.html?rentId="+data.data.rentInfoId;
+		             },5000,{className:'ui-alert',width:300});
+				}
+			},
+			complete : function(XMLHttpRequest,status){ //请求完成后最终执行参数
+			　　　　if(status=='timeout'){//超时,status还有success,error等值的情况
+			 　　　　　$.isLoading.hide();
+			       $.alert("开锁失败，请稍后再试",true,function(){
+                   },5000,{className:'ui-alert',width:300});
+			　　　　}
+			},
+			error:function(data){
+				reLogin(data);
+			}
+		});
+		
+	}
+	 //结束行程
+	 function endTravel(){
+		//获取当前人的经纬度
+		  var hidstr = "url="+encodeURIComponent(window.location.href);
+			 $.ajax({
+				       url : url+"/bikeRent/scanCode.action",
+				       data:hidstr,
+				       async : false,  
+				       type : "post", 
+				       dataType:"json",
+				       beforeSend : function() {
+				           //alert("before");
+				       },
+				       success : function(data) {
+				    	 wx.config({
+			    		      debug: false,
+			    		      appId: data.appId,
+			    		      timestamp: data.timestamp,
+			    		      nonceStr: data.nonceStr,
+			    		      signature: data.signature,
+			    		      jsApiList: [
+			    		        'getLocation'
+			    		      ]
+			    		  });
+				    	wx.ready(function () {
+				    		wx.getLocation({
+				    		    type: 'gcj02', // 默认为wgs84的gps坐标，如果要返回直接给openLocation用的火星坐标，可传入'gcj02'
+				    		    success: function (res) {
+				    		       var userAtitude = res.latitude; // 纬度，浮点数，范围为90 ~ -90
+				    		       var userLongitude = res.longitude; // 经度，浮点数，范围为180 ~ -180。
+				    		        isconfirm(userAtitude,userLongitude)
+				    		        var speed = res.speed; // 速度，以米/每秒计
+				    		        var accuracy = res.accuracy; // 位置精度
+				    		    }
+				    		});
+				    	   })
+				       }
+				 })
+
+		 			
+
+		function isconfirm(userAtitude,userLongitude){
+				$.confirm("请确保车辆处于静止状态、插销未被阻挡再关锁",[{'yes':'确定'},{'no':'取消'}],function(type){
+					if(type=='yes'){
+						//初始化Socket
+						initWebSocket();
+						 $.isLoading.show("关锁中...",true);
+						 $.ajax({
+							    timeout : 20000,
+								type : "post",
+								url : url+'/bikeRent/rentBike.action?returnFlag=1',
+								data :"bikeRentId="+$('#rentId').val()+"&userLongitude="+userLongitude+"&userAtitude="+userAtitude,
+								dataType : 'json',
+								success : function(data) {
+									if(data.code==3){
+										$.isLoading.hide();
+										$.alert("抱歉，当前位置距离租赁点太远，请到租赁点附近再尝试结束行程...",true,function(){
+						                   },5000,{className:'ui-alert',width:300});
+									}else if(data.code==0){
+										$.isLoading.hide();
+										$.alert("关锁失败，车辆出现故障请稍后再试",true,function(){
+						                   },5000,{className:'ui-alert',width:300});
+									}else if(data.code==1){
+										$.isLoading.hide();
+										$.alert("行程已结束，立即支付",true,function(){
+											window.location.href=url+"/html/bikeEnd.html?rentId="+data.data.rentInfo.rentInfoId;
+							             },5000,{className:'ui-alert',width:300});
+									}
+								},
+								complete : function(XMLHttpRequest,status){ //请求完成后最终执行参数
+								　　　　if(status=='timeout'){//超时,status还有success,error等值的情况
+								 　　　　　$.isLoading.hide();
+								       $.alert("关锁失败，请稍后再试",true,function(){
+					                   },5000,{className:'ui-alert',width:300});
+								　　　　}
+								},
+								error:function(data){
+									reLogin(data);
+								}
+							});
+						 this.hide();
+					}else if(type=="no"){
+						this.hide();
+					}
+						
+		        },{width:300}); 
+			 }
+		  
+	 }
+	 
+   </script>
+</body>
+
+</html>

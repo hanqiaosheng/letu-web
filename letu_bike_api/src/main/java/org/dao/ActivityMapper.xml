@@ -1,0 +1,310 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.dao.ActivityMapper" >
+  <resultMap id="BaseResultMap" type="org.entity.dto.Activity" >
+    <id column="activity_id" property="activityId" jdbcType="BIGINT" />
+    <result column="activity_name" property="activityName" jdbcType="VARCHAR" />
+    <result column="activity_instruction" property="activityInstruction" jdbcType="VARCHAR" />
+    <result column="activity_topnum" property="activityTopnum" jdbcType="INTEGER" />
+    <result column="activity_url" property="activityUrl" jdbcType="VARCHAR" />
+    <result column="activity_image" property="activityImage" jdbcType="VARCHAR" />
+    <result column="activity_create_time" property="activityCreateTime" jdbcType="TIMESTAMP" />
+    <result column="activity_state" property="activityState" jdbcType="INTEGER" />
+    <result column="activity_city_id" property="activityCityId" jdbcType="BIGINT" />
+  </resultMap>
+  <resultMap id="BaseUnionResultMap" type="org.entity.dto.Activity" extends="BaseResultMap">
+    <association property="city" javaType="org.entity.dto.City">
+        <id column="city_id" property="cityId" jdbcType="BIGINT" />
+	    <result column="city_name" property="cityName" jdbcType="VARCHAR" />
+	    <result column="city_of_province_id" property="cityOfProvinceId" jdbcType="BIGINT" />
+	    <result column="city_code" property="cityCode" jdbcType="VARCHAR" />
+	    <result column="city_center_lng" property="cityCenterLng" jdbcType="DOUBLE" />
+	    <result column="city_center_lat" property="cityCenterLat" jdbcType="DOUBLE" />
+    </association>
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    activity_id, activity_name, activity_instruction, activity_topnum, activity_url, 
+    activity_image, activity_create_time, activity_state,
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="org.entity.dto.ActivityExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from activity
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="limitStart != null and limitStart>=0" >
+      limit #{limitStart} , #{limitEnd}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from activity
+    where activity_id = #{activityId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from activity
+    where activity_id = #{activityId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="org.entity.dto.ActivityExample" >
+    delete from activity
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="org.entity.dto.Activity" >
+    insert into activity (activity_id, activity_name, activity_instruction, 
+      activity_topnum, activity_url, activity_image, 
+      activity_create_time, activity_state, activity_city_id
+      )
+    values (#{activityId,jdbcType=BIGINT}, #{activityName,jdbcType=VARCHAR}, #{activityInstruction,jdbcType=VARCHAR}, 
+      #{activityTopnum,jdbcType=INTEGER}, #{activityUrl,jdbcType=VARCHAR}, #{activityImage,jdbcType=VARCHAR}, 
+      #{activityCreateTime,jdbcType=TIMESTAMP}, #{activityState,jdbcType=INTEGER}, #{activityCityId,jdbcType=BIGINT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="org.entity.dto.Activity" >
+    insert into activity
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="activityId != null" >
+        activity_id,
+      </if>
+      <if test="activityName != null" >
+        activity_name,
+      </if>
+      <if test="activityInstruction != null" >
+        activity_instruction,
+      </if>
+      <if test="activityTopnum != null" >
+        activity_topnum,
+      </if>
+      <if test="activityUrl != null" >
+        activity_url,
+      </if>
+      <if test="activityImage != null" >
+        activity_image,
+      </if>
+      <if test="activityCreateTime != null" >
+        activity_create_time,
+      </if>
+      <if test="activityState != null" >
+        activity_state,
+      </if>
+      <if test="activityCityId != null" >
+        activity_city_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="activityId != null" >
+        #{activityId,jdbcType=BIGINT},
+      </if>
+      <if test="activityName != null" >
+        #{activityName,jdbcType=VARCHAR},
+      </if>
+      <if test="activityInstruction != null" >
+        #{activityInstruction,jdbcType=VARCHAR},
+      </if>
+      <if test="activityTopnum != null" >
+        #{activityTopnum,jdbcType=INTEGER},
+      </if>
+      <if test="activityUrl != null" >
+        #{activityUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="activityImage != null" >
+        #{activityImage,jdbcType=VARCHAR},
+      </if>
+      <if test="activityCreateTime != null" >
+        #{activityCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="activityState != null" >
+        #{activityState,jdbcType=INTEGER},
+      </if>
+      <if test="activityCityId != null" >
+        #{activityCityId,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="org.entity.dto.ActivityExample" resultType="java.lang.Integer" >
+    select count(*) from activity
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update activity
+    <set >
+      <if test="record.activityId != null" >
+        activity_id = #{record.activityId,jdbcType=BIGINT},
+      </if>
+      <if test="record.activityName != null" >
+        activity_name = #{record.activityName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.activityInstruction != null" >
+        activity_instruction = #{record.activityInstruction,jdbcType=VARCHAR},
+      </if>
+      <if test="record.activityTopnum != null" >
+        activity_topnum = #{record.activityTopnum,jdbcType=INTEGER},
+      </if>
+      <if test="record.activityUrl != null" >
+        activity_url = #{record.activityUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.activityImage != null" >
+        activity_image = #{record.activityImage,jdbcType=VARCHAR},
+      </if>
+      <if test="record.activityCreateTime != null" >
+        activity_create_time = #{record.activityCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.activityState != null" >
+        activity_state = #{record.activityState,jdbcType=INTEGER},
+      </if>
+      <if test="record.activityCityId != null" >
+        activity_city_id = #{record.activityCityId,jdbcType=BIGINT},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update activity
+    set activity_id = #{record.activityId,jdbcType=BIGINT},
+      activity_name = #{record.activityName,jdbcType=VARCHAR},
+      activity_instruction = #{record.activityInstruction,jdbcType=VARCHAR},
+      activity_topnum = #{record.activityTopnum,jdbcType=INTEGER},
+      activity_url = #{record.activityUrl,jdbcType=VARCHAR},
+      activity_image = #{record.activityImage,jdbcType=VARCHAR},
+      activity_create_time = #{record.activityCreateTime,jdbcType=TIMESTAMP},
+      activity_state = #{record.activityState,jdbcType=INTEGER},
+      activity_city_id = #{record.activityCityId,jdbcType=BIGINT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="org.entity.dto.Activity" >
+    update activity
+    <set >
+      <if test="activityName != null" >
+        activity_name = #{activityName,jdbcType=VARCHAR},
+      </if>
+      <if test="activityInstruction != null" >
+        activity_instruction = #{activityInstruction,jdbcType=VARCHAR},
+      </if>
+      <if test="activityTopnum != null" >
+        activity_topnum = #{activityTopnum,jdbcType=INTEGER},
+      </if>
+      <if test="activityUrl != null" >
+        activity_url = #{activityUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="activityImage != null" >
+        activity_image = #{activityImage,jdbcType=VARCHAR},
+      </if>
+      <if test="activityCreateTime != null" >
+        activity_create_time = #{activityCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="activityState != null" >
+        activity_state = #{activityState,jdbcType=INTEGER},
+      </if>
+      <if test="activityCityId != null" >
+        activity_city_id = #{activityCityId,jdbcType=BIGINT},
+      </if>
+    </set>
+    where activity_id = #{activityId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.entity.dto.Activity" >
+    update activity
+    set activity_name = #{activityName,jdbcType=VARCHAR},
+      activity_instruction = #{activityInstruction,jdbcType=VARCHAR},
+      activity_topnum = #{activityTopnum,jdbcType=INTEGER},
+      activity_url = #{activityUrl,jdbcType=VARCHAR},
+      activity_image = #{activityImage,jdbcType=VARCHAR},
+      activity_create_time = #{activityCreateTime,jdbcType=TIMESTAMP},
+      activity_state = #{activityState,jdbcType=INTEGER},
+      activity_city_id = #{activityCityId,jdbcType=BIGINT}
+    where activity_id = #{activityId,jdbcType=BIGINT}
+  </update>
+  
+  
+  <select id="selectUnionByExample" resultMap="BaseUnionResultMap" parameterType="org.entity.dto.ActivityExample" >
+    select * from activity a left join city c on a.activity_city_id=c.city_id
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="limitStart != null and limitStart>=0" >
+      limit #{limitStart} , #{limitEnd}
+    </if>
+  </select>
+  
+  <select id="countUnionByExample" parameterType="org.entity.dto.ActivityExample" resultType="java.lang.Integer" >
+    select count(*) from activity a left join city c on a.activity_city_id=c.city_id
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+</mapper>

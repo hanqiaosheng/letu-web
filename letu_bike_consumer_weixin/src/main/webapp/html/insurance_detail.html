@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="viewport" content="initial-scale=1, width=device-width, maximum-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-touch-fullscreen" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="format-detection" content="address=no">
+    <meta name="screen-orientation" content="portrait">
+    <meta name="x5-orientation" content="portrait">
+    <title>保险详情</title>
+    <link rel="stylesheet" href="font/iconfont.css">
+    <link rel="stylesheet" href="css/animate.min.css">
+    <link rel="stylesheet" href="css/base.css">
+    <script type="text/javascript" src="js/zepto.min.js"></script>
+    <link rel="stylesheet" href="js/dialog.css">
+    <script type="text/javascript" src="js/dialog.js"></script>
+    <link rel="stylesheet" href="js/swiper-3.2.7.min.css">
+    <script type="text/javascript" src="js/swiper-3.2.7.jquery.min.js"></script>
+    <script type="text/javascript" src="js/path.js"></script>
+    <script type="text/javascript" src="js/mobile.js"></script>
+    <script type="text/javascript" src="js/megapix-image.js"></script>
+</head>
+
+<body>
+    <div class="g-body">
+        <div class="weui_cells">
+            <div class="weui_cell">
+                <div>
+                    <label class="weui-label">意外保险处理状态：</label>
+                </div>
+                <div class="weui_cell_bd weui_cell_primary green" id="insuranceState"></div>
+            </div>
+            <div class="weui_cell">
+                <div class="weui_cell_hd">
+                    <label class="weui-label">提交人：</label>
+                </div>
+                <div class="weui_cell_bd weui_cell_primary green" id="adminName"></div>
+            </div>
+        </div>
+        <ul class="xingcheng">
+
+      	</ul>
+
+    </div>
+    <script type="text/javascript">
+    	$.ajax({
+    		url:url+'/user/insuranceDetail.action',
+    		data:{insuranceId:$.getQueryString('insuranceId')},
+    		type:'post',
+    		beforeSend: function(request) {
+                request.setRequestHeader("fromFlag", "2");
+            },
+    		success:function(data){
+    			$("#adminName").html(data.data.admin.adminRealname);
+    			if(0==data.data.insurance.insuranceState){
+    				$("#insuranceState").html("正在处理中");
+    			}else if(1==data.data.insurance.insuranceState){
+    				$("#insuranceState").html("已拒绝");
+    			}else if(2==data.data.insurance.insuranceState){
+    				$("#insuranceState").html("已接受");
+    			}else{
+    				
+    			}
+    			var html='';
+    			$.each(data.data.messageList,function(){
+    				html+='<li>'+
+   		              '<div class="con">'+this.messageContent+
+		                '</div>'+
+		            '</li>';
+    			})
+    			$('.xingcheng').html(html)
+    		}
+    	})
+    </script>
+</body>
+
+</html>

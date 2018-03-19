@@ -1,0 +1,310 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.dao.BannerMapper" >
+  <resultMap id="BaseResultMap" type="org.entity.dto.Banner" >
+    <id column="banner_id" property="bannerId" jdbcType="BIGINT" />
+    <result column="banner_name" property="bannerName" jdbcType="VARCHAR" />
+    <result column="banner_image_url" property="bannerImageUrl" jdbcType="VARCHAR" />
+    <result column="banner_state" property="bannerState" jdbcType="INTEGER" />
+    <result column="banner_top_num" property="bannerTopNum" jdbcType="INTEGER" />
+    <result column="banner_create_time" property="bannerCreateTime" jdbcType="TIMESTAMP" />
+    <result column="banner_update_time" property="bannerUpdateTime" jdbcType="TIMESTAMP" />
+    <result column="banner_city_id" property="bannerCityId" jdbcType="BIGINT" />
+    <result column="banner_is_all" property="bannerIsAll" jdbcType="INTEGER" />
+  </resultMap>
+  <resultMap id="BaseUnionResultMap" type="org.entity.dto.Banner" extends="BaseResultMap">
+    <association property="city" javaType="org.entity.dto.City">
+    <id column="city_id" property="cityId" jdbcType="BIGINT" />
+    <result column="city_name" property="cityName" jdbcType="VARCHAR" />
+    <result column="city_of_province_id" property="cityOfProvinceId" jdbcType="BIGINT" />
+    <result column="city_code" property="cityCode" jdbcType="VARCHAR" />
+    <result column="city_center_lng" property="cityCenterLng" jdbcType="DOUBLE" />
+    <result column="city_center_lat" property="cityCenterLat" jdbcType="DOUBLE" />
+    </association>
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    banner_id, banner_name, banner_image_url, banner_state, banner_top_num, banner_create_time, 
+    banner_update_time, banner_city_id, banner_is_all
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="org.entity.dto.BannerExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from banner
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="limitStart != null and limitStart>=0" >
+      limit #{limitStart} , #{limitEnd}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from banner
+    where banner_id = #{bannerId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from banner
+    where banner_id = #{bannerId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="org.entity.dto.BannerExample" >
+    delete from banner
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="org.entity.dto.Banner" >
+    insert into banner (banner_id, banner_name, banner_image_url, 
+      banner_state, banner_top_num, banner_create_time, 
+      banner_update_time, banner_city_id, banner_is_all
+      )
+    values (#{bannerId,jdbcType=BIGINT}, #{bannerName,jdbcType=VARCHAR}, #{bannerImageUrl,jdbcType=VARCHAR}, 
+      #{bannerState,jdbcType=INTEGER}, #{bannerTopNum,jdbcType=INTEGER}, #{bannerCreateTime,jdbcType=TIMESTAMP}, 
+      #{bannerUpdateTime,jdbcType=TIMESTAMP}, #{bannerCityId,jdbcType=BIGINT}, #{bannerIsAll,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="org.entity.dto.Banner" >
+    insert into banner
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="bannerId != null" >
+        banner_id,
+      </if>
+      <if test="bannerName != null" >
+        banner_name,
+      </if>
+      <if test="bannerImageUrl != null" >
+        banner_image_url,
+      </if>
+      <if test="bannerState != null" >
+        banner_state,
+      </if>
+      <if test="bannerTopNum != null" >
+        banner_top_num,
+      </if>
+      <if test="bannerCreateTime != null" >
+        banner_create_time,
+      </if>
+      <if test="bannerUpdateTime != null" >
+        banner_update_time,
+      </if>
+      <if test="bannerCityId != null" >
+        banner_city_id,
+      </if>
+      <if test="bannerIsAll != null" >
+        banner_is_all,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="bannerId != null" >
+        #{bannerId,jdbcType=BIGINT},
+      </if>
+      <if test="bannerName != null" >
+        #{bannerName,jdbcType=VARCHAR},
+      </if>
+      <if test="bannerImageUrl != null" >
+        #{bannerImageUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="bannerState != null" >
+        #{bannerState,jdbcType=INTEGER},
+      </if>
+      <if test="bannerTopNum != null" >
+        #{bannerTopNum,jdbcType=INTEGER},
+      </if>
+      <if test="bannerCreateTime != null" >
+        #{bannerCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="bannerUpdateTime != null" >
+        #{bannerUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="bannerCityId != null" >
+        #{bannerCityId,jdbcType=BIGINT},
+      </if>
+      <if test="bannerIsAll != null" >
+        #{bannerIsAll,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="org.entity.dto.BannerExample" resultType="java.lang.Integer" >
+    select count(*) from banner
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update banner
+    <set >
+      <if test="record.bannerId != null" >
+        banner_id = #{record.bannerId,jdbcType=BIGINT},
+      </if>
+      <if test="record.bannerName != null" >
+        banner_name = #{record.bannerName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bannerImageUrl != null" >
+        banner_image_url = #{record.bannerImageUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bannerState != null" >
+        banner_state = #{record.bannerState,jdbcType=INTEGER},
+      </if>
+      <if test="record.bannerTopNum != null" >
+        banner_top_num = #{record.bannerTopNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.bannerCreateTime != null" >
+        banner_create_time = #{record.bannerCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.bannerUpdateTime != null" >
+        banner_update_time = #{record.bannerUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.bannerCityId != null" >
+        banner_city_id = #{record.bannerCityId,jdbcType=BIGINT},
+      </if>
+      <if test="record.bannerIsAll != null" >
+        banner_is_all = #{record.bannerIsAll,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update banner
+    set banner_id = #{record.bannerId,jdbcType=BIGINT},
+      banner_name = #{record.bannerName,jdbcType=VARCHAR},
+      banner_image_url = #{record.bannerImageUrl,jdbcType=VARCHAR},
+      banner_state = #{record.bannerState,jdbcType=INTEGER},
+      banner_top_num = #{record.bannerTopNum,jdbcType=INTEGER},
+      banner_create_time = #{record.bannerCreateTime,jdbcType=TIMESTAMP},
+      banner_update_time = #{record.bannerUpdateTime,jdbcType=TIMESTAMP},
+      banner_city_id = #{record.bannerCityId,jdbcType=BIGINT},
+      banner_is_all = #{record.bannerIsAll,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="org.entity.dto.Banner" >
+    update banner
+    <set >
+      <if test="bannerName != null" >
+        banner_name = #{bannerName,jdbcType=VARCHAR},
+      </if>
+      <if test="bannerImageUrl != null" >
+        banner_image_url = #{bannerImageUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="bannerState != null" >
+        banner_state = #{bannerState,jdbcType=INTEGER},
+      </if>
+      <if test="bannerTopNum != null" >
+        banner_top_num = #{bannerTopNum,jdbcType=INTEGER},
+      </if>
+      <if test="bannerCreateTime != null" >
+        banner_create_time = #{bannerCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="bannerUpdateTime != null" >
+        banner_update_time = #{bannerUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="bannerCityId != null" >
+        banner_city_id = #{bannerCityId,jdbcType=BIGINT},
+      </if>
+      <if test="bannerIsAll != null" >
+        banner_is_all = #{bannerIsAll,jdbcType=INTEGER},
+      </if>
+    </set>
+    where banner_id = #{bannerId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.entity.dto.Banner" >
+    update banner
+    set banner_name = #{bannerName,jdbcType=VARCHAR},
+      banner_image_url = #{bannerImageUrl,jdbcType=VARCHAR},
+      banner_state = #{bannerState,jdbcType=INTEGER},
+      banner_top_num = #{bannerTopNum,jdbcType=INTEGER},
+      banner_create_time = #{bannerCreateTime,jdbcType=TIMESTAMP},
+      banner_update_time = #{bannerUpdateTime,jdbcType=TIMESTAMP},
+      banner_city_id = #{bannerCityId,jdbcType=BIGINT},
+      banner_is_all = #{bannerIsAll,jdbcType=INTEGER}
+    where banner_id = #{bannerId,jdbcType=BIGINT}
+  </update>
+  
+  
+  <select id="selectUnionByExample" resultMap="BaseUnionResultMap" parameterType="org.entity.dto.BannerExample" >
+    select * from banner b left join city c on b.banner_city_id = c.city_id
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="limitStart != null and limitStart>=0" >
+      limit #{limitStart} , #{limitEnd}
+    </if>
+  </select>
+  
+  <select id="countUnionByExample" parameterType="org.entity.dto.BannerExample" resultType="java.lang.Integer" >
+    select count(*) from banner b left join city c on b.banner_city_id = c.city_id
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+</mapper>

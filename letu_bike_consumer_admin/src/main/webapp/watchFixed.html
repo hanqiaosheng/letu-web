@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta http-equiv="Access-Control-Allow-Origin" content="*">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="viewport" content="initial-scale=1, width=device-width, maximum-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-touch-fullscreen" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="format-detection" content="address=no">
+    <meta name="screen-orientation" content="portrait">
+    <meta name="x5-orientation" content="portrait">
+    <title>乐途</title>
+    <link rel="stylesheet" href="html/font/iconfont.css">
+    <link rel="stylesheet" href="html/font/iconfont-2.css">
+    <link rel="stylesheet" href="html/css/animate.min.css">
+    <link rel="stylesheet" href="html/css/base.css">
+    <link rel="stylesheet" href="html/css/style.css">
+    <script type="text/javascript" src="html/js/zepto.min.js"></script>
+    <script type="text/javascript" src="html/js/fastclick.js"></script>
+    <link rel="stylesheet" href="html/js/dialog.css">
+    <script type="text/javascript" src="html/js/dialog.js"></script>
+    <script type="text/javascript" src="html/js/iscroll.js"></script>
+    <link rel="stylesheet" href="html/js/swiper-3.2.7.min.css">
+    <script type="text/javascript" src="html/js/swiper-3.2.7.jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cache.amap.com/lbs/static/main.css?v=1.0"/>
+	<link rel="stylesheet" href="map/AMap.WalkingRender1120.css"/>
+	<link rel="stylesheet" href="map/map.css"/>
+	<script type="text/javascript" src="https://webapi.amap.com/maps?v=1.3&key=5d6fa7d0648f1101f5174c6bc2eb7e32&plugin=AMap.Walking,AMap.Autocomplete,AMap.PlaceSearch"></script>
+	<script type="text/javascript" src="map/WalkingRender1230.js"></script>
+	<script type="text/javascript" src="html/js/mobile.js"></script>
+	<!-- 页面js -->
+	<script type="text/javascript" src="html/js/jweixin-1.0.0.js"></script>
+	<style>
+		.icon-refresharrow:before {
+		    transform: rotate(-90deg);
+		    -webkit-transform: rotate(-90deg);
+		}
+	</style>
+	
+</head>
+
+<body>
+  <a href="javascript:void(0)" onclick="regular()">
+<img src="/images/geo.png" style="width: 15px;height: 34.77px;position: fixed;left: 50%;top: 50%;margin-left: -7.5px;margin-top: -34.77px; z-index:999;" id="centerPoint">
+</a><!-- 屏幕中心图层-->
+   <div class="g-body mapbox">
+   <div id="mapContainer"></div>
+    <div class="watchbox">
+        <div class="tit flex-box"><i class="icon-locationfill"></i><span id="address"></span></div>
+        <ul class="info flex-box">
+            <li><p class="p1"><span id="distance"></span>米</p><p class="p2">站点距离</p></li>
+            <li><p class="p1"><span id="walkTime"></span>分钟</p><p class="p2">预计到达时间</p></li> 
+            <li><p class="p1"><span id="bikeNum"></span>辆</p><p class="p2">可用车辆</p></li>
+        </ul>
+        <div class="fold unfold">
+            <ul class="info-details tit">
+                <li class="clearfix flex-box">
+                    <svg x="0px" y="0px" width="30px" height="30px" viewBox="0 0 200 200">
+                        <path fill="#93c725" d="M141.202,25.29C99.937,2.165,47.738,16.872,24.614,58.138c-23.124,41.267-8.417,93.465,32.849,116.59
+                            c30.142,16.89,66.983,13.833,93.767-6.586l-0.002-0.003c1.245-0.846,2.063-2.272,2.063-3.892c0-2.595-2.104-4.699-4.702-4.699
+                            c-1.104,0-2.107,0.397-2.91,1.036l-0.009-0.013c-29.105,22.276-70.882,20.823-98.391-5.154
+                            c-30.546-28.846-31.924-76.992-3.079-107.539c28.846-30.546,76.993-31.924,107.539-3.079c22.925,21.65,29.881,54.886,18.407,83.547
+                            l0.007,0.003c-0.215,0.536-0.34,1.119-0.34,1.732c0,2.582,2.092,4.674,4.673,4.674c1.951,0,3.619-1.196,4.319-2.894l0.013,0.005
+                            C194.649,92.509,179.196,46.579,141.202,25.29z"/>
+                        <path fill="#93c725" d="M110.712,69.16c5.008,0,9.063-3.924,9.063-8.79c-0.072-4.934-4.128-8.876-9.063-8.808c-4.996,0-9.062,3.952-9.062,8.808
+                            C101.65,65.235,105.716,69.16,110.712,69.16z M107.325,88.328c1.034,1.591,2.456,2.24,3.774,2.202h17.503c5.42,0,5.42-6.888,0-6.888
+                            l-15.114,0.028l-9.946-15.16c0,0-2.108-3.407-6.117-3.407c0,0-3.331-0.414-5.693,2.192l-19.159,18.67
+                            c-1.261,1.331-1.959,3.097-1.948,4.931c0,2.757,1.581,5.175,3.905,6.437l19.517,10.548v19.837c0,2.796,2.334,5.092,5.213,5.092
+                            c2.848,0.03,5.186-2.243,5.231-5.092v-24.785c0,0,0.695-3.953-3.934-6.108l-11.254-5.759l12.139-11.688L107.325,88.328z
+                             M135.217,100.552c-13.645,0-24.711,10.736-24.711,24.015c0,13.277,11.076,24.015,24.711,24.015
+                            c13.617,0,24.684-10.737,24.684-24.015C159.9,111.288,148.834,100.552,135.217,100.552L135.217,100.552z M135.207,142.032
+                            c-9.918,0-17.964-7.82-17.964-17.475c0-9.646,8.046-17.456,17.964-17.456c9.91,0,17.965,7.819,17.965,17.456
+                            C153.172,134.222,145.107,142.032,135.207,142.032z M64.283,100.552c-13.607,0-24.683,10.736-24.683,24.015
+                            c0,13.277,11.076,24.015,24.683,24.015c13.664,0,24.721-10.746,24.721-24.015C89.004,111.288,77.937,100.552,64.283,100.552z
+                             M64.283,142.032c-9.9,0-17.955-7.82-17.945-17.475c0-9.637,8.045-17.456,17.945-17.456c9.918,0,17.982,7.819,17.982,17.456
+                            C82.266,134.212,74.211,142.032,64.283,142.032z"/>
+                    </svg>
+                    <div class="right-word">
+                        <p class="font-size-16" id="fixedName"></p>
+                    </div>
+                </li>
+                <li class="clearfix margin0">
+                    <div class="right-word padding-left-44 margin-top-8" id="fixedBrief"></div>
+                </li>
+                <li class="clearfix flex-box">
+                    <svg x="0px" y="0px" width="30px" height="30px" viewBox="0 0 200 200">
+                        <path fill="#93c725" d="M124.544,105.039c0.07,0.002,0.137,0.021,0.206,0.021c2.464,0,4.461-2.005,4.461-4.479c0-2.473-1.997-4.477-4.461-4.477
+                            c-0.027,0-0.055,0.008-0.081,0.008v-0.008l-17.343-0.067l20.759-37.941c0,0,0.707-1.691,0.357-3.253
+                            c-0.415-1.859-2.096-3.635-5.051-3.545c-4.321,0.375-5.926,4.286-5.926,4.286l-15.295,31.219c-1.135,2.264-2.136,4.592-2.993,6.975
+                            l-0.228-0.002c-1.057-2.713-1.998-4.952-2.828-6.713c0,0-12.231-25.518-14.996-31.621c-1.352-2.685-2.764-4.77-6.585-4.148
+                            c-6.646,1.463-4.171,7.812-4.171,7.812l19.494,36.863l-17.581-0.067c-0.041-0.002-0.079-0.013-0.119-0.013
+                            c-2.464,0-4.46,2.004-4.46,4.478s1.997,4.478,4.46,4.478c0.029,0,0.054-0.009,0.082-0.011l20.896,0.083l-0.048,12.427l-20.909-0.082
+                            c-0.008,0-0.015-0.002-0.022-0.002c-0.007,0-0.014,0.002-0.021,0.002h-0.04v0.005c-2.435,0.032-4.399,2.02-4.399,4.472
+                            c0,2.44,1.946,4.416,4.364,4.468v0.051l20.993,0.08l-0.069,17.874h0.063c0,0.015-0.002,0.027-0.002,0.042
+                            c0,3.063,2.472,5.545,5.522,5.545c3.049,0,5.522-2.482,5.522-5.544h0.02l0.068-17.872l20.366,0.077v-0.008
+                            c0.024,0,0.046,0.007,0.069,0.007c2.475,0,4.484-2.016,4.484-4.502c0-2.485-2.01-4.501-4.484-4.501
+                            c-0.039,0-0.074,0.012-0.112,0.012l-20.288-0.078l0.049-12.427L124.544,105.039z"/>
+                        <path fill="#93c725" d="M141.202,25.29C99.937,2.165,47.738,16.872,24.614,58.138c-23.124,41.267-8.417,93.465,32.849,116.59
+                            c30.142,16.89,66.983,13.833,93.767-6.586l-0.002-0.003c1.245-0.846,2.063-2.272,2.063-3.892c0-2.595-2.104-4.699-4.702-4.699
+                            c-1.104,0-2.107,0.397-2.91,1.036l-0.009-0.013c-29.105,22.276-70.882,20.823-98.391-5.154
+                            c-30.546-28.846-31.924-76.992-3.079-107.539c28.846-30.546,76.993-31.924,107.539-3.079c22.925,21.65,29.881,54.886,18.407,83.547
+                            l0.007,0.003c-0.215,0.536-0.34,1.119-0.34,1.732c0,2.582,2.092,4.674,4.673,4.674c1.951,0,3.619-1.196,4.319-2.894l0.013,0.005
+                            C194.649,92.509,179.196,46.579,141.202,25.29z"/>
+                    </svg>
+                   <div class="right-word clearfix">
+                        <p><label class="pull-left">计费规则：</label><span class="flex-box pull-left" id="open-list">点击查看详情<i class="iconfont-yao icon2-212102"></i></span></p>
+                    </div>
+                </li>
+                 <li class="close-list clearfix none">
+                    <ul id="fixedModels">
+                    </ul>
+                    <p class="pull-right flex-box" id="close-list">收起详情<i class="iconfont-yao icon2-2121021"></i></p>
+                </li>
+                <li class="clearfix flex-box">
+                    <svg x="0px" y="0px" width="30px" height="30px" viewBox="0 0 200 200">
+                        <path fill="#93c725" d="M125.283,156.497c-2.854,0-5.989-0.484-9.584-1.48c-11.255-3.136-21.714-9.265-32.917-19.289  c-13.957-12.486-23.881-25.861-30.34-40.888c-3.932-9.149-5.434-16.846-4.728-24.224c0.574-6.016,3.091-10.905,7.482-14.531  c1.524-1.264,3.03-2.613,4.485-3.917c1.039-0.93,2.077-1.86,3.132-2.771c3.288-2.844,7.17-4.348,11.228-4.348  c4.559,0,8.924,1.945,12.291,5.477c1.731,1.83,3.436,3.745,5.02,5.543c6.255,7.1,5.677,17.257-1.345,23.626  c-0.505,0.457-1.007,0.915-1.509,1.374c-1.899,1.735-3.863,3.53-5.932,5.143c-1.42,1.117-1.868,2.391-1.542,4.396  c0.595,3.599,2.077,7.111,4.664,11.053c4.94,7.55,10.612,13.15,17.339,17.121c1.88,1.102,4.058,1.866,6.163,2.605  c0.515,0.178,0.951,0.257,1.374,0.257c0.929,0,1.789-0.393,2.632-1.201c2.211-2.12,4.571-4.145,6.854-6.102l0.531-0.456  c3.404-2.947,7.361-4.506,11.441-4.506c4.634,0,9.098,2.06,12.569,5.8c1.934,2.082,3.487,3.809,4.89,5.433  c6.198,7.157,5.701,16.688-1.211,23.175c-0.052,0.05-0.138,0.15-0.262,0.291c-4.012,4.546-9.075,8.276-15.05,11.088  C130.497,156.073,128.013,156.497,125.283,156.497z M74.042,52.841c-2.161,0-4.281,0.847-6.131,2.448  c-0.998,0.86-1.972,1.734-2.946,2.607l-0.156,0.14c-1.489,1.331-3.028,2.708-4.642,4.046c-2.824,2.332-4.315,5.278-4.695,9.272  c-0.586,6.106,0.688,12.4,4.131,20.409c5.999,13.96,15.28,26.441,28.374,38.157c10.278,9.196,19.752,14.786,29.813,17.59  c2.906,0.805,5.358,1.196,7.493,1.196c1.689,0,3.213-0.238,4.655-0.729c4.877-2.339,8.992-5.385,12.229-9.054  c0.394-0.448,0.68-0.73,0.813-0.855c3.733-3.504,3.98-8.468,0.612-12.352c-1.313-1.525-2.81-3.188-4.71-5.235  c-2.012-2.165-4.384-3.31-6.859-3.31c-2.18,0-4.373,0.901-6.344,2.607l-0.624,0.535c-2.271,1.948-4.417,3.789-6.464,5.754  c-2.902,2.784-5.967,3.368-8.026,3.368c-1.294,0-2.6-0.226-3.881-0.67c-2.371-0.831-5.055-1.771-7.596-3.262  c-7.791-4.598-14.305-11.001-19.917-19.577c-3.155-4.808-5.063-9.404-5.833-14.052c-0.992-6.094,1.855-9.774,4.417-11.789  c1.865-1.454,3.633-3.071,5.505-4.784l1.517-1.383c3.841-3.481,4.146-8.822,0.729-12.701c-1.519-1.725-3.156-3.564-4.828-5.333  C78.806,53.924,76.448,52.841,74.042,52.841z"/>
+                        <path fill="#93c725" d="M141.795,25.316C100.529,2.191,48.331,16.898,25.207,58.164c-23.124,41.267-8.417,93.465,32.849,116.59  c30.142,16.89,66.983,13.833,93.767-6.586l-0.002-0.003c1.245-0.846,2.063-2.272,2.063-3.892c0-2.595-2.104-4.699-4.702-4.699  c-1.104,0-2.107,0.397-2.91,1.036l-0.009-0.013c-29.105,22.276-70.882,20.823-98.391-5.154  c-30.546-28.846-31.924-76.993-3.079-107.539c28.846-30.546,76.993-31.924,107.539-3.079c22.925,21.65,29.881,54.886,18.407,83.547  l0.007,0.003c-0.215,0.536-0.34,1.119-0.34,1.732c0,2.582,2.092,4.674,4.673,4.674c1.951,0,3.619-1.196,4.319-2.894l0.013,0.005  C195.242,92.536,179.789,46.605,141.795,25.316z"/>
+                    </svg>
+                    <div class="right-word" id="fixedTel">
+                        <!-- <p>15167194108</p>
+                        <p>15167194108</p> -->
+                    </div>
+                </li>
+            </ul>
+            <div class="fold-icon" id="unfold">
+                <div class="p1">隐藏详情</div>
+                <div class="p1">
+                	<i class="iconfont-yao icon2-2121021"></i>
+                </div>
+            </div>
+        </div>
+        <div class="fold fold-icon none" id="fold">
+            <div class="p1">展开详情</div>
+            <div class="p1">
+                <i class="iconfont-yao icon2-212102"></i>
+            </div>
+        </div>
+		<div style="display:none" id="appointing">
+        </div>
+    </div>
+    <div class="news-box flex-box">
+        <i class="icon-notificationfill"></i>
+        <div class="swiper-container" id="swiper-news">
+            <div class="swiper-wrapper" id="sysMsgs">
+                
+            </div>
+        </div>
+    </div>
+    <div class="fix-bottom map-bar">
+        <div class="local"></div>
+        <div class="scanbox flex-box"> <a onclick="history.go(-1)" class="back scan" id="">返  回</a></div>
+      <!--   <a  id="userPage">
+        	<div class="people"><i class="icon-people"></i></div>
+        </a> -->
+    </div>
+   </div>
+
+  
+   <script type="text/javascript" src="map/fixedMain.js"></script>
+   
+    <script type="text/javascript">
+
+   $('#fold').click(function () {
+              $(this).hide();
+              $('.unfold').show();
+          })
+          $('#unfold').click(function () {
+              $('.unfold').hide();
+              $('#fold').show();
+          })
+   $('#close-list').click(function () {
+       $('.close-list').hide();
+       $('#open-list').show();
+   })
+   $('#open-list').click(function () {
+       $(this).hide();
+       $('.close-list').show();
+   })
+   </script>
+</body>
+
+</html>

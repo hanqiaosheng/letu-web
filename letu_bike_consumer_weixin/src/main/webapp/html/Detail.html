@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="viewport" content="initial-scale=1, width=device-width, maximum-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-touch-fullscreen" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="format-detection" content="address=no">
+    <meta name="screen-orientation" content="portrait">
+    <meta name="x5-orientation" content="portrait">
+    <title>账户明细</title>
+    <link rel="stylesheet" href="font/iconfont.css">
+    <link rel="stylesheet" href="css/animate.min.css">
+    <link rel="stylesheet" href="css/base.css">
+    <script type="text/javascript" src="js/zepto.min.js"></script>
+    <link rel="stylesheet" href="js/dialog.css">
+    <script type="text/javascript" src="js/dialog.js"></script>
+    <script type="text/javascript" src="js/iscroll.js"></script>
+    <link rel="stylesheet" href="js/swiper-3.2.7.min.css">
+    <script type="text/javascript" src="js/swiper-3.2.7.jquery.min.js"></script>
+    <script type="text/javascript" src="js/path.js"></script>
+    <script type="text/javascript" src="js/mobile.js"></script>
+
+</head>
+
+<body>
+    <div class="g-body">
+        <ul class="messbox">
+        </ul>
+    </div>
+    <script type="text/javascript">
+    var appendHtml=function(res,_obj){
+    	var htmls='';
+		var types=['充值','退款中','退款成功','退款关闭','退款未确定','退款处理中','退款异常','消费']; 
+    	var opreates=['微信支付','游客消费','会员消费','预付款退款','支付宝支付'];
+    	var  type=['骑行消费','退款','预付款充值','余额充值'];
+        $.each(res.data.moneyLogList,function(i,item){
+            htmls+='<li>'+
+                '<div class="tit flex-box"><h2>'+types[item.moneyLogRefundState]+'</h2><div class="digest">'+new Date(item.moneyLogCreateTime).formatCN()+'</div></div>'+
+                '<div class="con">'+
+                    '<div class="list flex-box"><span class="label">金额</span><span class="info red"><span class="big">'+item.moneyLogOpreateMoney+'</span>元</span></div>'+
+                    '<div class="list flex-box"><span class="label">方式</span><span class="info">'+opreates[item.moneyLogOpreateId-1]+'</span></div>'+
+                    '<div class="list flex-box"><span class="label">类型</span><span class="info">'+type[item.moneyLogStreamType-1]+'</span></div>'+
+                '</div>'+
+            '</li>';
+        })
+
+        _obj.append(htmls)
+
+    };
+    var argument={
+    	    'url'      : url+'/account/Mydetail.action',
+    	    'res'      : {},
+    	    'success'  : appendHtml,
+    	    'error'    : function(data){
+    	    	reLogin(data);
+    	    },
+    	    'mainbox'  : $('.messbox')  
+    	}
+    $(function(){
+        addData(argument);
+    })
+
+    </script>
+</body>
+
+</html>

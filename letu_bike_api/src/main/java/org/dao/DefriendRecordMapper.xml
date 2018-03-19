@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.dao.DefriendRecordMapper" >
+  <resultMap id="BaseResultMap" type="org.entity.dto.DefriendRecord" >
+    <id column="defriend_id" property="defriendId" jdbcType="BIGINT" />
+    <result column="defriend_admin_id" property="defriendAdminId" jdbcType="BIGINT" />
+    <result column="defriend_time" property="defriendTime" jdbcType="TIMESTAMP" />
+    <result column="defriend_regain_admin_id" property="defriendRegainAdminId" jdbcType="BIGINT" />
+    <result column="defriend_regain_time" property="defriendRegainTime" jdbcType="TIMESTAMP" />
+    <result column="defriend_user_id" property="defriendUserId" jdbcType="BIGINT" />
+    <result column="defriend_reason" property="defriendReason" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    defriend_id, defriend_admin_id, defriend_time, defriend_regain_admin_id, defriend_regain_time, 
+    defriend_user_id, defriend_reason
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="org.entity.dto.DefriendRecordExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from defriend_record
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="limitStart != null and limitStart>=0" >
+      limit #{limitStart} , #{limitEnd}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from defriend_record
+    where defriend_id = #{defriendId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from defriend_record
+    where defriend_id = #{defriendId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="org.entity.dto.DefriendRecordExample" >
+    delete from defriend_record
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="org.entity.dto.DefriendRecord" >
+    insert into defriend_record (defriend_id, defriend_admin_id, defriend_time, 
+      defriend_regain_admin_id, defriend_regain_time, 
+      defriend_user_id, defriend_reason)
+    values (#{defriendId,jdbcType=BIGINT}, #{defriendAdminId,jdbcType=BIGINT}, #{defriendTime,jdbcType=TIMESTAMP}, 
+      #{defriendRegainAdminId,jdbcType=BIGINT}, #{defriendRegainTime,jdbcType=TIMESTAMP}, 
+      #{defriendUserId,jdbcType=BIGINT}, #{defriendReason,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="org.entity.dto.DefriendRecord" >
+    insert into defriend_record
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="defriendId != null" >
+        defriend_id,
+      </if>
+      <if test="defriendAdminId != null" >
+        defriend_admin_id,
+      </if>
+      <if test="defriendTime != null" >
+        defriend_time,
+      </if>
+      <if test="defriendRegainAdminId != null" >
+        defriend_regain_admin_id,
+      </if>
+      <if test="defriendRegainTime != null" >
+        defriend_regain_time,
+      </if>
+      <if test="defriendUserId != null" >
+        defriend_user_id,
+      </if>
+      <if test="defriendReason != null" >
+        defriend_reason,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="defriendId != null" >
+        #{defriendId,jdbcType=BIGINT},
+      </if>
+      <if test="defriendAdminId != null" >
+        #{defriendAdminId,jdbcType=BIGINT},
+      </if>
+      <if test="defriendTime != null" >
+        #{defriendTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="defriendRegainAdminId != null" >
+        #{defriendRegainAdminId,jdbcType=BIGINT},
+      </if>
+      <if test="defriendRegainTime != null" >
+        #{defriendRegainTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="defriendUserId != null" >
+        #{defriendUserId,jdbcType=BIGINT},
+      </if>
+      <if test="defriendReason != null" >
+        #{defriendReason,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="org.entity.dto.DefriendRecordExample" resultType="java.lang.Integer" >
+    select count(*) from defriend_record
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update defriend_record
+    <set >
+      <if test="record.defriendId != null" >
+        defriend_id = #{record.defriendId,jdbcType=BIGINT},
+      </if>
+      <if test="record.defriendAdminId != null" >
+        defriend_admin_id = #{record.defriendAdminId,jdbcType=BIGINT},
+      </if>
+      <if test="record.defriendTime != null" >
+        defriend_time = #{record.defriendTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.defriendRegainAdminId != null" >
+        defriend_regain_admin_id = #{record.defriendRegainAdminId,jdbcType=BIGINT},
+      </if>
+      <if test="record.defriendRegainTime != null" >
+        defriend_regain_time = #{record.defriendRegainTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.defriendUserId != null" >
+        defriend_user_id = #{record.defriendUserId,jdbcType=BIGINT},
+      </if>
+      <if test="record.defriendReason != null" >
+        defriend_reason = #{record.defriendReason,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update defriend_record
+    set defriend_id = #{record.defriendId,jdbcType=BIGINT},
+      defriend_admin_id = #{record.defriendAdminId,jdbcType=BIGINT},
+      defriend_time = #{record.defriendTime,jdbcType=TIMESTAMP},
+      defriend_regain_admin_id = #{record.defriendRegainAdminId,jdbcType=BIGINT},
+      defriend_regain_time = #{record.defriendRegainTime,jdbcType=TIMESTAMP},
+      defriend_user_id = #{record.defriendUserId,jdbcType=BIGINT},
+      defriend_reason = #{record.defriendReason,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="org.entity.dto.DefriendRecord" >
+    update defriend_record
+    <set >
+      <if test="defriendAdminId != null" >
+        defriend_admin_id = #{defriendAdminId,jdbcType=BIGINT},
+      </if>
+      <if test="defriendTime != null" >
+        defriend_time = #{defriendTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="defriendRegainAdminId != null" >
+        defriend_regain_admin_id = #{defriendRegainAdminId,jdbcType=BIGINT},
+      </if>
+      <if test="defriendRegainTime != null" >
+        defriend_regain_time = #{defriendRegainTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="defriendUserId != null" >
+        defriend_user_id = #{defriendUserId,jdbcType=BIGINT},
+      </if>
+      <if test="defriendReason != null" >
+        defriend_reason = #{defriendReason,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where defriend_id = #{defriendId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.entity.dto.DefriendRecord" >
+    update defriend_record
+    set defriend_admin_id = #{defriendAdminId,jdbcType=BIGINT},
+      defriend_time = #{defriendTime,jdbcType=TIMESTAMP},
+      defriend_regain_admin_id = #{defriendRegainAdminId,jdbcType=BIGINT},
+      defriend_regain_time = #{defriendRegainTime,jdbcType=TIMESTAMP},
+      defriend_user_id = #{defriendUserId,jdbcType=BIGINT},
+      defriend_reason = #{defriendReason,jdbcType=VARCHAR}
+    where defriend_id = #{defriendId,jdbcType=BIGINT}
+  </update>
+</mapper>

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="viewport" content="initial-scale=1, width=device-width, maximum-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-touch-fullscreen" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="format-detection" content="address=no">
+    <meta name="screen-orientation" content="portrait">
+    <meta name="x5-orientation" content="portrait">
+    <title>我的账户</title>
+    <link rel="stylesheet" href="font/iconfont.css">
+    <link rel="stylesheet" href="css/animate.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <script type="text/javascript" src="js/zepto.min.js"></script>
+    <link rel="stylesheet" href="js/dialog.css">
+    <script type="text/javascript" src="js/dialog.js"></script>
+    <script type="text/javascript" src="js/iscroll.js"></script>
+    <link rel="stylesheet" href="js/swiper-3.2.7.min.css">
+    <script type="text/javascript" src="js/swiper-3.2.7.jquery.min.js"></script>
+    <script type="text/javascript" src="js/path.js"></script>
+    <script type="text/javascript" src="js/mobile.js"></script>
+    <script type="text/javascript" src="js/usercenter.js"></script>
+    <script type="text/javascript" src="js/fastclick.js"></script>
+</head>
+<body style="background: #fcfefe;">
+<div class="myAccount">
+    <img src="/images/myAccountBg.jpg" class="img-size" />
+    <div class="text font-size-90 text-center green">
+        <div class="font-size-16">我的余额(元)</div>
+        <div class="margin" id="deposit"></div>
+        <a href="Detail.html">账单明细</a>
+    </div>
+    <div class="surebtn">
+    <a id="refund" class="btn"><div class="button text-center font-size-18 color-green">退&nbsp;&nbsp;款</div></a>
+    </div>
+</div>
+	<script>
+	function getStatesFn(){
+		 $.ajax({
+				type:"post",
+				url:url+"/pay/toRefund.action",
+				beforeSend: function(request) {
+		            request.setRequestHeader("fromFlag", "2");
+		        },
+				success:function(data){
+					if(data.message=="退款成功"){
+   				$.alert("退款成功",true,function(){
+   					window.location.reload();
+		            },false,{className:'ui-alert',width:300}); 
+   			}else if(data.message=="租赁中，无法退款"||data.message=="订单未支付，无法退款"){
+  				$.alert("骑行中或有订单未结束，无法退款",true,function(){
+		            },false,{className:'ui-alert',width:300}); 
+  			}else if(data.message=="退款失败"){
+   				$.alert("您的余额为0元，无法退款",true,function(){
+		            },false,{className:'ui-alert',width:300}); 
+   			}else if(data.message=="退款失败!"){
+   				$.alert("退款申请失败",true,function(){
+		            },false,{className:'ui-alert',width:300}); 
+   			}
+				}
+			});
+	}
+	/*$('#refund').click(function(){
+          $.confirm('<div class="con">您的退款将在1-7天内审核完成，<br/>请您确认是否要进行退款？</div>',[{yes:"确定退款"},{no:"取消"}],function(type){
+                 if(type=="yes"){
+                 	var _self=this;
+                 	$.ajax({
+                 		type:'post',
+                 		url:url+'/pay/refundApplication.action',
+                 		success:function(data){
+                 			if(data.message=="退款成功"){
+               					_self.hide();
+                 				$.alert("退款申请成功",true,function(){
+                 					window.location.reload();
+            		            },false,{className:'ui-alert',width:300}); 
+                 			}else if(data.message=="fail"){
+                 				$.alert("您的押金为0元，无法退款",true,function(){
+            		            },false,{className:'ui-alert',width:300}); 
+                 				_self.hide();
+                 			}else if(data.message=="renting"){
+                 				$.alert("骑行中无法退款",true,function(){
+            		            },false,{className:'ui-alert',width:300}); 
+                 				_self.hide();
+                 			}else if(data.message=="noRecharge"){
+                 				$.alert("退款申请失败",true,function(){
+            		            },false,{className:'ui-alert',width:300}); 
+                 				_self.hide();
+                 			}
+                 			
+                 			
+                 		}
+                 	})
+                    
+                 }else if(type=="no"){
+                     this.hide();  
+                 }
+             },{width:300,}); 
+             
+             
+		
+     })*/
+	</script>
+
+</body>
+
+</html>

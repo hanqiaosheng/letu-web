@@ -1,0 +1,805 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.dao.UserMapper" >
+  <resultMap id="BaseResultMap" type="org.entity.dto.User" >
+    <id column="user_id" property="userId" jdbcType="BIGINT" />
+    <result column="user_account_id" property="userAccountId" jdbcType="BIGINT" />
+    <result column="user_nickname" property="userNickname" jdbcType="VARCHAR" />
+    <result column="user_tel" property="userTel" jdbcType="VARCHAR" />
+    <result column="user_idcard" property="userIdcard" jdbcType="VARCHAR" />
+    <result column="user_realname" property="userRealname" jdbcType="VARCHAR" />
+    <result column="user_profile_image" property="userProfileImage" jdbcType="VARCHAR" />
+    <result column="user_gender" property="userGender" jdbcType="INTEGER" />
+    <result column="user_openId" property="userOpenid" jdbcType="VARCHAR" />
+    <result column="user_unionId" property="userUnionid" jdbcType="VARCHAR" />
+    <result column="user_state" property="userState" jdbcType="INTEGER" />
+    <result column="user_createtime" property="userCreatetime" jdbcType="TIMESTAMP" />
+    <result column="user_logintime" property="userLogintime" jdbcType="TIMESTAMP" />
+    <result column="user_usetime" property="userUsetime" jdbcType="INTEGER" />
+    <result column="user_use_distance" property="userUseDistance" jdbcType="INTEGER" />
+    <result column="user_channel_id" property="userChannelId" jdbcType="BIGINT" />
+    <result column="user_isblacklist" property="userIsblacklist" jdbcType="SMALLINT" />
+    <result column="user_defriend_time" property="userDefriendTime" jdbcType="TIMESTAMP" />
+    <result column="user_token" property="userToken" jdbcType="VARCHAR" />
+    <result column="user_small_openId" property="userSmallOpenid" jdbcType="VARCHAR" />
+    <result column="user_session_key" property="userSessionKey" jdbcType="VARCHAR" />
+    <result column="user_vipexpirationdate" property="userVipexpirationdate" jdbcType="TIMESTAMP" />
+    <result column="user_lastusebiketime" property="userLastusebiketime" jdbcType="TIMESTAMP" />
+    <result column="user_fistusebiketime" property="userFistusebiketime" jdbcType="TIMESTAMP" />
+    <result column="user_fistusebikeid" property="userFistusebikeid" jdbcType="BIGINT" />
+    <result column="user_birthday" property="userBirthday" jdbcType="TIMESTAMP" />
+    <result column="user_total_calorie" property="userTotalCalorie" jdbcType="DOUBLE" />
+    <result column="user_total_distance" property="userTotalDistance" jdbcType="DOUBLE" />
+    <result column="user_total_ride_time" property="userTotalRideTime" jdbcType="DOUBLE" />
+    <result column="user_level" property="userLevel" jdbcType="INTEGER" />
+    <result column="user_grade" property="userGrade" jdbcType="INTEGER" />
+    <result column="user_total_grade" property="userTotalGrade" jdbcType="INTEGER" />
+    <result column="user_use_grade" property="userUseGrade" jdbcType="INTEGER" />
+    <result column="user_verify_state" property="userVerifyState" jdbcType="INTEGER"/>
+    <result column="user_creator_type" property="userCreatorType" jdbcType="INTEGER"/>
+  </resultMap>
+  <resultMap id="BaseUnionResultMap" type="org.entity.dto.User" extends="BaseResultMap">
+    <association property="bike" javaType="org.entity.dto.Bike">
+  	 <id column="bike_id" property="bikeId" jdbcType="BIGINT" />
+    <result column="bike_manager_id" property="bikeManagerId" jdbcType="BIGINT" />
+    <result column="bike_admin_id" property="bikeAdminId" jdbcType="BIGINT" />
+    <result column="bike_block_id" property="bikeBlockId" jdbcType="BIGINT" />
+    <result column="bike_code" property="bikeCode" jdbcType="VARCHAR" />
+    <result column="bike_state" property="bikeState" jdbcType="INTEGER" />
+    <result column="bike_del" property="bikeDel" jdbcType="INTEGER" />
+    <result column="bike_address" property="bikeAddress" jdbcType="VARCHAR" />
+    <result column="bike_atitude" property="bikeAtitude" jdbcType="DOUBLE" />
+    <result column="bike_longitude" property="bikeLongitude" jdbcType="DOUBLE" />
+    <result column="bike_rent_num" property="bikeRentNum" jdbcType="INTEGER" />
+    <result column="bike_createtime" property="bikeCreatetime" jdbcType="TIMESTAMP" />
+    <result column="bike_batch_number" property="bikeBatchNumber" jdbcType="VARCHAR" />
+    <result column="bike_lock_id" property="bikeLockId" jdbcType="BIGINT" />
+    <result column="bike_chip_code" property="bikeChipCode" jdbcType="VARCHAR" />
+    <result column="bike_dynamotor_code" property="bikeDynamotorCode" jdbcType="VARCHAR" />
+    <result column="bike_put_time" property="bikePutTime" jdbcType="TIMESTAMP" />
+    <result column="bike_models_id" property="bikeModelsId" jdbcType="BIGINT" />
+    <result column="bike_last_rent_time" property="bikeLastRentTime" jdbcType="TIMESTAMP" />
+    <result column="bike_manager_name" property="bikeManagerName" jdbcType="VARCHAR" />
+    <result column="bike_manager_tel" property="bikeManagerTel" jdbcType="VARCHAR" />
+    <result column="bike_temporarylocktime" property="bikeTemporarylocktime" jdbcType="TIMESTAMP" />
+     <association property="models" javaType="org.entity.dto.Models">
+        <id column="models_id" property="modelsId" jdbcType="BIGINT" />
+	    <result column="models_code" property="modelsCode" jdbcType="VARCHAR" />
+	    <result column="models_name" property="modelsName" jdbcType="VARCHAR" />
+	    <result column="models_deposit" property="modelsDeposit" jdbcType="DECIMAL" />
+	    <result column="models_content" property="modelsContent" jdbcType="VARCHAR" />
+	    <result column="models_channel_id" property="modelsChannelId" jdbcType="BIGINT" />
+	    <association property="channel" javaType="org.entity.dto.Channel">
+        <id column="channel_id" property="channelId" jdbcType="BIGINT" />
+	    <result column="channel_admin_id" property="channelAdminId" jdbcType="BIGINT" />
+	    <result column="channel_name" property="channelName" jdbcType="VARCHAR" />
+	    <result column="channel_charger_name" property="channelChargerName" jdbcType="VARCHAR" />
+	    <result column="channel_charger_tel" property="channelChargerTel" jdbcType="VARCHAR" />
+	    <result column="channel_charger_adminId" property="channelChargerAdminid" jdbcType="BIGINT" />
+	    <result column="channel_state" property="channelState" jdbcType="INTEGER" />
+      </association> 
+     </association>
+  	</association>
+    <collection property="rentInfos" ofType="org.entity.dto.BikeRentInfo">
+      <id column="rent_info_id" property="rentInfoId" jdbcType="BIGINT" />
+      <result column="rent_info_bike_id" property="rentInfoBikeId" jdbcType="BIGINT" />
+      <result column="rent_info_user_id" property="rentInfoUserId" jdbcType="BIGINT" />
+      <result column="rent_starttime" property="rentStarttime" jdbcType="TIMESTAMP" />
+      <result column="rent_endtime" property="rentEndtime" jdbcType="TIMESTAMP" />
+      <result column="rent_startlat" property="rentStartlat" jdbcType="DOUBLE" />
+      <result column="rent_startlng" property="rentStartlng" jdbcType="DOUBLE" />
+      <result column="rent_endlat" property="rentEndlat" jdbcType="DOUBLE" />
+      <result column="rent_endlng" property="rentEndlng" jdbcType="DOUBLE" />
+      <result column="rent_price" property="rentPrice" jdbcType="DECIMAL" />
+      <result column="rent_insurance_price" property="rentInsurancePrice" jdbcType="DECIMAL" />
+      <result column="rent_pay_time" property="rentPayTime" jdbcType="TIMESTAMP" />
+      <result column="rent_state" property="rentState" jdbcType="INTEGER" />
+      <result column="rent_distance" property="rentDistance" jdbcType="INTEGER" />
+      <result column="rent_pay_type" property="rentPayType" jdbcType="INTEGER" />
+      <result column="rent_isdel" property="rentIsdel" jdbcType="INTEGER" />
+      <result column="rent_start_block_id" property="rentStartBlockId" jdbcType="BIGINT" />
+      <result column="rent_end_block_id" property="rentEndBlockId" jdbcType="BIGINT" />
+      <result column="rent_isvillager" property="rentIsvillager" jdbcType="INTEGER" />
+      <result column="rent_temporarylocktime" property="rentTemporarylocktime" jdbcType="TIMESTAMP" />
+      <result column="rent_invoice_id" property="rentInvoiceId" jdbcType="BIGINT" />
+      <result column="rent_longtime" property="rentLongtime" jdbcType="INTEGER" />
+      <result column="rent_start_fixed_id" property="rentStartFixedId" jdbcType="BIGINT" />
+      <result column="rent_end_fixed_id" property="rentEndFixedId" jdbcType="BIGINT" />
+      <result column="rent_bike_channel_id" property="rentBikeChannelId" jdbcType="BIGINT" />
+      <result column="rent_start_block" property="rentStartBlock" jdbcType="VARCHAR" />
+      <result column="rent_end_block" property="rentEndBlock" jdbcType="VARCHAR" />
+      <result column="rent_coupon_money" property="rentCouponMoney" jdbcType="DECIMAL" />
+      <result column="rent_guide_group_id" property="rentGuideGroupId" jdbcType="BIGINT"/>
+      <result column="rent_unlock_way" property="rentUnlockWay" jdbcType="INTEGER"/>
+    </collection>
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    user_id, user_account_id, user_nickname, user_tel, user_idcard, user_realname, user_profile_image, 
+    user_gender, user_openId, user_unionId, user_state, user_createtime, user_logintime, 
+    user_usetime, user_use_distance, user_channel_id, user_isblacklist, user_defriend_time, 
+    user_token, user_small_openId, user_session_key, user_vipexpirationdate, user_lastusebiketime, 
+    user_fistusebiketime, user_fistusebikeid, user_birthday, user_total_calorie, user_total_distance, 
+    user_total_ride_time, user_level, user_grade, user_total_grade, user_use_grade,user_verify_state,
+    user_creator_type
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="org.entity.dto.UserExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from user
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="limitStart != null and limitStart>=0" >
+      limit #{limitStart} , #{limitEnd}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from user
+    where user_id = #{userId,jdbcType=BIGINT}
+  </select>
+  <select id="selectByIds" resultMap="BaseResultMap" parameterType="java.util.List" >
+    select * from user
+    where user_id in
+    <foreach collection="userIds" item="id" open="(" close=")" separator=",">
+      #{id}
+    </foreach>
+  </select>
+  <select id="selectUserAndRentByIds" resultMap="BaseUnionResultMap" parameterType="java.util.List" >
+    select * from user u LEFT JOIN bike_rent_info r ON u.user_id=r.rent_info_user_id
+    where u.user_id in
+    <foreach collection="userIds" item="id" open="(" close=")" separator=",">
+      #{id}
+    </foreach>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from user
+    where user_id = #{userId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="org.entity.dto.UserExample" >
+    delete from user
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" useGeneratedKeys="true" keyProperty="userId" parameterType="org.entity.dto.User" >
+    insert into user (user_id, user_account_id, user_nickname, 
+      user_tel, user_idcard, user_realname, 
+      user_profile_image, user_gender, user_openId, 
+      user_unionId, user_state, user_createtime, 
+      user_logintime, user_usetime, user_use_distance, 
+      user_channel_id, user_isblacklist, user_defriend_time, 
+      user_token, user_small_openId, user_session_key, 
+      user_vipexpirationdate, user_lastusebiketime, 
+      user_fistusebiketime, user_fistusebikeid, 
+      user_birthday, user_total_calorie, user_total_distance, 
+      user_total_ride_time, user_level, user_grade, 
+      user_total_grade, user_use_grade,user_creator_type,user_verify_state)
+    values (#{userId,jdbcType=BIGINT}, #{userAccountId,jdbcType=BIGINT}, #{userNickname,jdbcType=VARCHAR}, 
+      #{userTel,jdbcType=VARCHAR}, #{userIdcard,jdbcType=VARCHAR}, #{userRealname,jdbcType=VARCHAR}, 
+      #{userProfileImage,jdbcType=VARCHAR}, #{userGender,jdbcType=INTEGER}, #{userOpenid,jdbcType=VARCHAR}, 
+      #{userUnionid,jdbcType=VARCHAR}, #{userState,jdbcType=INTEGER}, #{userCreatetime,jdbcType=TIMESTAMP}, 
+      #{userLogintime,jdbcType=TIMESTAMP}, #{userUsetime,jdbcType=INTEGER}, #{userUseDistance,jdbcType=INTEGER}, 
+      #{userChannelId,jdbcType=BIGINT}, #{userIsblacklist,jdbcType=SMALLINT}, #{userDefriendTime,jdbcType=TIMESTAMP}, 
+      #{userToken,jdbcType=VARCHAR}, #{userSmallOpenid,jdbcType=VARCHAR}, #{userSessionKey,jdbcType=VARCHAR}, 
+      #{userVipexpirationdate,jdbcType=TIMESTAMP}, #{userLastusebiketime,jdbcType=TIMESTAMP}, 
+      #{userFistusebiketime,jdbcType=TIMESTAMP}, #{userFistusebikeid,jdbcType=BIGINT}, 
+      #{userBirthday,jdbcType=TIMESTAMP}, #{userTotalCalorie,jdbcType=DOUBLE}, #{userTotalDistance,jdbcType=DOUBLE}, 
+      #{userTotalRideTime,jdbcType=DOUBLE}, #{userLevel,jdbcType=INTEGER}, #{userGrade,jdbcType=INTEGER}, 
+      #{userTotalGrade,jdbcType=INTEGER}, #{userUseGrade,jdbcType=INTEGER},#{userVerifyState,jdbcType=INTEGER},
+      #{userCreatorType,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" useGeneratedKeys="true" keyProperty="userId" parameterType="org.entity.dto.User" >
+    insert into user
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="userAccountId != null" >
+        user_account_id,
+      </if>
+      <if test="userNickname != null" >
+        user_nickname,
+      </if>
+      <if test="userTel != null" >
+        user_tel,
+      </if>
+      <if test="userIdcard != null" >
+        user_idcard,
+      </if>
+      <if test="userRealname != null" >
+        user_realname,
+      </if>
+      <if test="userProfileImage != null" >
+        user_profile_image,
+      </if>
+      <if test="userGender != null" >
+        user_gender,
+      </if>
+      <if test="userOpenid != null" >
+        user_openId,
+      </if>
+      <if test="userUnionid != null" >
+        user_unionId,
+      </if>
+      <if test="userState != null" >
+        user_state,
+      </if>
+      <if test="userCreatetime != null" >
+        user_createtime,
+      </if>
+      <if test="userLogintime != null" >
+        user_logintime,
+      </if>
+      <if test="userUsetime != null" >
+        user_usetime,
+      </if>
+      <if test="userUseDistance != null" >
+        user_use_distance,
+      </if>
+      <if test="userChannelId != null" >
+        user_channel_id,
+      </if>
+      <if test="userIsblacklist != null" >
+        user_isblacklist,
+      </if>
+      <if test="userDefriendTime != null" >
+        user_defriend_time,
+      </if>
+      <if test="userToken != null" >
+        user_token,
+      </if>
+      <if test="userSmallOpenid != null" >
+        user_small_openId,
+      </if>
+      <if test="userSessionKey != null" >
+        user_session_key,
+      </if>
+      <if test="userVipexpirationdate != null" >
+        user_vipexpirationdate,
+      </if>
+      <if test="userLastusebiketime != null" >
+        user_lastusebiketime,
+      </if>
+      <if test="userFistusebiketime != null" >
+        user_fistusebiketime,
+      </if>
+      <if test="userFistusebikeid != null" >
+        user_fistusebikeid,
+      </if>
+      <if test="userBirthday != null" >
+        user_birthday,
+      </if>
+      <if test="userTotalCalorie != null" >
+        user_total_calorie,
+      </if>
+      <if test="userTotalDistance != null" >
+        user_total_distance,
+      </if>
+      <if test="userTotalRideTime != null" >
+        user_total_ride_time,
+      </if>
+      <if test="userLevel != null" >
+        user_level,
+      </if>
+      <if test="userGrade != null" >
+        user_grade,
+      </if>
+      <if test="userTotalGrade != null" >
+        user_total_grade,
+      </if>
+      <if test="userUseGrade != null" >
+        user_use_grade,
+      </if>
+      <if test="userVerifyState != null" >
+        user_verify_state,
+      </if>
+      <if test="userCreatorType != null" >
+        user_creator_type,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="userId != null" >
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="userAccountId != null" >
+        #{userAccountId,jdbcType=BIGINT},
+      </if>
+      <if test="userNickname != null" >
+        #{userNickname,jdbcType=VARCHAR},
+      </if>
+      <if test="userTel != null" >
+        #{userTel,jdbcType=VARCHAR},
+      </if>
+      <if test="userIdcard != null" >
+        #{userIdcard,jdbcType=VARCHAR},
+      </if>
+      <if test="userRealname != null" >
+        #{userRealname,jdbcType=VARCHAR},
+      </if>
+      <if test="userProfileImage != null" >
+        #{userProfileImage,jdbcType=VARCHAR},
+      </if>
+      <if test="userGender != null" >
+        #{userGender,jdbcType=INTEGER},
+      </if>
+      <if test="userOpenid != null" >
+        #{userOpenid,jdbcType=VARCHAR},
+      </if>
+      <if test="userUnionid != null" >
+        #{userUnionid,jdbcType=VARCHAR},
+      </if>
+      <if test="userState != null" >
+        #{userState,jdbcType=INTEGER},
+      </if>
+      <if test="userCreatetime != null" >
+        #{userCreatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userLogintime != null" >
+        #{userLogintime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userUsetime != null" >
+        #{userUsetime,jdbcType=INTEGER},
+      </if>
+      <if test="userUseDistance != null" >
+        #{userUseDistance,jdbcType=INTEGER},
+      </if>
+      <if test="userChannelId != null" >
+        #{userChannelId,jdbcType=BIGINT},
+      </if>
+      <if test="userIsblacklist != null" >
+        #{userIsblacklist,jdbcType=SMALLINT},
+      </if>
+      <if test="userDefriendTime != null" >
+        #{userDefriendTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userToken != null" >
+        #{userToken,jdbcType=VARCHAR},
+      </if>
+      <if test="userSmallOpenid != null" >
+        #{userSmallOpenid,jdbcType=VARCHAR},
+      </if>
+      <if test="userSessionKey != null" >
+        #{userSessionKey,jdbcType=VARCHAR},
+      </if>
+      <if test="userVipexpirationdate != null" >
+        #{userVipexpirationdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userLastusebiketime != null" >
+        #{userLastusebiketime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userFistusebiketime != null" >
+        #{userFistusebiketime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userFistusebikeid != null" >
+        #{userFistusebikeid,jdbcType=BIGINT},
+      </if>
+      <if test="userBirthday != null" >
+        #{userBirthday,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userTotalCalorie != null" >
+        #{userTotalCalorie,jdbcType=DOUBLE},
+      </if>
+      <if test="userTotalDistance != null" >
+        #{userTotalDistance,jdbcType=DOUBLE},
+      </if>
+      <if test="userTotalRideTime != null" >
+        #{userTotalRideTime,jdbcType=DOUBLE},
+      </if>
+      <if test="userLevel != null" >
+        #{userLevel,jdbcType=INTEGER},
+      </if>
+      <if test="userGrade != null" >
+        #{userGrade,jdbcType=INTEGER},
+      </if>
+      <if test="userTotalGrade != null" >
+        #{userTotalGrade,jdbcType=INTEGER},
+      </if>
+      <if test="userUseGrade != null" >
+        #{userUseGrade,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="org.entity.dto.UserExample" resultType="java.lang.Integer" >
+    select count(*) from user
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update user
+    <set >
+      <if test="record.userId != null" >
+        user_id = #{record.userId,jdbcType=BIGINT},
+      </if>
+      <if test="record.userAccountId != null" >
+        user_account_id = #{record.userAccountId,jdbcType=BIGINT},
+      </if>
+      <if test="record.userNickname != null" >
+        user_nickname = #{record.userNickname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userTel != null" >
+        user_tel = #{record.userTel,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userIdcard != null" >
+        user_idcard = #{record.userIdcard,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userRealname != null" >
+        user_realname = #{record.userRealname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userProfileImage != null" >
+        user_profile_image = #{record.userProfileImage,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userGender != null" >
+        user_gender = #{record.userGender,jdbcType=INTEGER},
+      </if>
+      <if test="record.userOpenid != null" >
+        user_openId = #{record.userOpenid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userUnionid != null" >
+        user_unionId = #{record.userUnionid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userState != null" >
+        user_state = #{record.userState,jdbcType=INTEGER},
+      </if>
+      <if test="record.userCreatetime != null" >
+        user_createtime = #{record.userCreatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.userLogintime != null" >
+        user_logintime = #{record.userLogintime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.userUsetime != null" >
+        user_usetime = #{record.userUsetime,jdbcType=INTEGER},
+      </if>
+      <if test="record.userUseDistance != null" >
+        user_use_distance = #{record.userUseDistance,jdbcType=INTEGER},
+      </if>
+      <if test="record.userChannelId != null" >
+        user_channel_id = #{record.userChannelId,jdbcType=BIGINT},
+      </if>
+      <if test="record.userIsblacklist != null" >
+        user_isblacklist = #{record.userIsblacklist,jdbcType=SMALLINT},
+      </if>
+      <if test="record.userDefriendTime != null" >
+        user_defriend_time = #{record.userDefriendTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.userToken != null" >
+        user_token = #{record.userToken,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userSmallOpenid != null" >
+        user_small_openId = #{record.userSmallOpenid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userSessionKey != null" >
+        user_session_key = #{record.userSessionKey,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userVipexpirationdate != null" >
+        user_vipexpirationdate = #{record.userVipexpirationdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.userLastusebiketime != null" >
+        user_lastusebiketime = #{record.userLastusebiketime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.userFistusebiketime != null" >
+        user_fistusebiketime = #{record.userFistusebiketime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.userFistusebikeid != null" >
+        user_fistusebikeid = #{record.userFistusebikeid,jdbcType=BIGINT},
+      </if>
+      <if test="record.userBirthday != null" >
+        user_birthday = #{record.userBirthday,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.userTotalCalorie != null" >
+        user_total_calorie = #{record.userTotalCalorie,jdbcType=DOUBLE},
+      </if>
+      <if test="record.userTotalDistance != null" >
+        user_total_distance = #{record.userTotalDistance,jdbcType=DOUBLE},
+      </if>
+      <if test="record.userTotalRideTime != null" >
+        user_total_ride_time = #{record.userTotalRideTime,jdbcType=DOUBLE},
+      </if>
+      <if test="record.userLevel != null" >
+        user_level = #{record.userLevel,jdbcType=INTEGER},
+      </if>
+      <if test="record.userGrade != null" >
+        user_grade = #{record.userGrade,jdbcType=INTEGER},
+      </if>
+      <if test="record.userTotalGrade != null" >
+        user_total_grade = #{record.userTotalGrade,jdbcType=INTEGER},
+      </if>
+      <if test="record.userUseGrade != null" >
+        user_use_grade = #{record.userUseGrade,jdbcType=INTEGER},
+      </if>
+      <if test="record.userUseGrade != null" >
+        user_verify_state = #{record.userVerifyState,jdbcType=INTEGER},
+      </if>
+      <if test="record.userUseGrade != null" >
+        user_creator_type = #{record.userCreatorType,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update user
+    set user_id = #{record.userId,jdbcType=BIGINT},
+      user_account_id = #{record.userAccountId,jdbcType=BIGINT},
+      user_nickname = #{record.userNickname,jdbcType=VARCHAR},
+      user_tel = #{record.userTel,jdbcType=VARCHAR},
+      user_idcard = #{record.userIdcard,jdbcType=VARCHAR},
+      user_realname = #{record.userRealname,jdbcType=VARCHAR},
+      user_profile_image = #{record.userProfileImage,jdbcType=VARCHAR},
+      user_gender = #{record.userGender,jdbcType=INTEGER},
+      user_openId = #{record.userOpenid,jdbcType=VARCHAR},
+      user_unionId = #{record.userUnionid,jdbcType=VARCHAR},
+      user_state = #{record.userState,jdbcType=INTEGER},
+      user_createtime = #{record.userCreatetime,jdbcType=TIMESTAMP},
+      user_logintime = #{record.userLogintime,jdbcType=TIMESTAMP},
+      user_usetime = #{record.userUsetime,jdbcType=INTEGER},
+      user_use_distance = #{record.userUseDistance,jdbcType=INTEGER},
+      user_channel_id = #{record.userChannelId,jdbcType=BIGINT},
+      user_isblacklist = #{record.userIsblacklist,jdbcType=SMALLINT},
+      user_defriend_time = #{record.userDefriendTime,jdbcType=TIMESTAMP},
+      user_token = #{record.userToken,jdbcType=VARCHAR},
+      user_small_openId = #{record.userSmallOpenid,jdbcType=VARCHAR},
+      user_session_key = #{record.userSessionKey,jdbcType=VARCHAR},
+      user_vipexpirationdate = #{record.userVipexpirationdate,jdbcType=TIMESTAMP},
+      user_lastusebiketime = #{record.userLastusebiketime,jdbcType=TIMESTAMP},
+      user_fistusebiketime = #{record.userFistusebiketime,jdbcType=TIMESTAMP},
+      user_fistusebikeid = #{record.userFistusebikeid,jdbcType=BIGINT},
+      user_birthday = #{record.userBirthday,jdbcType=TIMESTAMP},
+      user_total_calorie = #{record.userTotalCalorie,jdbcType=DOUBLE},
+      user_total_distance = #{record.userTotalDistance,jdbcType=DOUBLE},
+      user_total_ride_time = #{record.userTotalRideTime,jdbcType=DOUBLE},
+      user_level = #{record.userLevel,jdbcType=INTEGER},
+      user_grade = #{record.userGrade,jdbcType=INTEGER},
+      user_total_grade = #{record.userTotalGrade,jdbcType=INTEGER},
+      user_use_grade = #{record.userUseGrade,jdbcType=INTEGER},
+      user_verify_state = #{record.userVerifyState,jdbcType=INTEGER},
+      user_creator_type = #{record.userCreatorType,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="org.entity.dto.User" >
+    update user
+    <set >
+      <if test="userAccountId != null" >
+        user_account_id = #{userAccountId,jdbcType=BIGINT},
+      </if>
+      <if test="userNickname != null" >
+        user_nickname = #{userNickname,jdbcType=VARCHAR},
+      </if>
+      <if test="userTel != null" >
+        user_tel = #{userTel,jdbcType=VARCHAR},
+      </if>
+      <if test="userIdcard != null" >
+        user_idcard = #{userIdcard,jdbcType=VARCHAR},
+      </if>
+      <if test="userRealname != null" >
+        user_realname = #{userRealname,jdbcType=VARCHAR},
+      </if>
+      <if test="userProfileImage != null" >
+        user_profile_image = #{userProfileImage,jdbcType=VARCHAR},
+      </if>
+      <if test="userGender != null" >
+        user_gender = #{userGender,jdbcType=INTEGER},
+      </if>
+      <if test="userOpenid != null" >
+        user_openId = #{userOpenid,jdbcType=VARCHAR},
+      </if>
+      <if test="userUnionid != null" >
+        user_unionId = #{userUnionid,jdbcType=VARCHAR},
+      </if>
+      <if test="userState != null" >
+        user_state = #{userState,jdbcType=INTEGER},
+      </if>
+      <if test="userCreatetime != null" >
+        user_createtime = #{userCreatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userLogintime != null" >
+        user_logintime = #{userLogintime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userUsetime != null" >
+        user_usetime = #{userUsetime,jdbcType=INTEGER},
+      </if>
+      <if test="userUseDistance != null" >
+        user_use_distance = #{userUseDistance,jdbcType=INTEGER},
+      </if>
+      <if test="userChannelId != null" >
+        user_channel_id = #{userChannelId,jdbcType=BIGINT},
+      </if>
+      <if test="userIsblacklist != null" >
+        user_isblacklist = #{userIsblacklist,jdbcType=SMALLINT},
+      </if>
+      <if test="userDefriendTime != null" >
+        user_defriend_time = #{userDefriendTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userToken != null" >
+        user_token = #{userToken,jdbcType=VARCHAR},
+      </if>
+      <if test="userSmallOpenid != null" >
+        user_small_openId = #{userSmallOpenid,jdbcType=VARCHAR},
+      </if>
+      <if test="userSessionKey != null" >
+        user_session_key = #{userSessionKey,jdbcType=VARCHAR},
+      </if>
+      <if test="userVipexpirationdate != null" >
+        user_vipexpirationdate = #{userVipexpirationdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userLastusebiketime != null" >
+        user_lastusebiketime = #{userLastusebiketime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userFistusebiketime != null" >
+        user_fistusebiketime = #{userFistusebiketime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userFistusebikeid != null" >
+        user_fistusebikeid = #{userFistusebikeid,jdbcType=BIGINT},
+      </if>
+      <if test="userBirthday != null" >
+        user_birthday = #{userBirthday,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userTotalCalorie != null" >
+        user_total_calorie = #{userTotalCalorie,jdbcType=DOUBLE},
+      </if>
+      <if test="userTotalDistance != null" >
+        user_total_distance = #{userTotalDistance,jdbcType=DOUBLE},
+      </if>
+      <if test="userTotalRideTime != null" >
+        user_total_ride_time = #{userTotalRideTime,jdbcType=DOUBLE},
+      </if>
+      <if test="userLevel != null" >
+        user_level = #{userLevel,jdbcType=INTEGER},
+      </if>
+      <if test="userGrade != null" >
+        user_grade = #{userGrade,jdbcType=INTEGER},
+      </if>
+      <if test="userTotalGrade != null" >
+        user_total_grade = #{userTotalGrade,jdbcType=INTEGER},
+      </if>
+      <if test="userUseGrade != null" >
+        user_use_grade = #{userUseGrade,jdbcType=INTEGER},
+      </if>
+      <if test="userUseGrade != null" >
+        user_verify_state = #{userVerifyState,jdbcType=INTEGER},
+      </if>
+      <if test="userUseGrade != null" >
+        user_creator_type = #{userCreatorType,jdbcType=INTEGER},
+      </if>
+    </set>
+    where user_id = #{userId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.entity.dto.User" >
+    update user
+    set user_account_id = #{userAccountId,jdbcType=BIGINT},
+      user_nickname = #{userNickname,jdbcType=VARCHAR},
+      user_tel = #{userTel,jdbcType=VARCHAR},
+      user_idcard = #{userIdcard,jdbcType=VARCHAR},
+      user_realname = #{userRealname,jdbcType=VARCHAR},
+      user_profile_image = #{userProfileImage,jdbcType=VARCHAR},
+      user_gender = #{userGender,jdbcType=INTEGER},
+      user_openId = #{userOpenid,jdbcType=VARCHAR},
+      user_unionId = #{userUnionid,jdbcType=VARCHAR},
+      user_state = #{userState,jdbcType=INTEGER},
+      user_createtime = #{userCreatetime,jdbcType=TIMESTAMP},
+      user_logintime = #{userLogintime,jdbcType=TIMESTAMP},
+      user_usetime = #{userUsetime,jdbcType=INTEGER},
+      user_use_distance = #{userUseDistance,jdbcType=INTEGER},
+      user_channel_id = #{userChannelId,jdbcType=BIGINT},
+      user_isblacklist = #{userIsblacklist,jdbcType=SMALLINT},
+      user_defriend_time = #{userDefriendTime,jdbcType=TIMESTAMP},
+      user_token = #{userToken,jdbcType=VARCHAR},
+      user_small_openId = #{userSmallOpenid,jdbcType=VARCHAR},
+      user_session_key = #{userSessionKey,jdbcType=VARCHAR},
+      user_vipexpirationdate = #{userVipexpirationdate,jdbcType=TIMESTAMP},
+      user_lastusebiketime = #{userLastusebiketime,jdbcType=TIMESTAMP},
+      user_fistusebiketime = #{userFistusebiketime,jdbcType=TIMESTAMP},
+      user_fistusebikeid = #{userFistusebikeid,jdbcType=BIGINT},
+      user_birthday = #{userBirthday,jdbcType=TIMESTAMP},
+      user_total_calorie = #{userTotalCalorie,jdbcType=DOUBLE},
+      user_total_distance = #{userTotalDistance,jdbcType=DOUBLE},
+      user_total_ride_time = #{userTotalRideTime,jdbcType=DOUBLE},
+      user_level = #{userLevel,jdbcType=INTEGER},
+      user_grade = #{userGrade,jdbcType=INTEGER},
+      user_total_grade = #{userTotalGrade,jdbcType=INTEGER},
+      user_use_grade = #{userUseGrade,jdbcType=INTEGER},
+      user_verify_state = #{userVerifyState,jdbcType=INTEGER},
+      user_creator_type = #{userCreatorType,jdbcType=INTEGER}
+    where user_id = #{userId,jdbcType=BIGINT}
+  </update>
+  
+  
+  <select id="selectUnionByExample" resultMap="BaseUnionResultMap" parameterType="org.entity.dto.UserExample" >
+    select * from user u left join  bike b on u.user_fistusebikeid = b.bike_id 
+                                     left join models m on m.models_id = b.bike_models_id 
+                                     left join channel c on m.models_channel_id = c.channel_id                            
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="limitStart != null and limitStart>=0" >
+      limit #{limitStart} , #{limitEnd}
+    </if>
+  </select>
+  
+    <select id="countUnionByExample" parameterType="org.entity.dto.UserExample" resultType="java.lang.Integer" >
+    select count(*) from user u left join  bike b on u.user_fistusebikeid = b.bike_id 
+                                     left join models m on m.models_id = b.bike_models_id 
+                                     left join channel c on m.models_channel_id = c.channel_id    
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    </select>
+   <select id="selectUnionByPrimaryKey" resultMap="BaseUnionResultMap" parameterType="java.lang.Long" >
+    select * from user u left join  bike b on u.user_fistusebikeid = b.bike_id 
+                                     left join models m on m.models_id = b.bike_models_id 
+                                     left join channel c on m.models_channel_id = c.channel_id    
+    where user_id = #{userId,jdbcType=BIGINT}
+  </select>
+</mapper>

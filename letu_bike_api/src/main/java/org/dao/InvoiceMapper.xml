@@ -1,0 +1,455 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.dao.InvoiceMapper" >
+  <resultMap id="BaseResultMap" type="org.entity.dto.Invoice" >
+    <id column="invoice_id" property="invoiceId" jdbcType="BIGINT" />
+    <result column="invoice_name" property="invoiceName" jdbcType="VARCHAR" />
+    <result column="invoice_user_id" property="invoiceUserId" jdbcType="BIGINT" />
+    <result column="invoice_content" property="invoiceContent" jdbcType="VARCHAR" />
+    <result column="invoice_money" property="invoiceMoney" jdbcType="DECIMAL" />
+    <result column="invoice_mark" property="invoiceMark" jdbcType="VARCHAR" />
+    <result column="invoice_taxpayer_number" property="invoiceTaxpayerNumber" jdbcType="VARCHAR" />
+    <result column="invoice_addre_phone" property="invoiceAddrePhone" jdbcType="VARCHAR" />
+    <result column="invoice_bank_account" property="invoiceBankAccount" jdbcType="VARCHAR" />
+    <result column="invoice_email" property="invoiceEmail" jdbcType="VARCHAR" />
+    <result column="invoice_receive_name" property="invoiceReceiveName" jdbcType="VARCHAR" />
+    <result column="invoice_receive_tel" property="invoiceReceiveTel" jdbcType="VARCHAR" />
+    <result column="invoice_receive_city" property="invoiceReceiveCity" jdbcType="VARCHAR" />
+    <result column="invoice_receive_address" property="invoiceReceiveAddress" jdbcType="VARCHAR" />
+    <result column="invoice_application_time" property="invoiceApplicationTime" jdbcType="TIMESTAMP" />
+    <result column="invoice_type" property="invoiceType" jdbcType="INTEGER" />
+    <result column="invoice_state" property="invoiceState" jdbcType="INTEGER" />
+    <result column="invoice_deliver_type_id" property="invoiceDeliverTypeId" jdbcType="BIGINT" />
+    <result column="invoice_url" property="invoiceUrl" jdbcType="VARCHAR" />
+    <result column="invoice_travel_url" property="invoiceTravelUrl" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    invoice_id, invoice_name, invoice_user_id, invoice_content, invoice_money, invoice_mark, 
+    invoice_taxpayer_number, invoice_addre_phone, invoice_bank_account, invoice_email, 
+    invoice_receive_name, invoice_receive_tel, invoice_receive_city, invoice_receive_address, 
+    invoice_application_time, invoice_type, invoice_state, invoice_deliver_type_id, invoice_url, 
+    invoice_travel_url
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="org.entity.dto.InvoiceExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from invoice
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="limitStart != null and limitStart>=0" >
+      limit #{limitStart} , #{limitEnd}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from invoice
+    where invoice_id = #{invoiceId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from invoice
+    where invoice_id = #{invoiceId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="org.entity.dto.InvoiceExample" >
+    delete from invoice
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="org.entity.dto.Invoice" >
+    insert into invoice (invoice_id, invoice_name, invoice_user_id, 
+      invoice_content, invoice_money, invoice_mark, 
+      invoice_taxpayer_number, invoice_addre_phone, 
+      invoice_bank_account, invoice_email, invoice_receive_name, 
+      invoice_receive_tel, invoice_receive_city, 
+      invoice_receive_address, invoice_application_time, 
+      invoice_type, invoice_state, invoice_deliver_type_id, 
+      invoice_url, invoice_travel_url)
+    values (#{invoiceId,jdbcType=BIGINT}, #{invoiceName,jdbcType=VARCHAR}, #{invoiceUserId,jdbcType=BIGINT}, 
+      #{invoiceContent,jdbcType=VARCHAR}, #{invoiceMoney,jdbcType=DECIMAL}, #{invoiceMark,jdbcType=VARCHAR}, 
+      #{invoiceTaxpayerNumber,jdbcType=VARCHAR}, #{invoiceAddrePhone,jdbcType=VARCHAR}, 
+      #{invoiceBankAccount,jdbcType=VARCHAR}, #{invoiceEmail,jdbcType=VARCHAR}, #{invoiceReceiveName,jdbcType=VARCHAR}, 
+      #{invoiceReceiveTel,jdbcType=VARCHAR}, #{invoiceReceiveCity,jdbcType=VARCHAR}, 
+      #{invoiceReceiveAddress,jdbcType=VARCHAR}, #{invoiceApplicationTime,jdbcType=TIMESTAMP}, 
+      #{invoiceType,jdbcType=INTEGER}, #{invoiceState,jdbcType=INTEGER}, #{invoiceDeliverTypeId,jdbcType=BIGINT}, 
+      #{invoiceUrl,jdbcType=VARCHAR}, #{invoiceTravelUrl,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" useGeneratedKeys="true" keyProperty="invoiceId" parameterType="org.entity.dto.Invoice" >
+    insert into invoice
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="invoiceId != null" >
+        invoice_id,
+      </if>
+      <if test="invoiceName != null" >
+        invoice_name,
+      </if>
+      <if test="invoiceUserId != null" >
+        invoice_user_id,
+      </if>
+      <if test="invoiceContent != null" >
+        invoice_content,
+      </if>
+      <if test="invoiceMoney != null" >
+        invoice_money,
+      </if>
+      <if test="invoiceMark != null" >
+        invoice_mark,
+      </if>
+      <if test="invoiceTaxpayerNumber != null" >
+        invoice_taxpayer_number,
+      </if>
+      <if test="invoiceAddrePhone != null" >
+        invoice_addre_phone,
+      </if>
+      <if test="invoiceBankAccount != null" >
+        invoice_bank_account,
+      </if>
+      <if test="invoiceEmail != null" >
+        invoice_email,
+      </if>
+      <if test="invoiceReceiveName != null" >
+        invoice_receive_name,
+      </if>
+      <if test="invoiceReceiveTel != null" >
+        invoice_receive_tel,
+      </if>
+      <if test="invoiceReceiveCity != null" >
+        invoice_receive_city,
+      </if>
+      <if test="invoiceReceiveAddress != null" >
+        invoice_receive_address,
+      </if>
+      <if test="invoiceApplicationTime != null" >
+        invoice_application_time,
+      </if>
+      <if test="invoiceType != null" >
+        invoice_type,
+      </if>
+      <if test="invoiceState != null" >
+        invoice_state,
+      </if>
+      <if test="invoiceDeliverTypeId != null" >
+        invoice_deliver_type_id,
+      </if>
+      <if test="invoiceUrl != null" >
+        invoice_url,
+      </if>
+      <if test="invoiceTravelUrl != null" >
+        invoice_travel_url,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="invoiceId != null" >
+        #{invoiceId,jdbcType=BIGINT},
+      </if>
+      <if test="invoiceName != null" >
+        #{invoiceName,jdbcType=VARCHAR},
+      </if>
+      <if test="invoiceUserId != null" >
+        #{invoiceUserId,jdbcType=BIGINT},
+      </if>
+      <if test="invoiceContent != null" >
+        #{invoiceContent,jdbcType=VARCHAR},
+      </if>
+      <if test="invoiceMoney != null" >
+        #{invoiceMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="invoiceMark != null" >
+        #{invoiceMark,jdbcType=VARCHAR},
+      </if>
+      <if test="invoiceTaxpayerNumber != null" >
+        #{invoiceTaxpayerNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="invoiceAddrePhone != null" >
+        #{invoiceAddrePhone,jdbcType=VARCHAR},
+      </if>
+      <if test="invoiceBankAccount != null" >
+        #{invoiceBankAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="invoiceEmail != null" >
+        #{invoiceEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="invoiceReceiveName != null" >
+        #{invoiceReceiveName,jdbcType=VARCHAR},
+      </if>
+      <if test="invoiceReceiveTel != null" >
+        #{invoiceReceiveTel,jdbcType=VARCHAR},
+      </if>
+      <if test="invoiceReceiveCity != null" >
+        #{invoiceReceiveCity,jdbcType=VARCHAR},
+      </if>
+      <if test="invoiceReceiveAddress != null" >
+        #{invoiceReceiveAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="invoiceApplicationTime != null" >
+        #{invoiceApplicationTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="invoiceType != null" >
+        #{invoiceType,jdbcType=INTEGER},
+      </if>
+      <if test="invoiceState != null" >
+        #{invoiceState,jdbcType=INTEGER},
+      </if>
+      <if test="invoiceDeliverTypeId != null" >
+        #{invoiceDeliverTypeId,jdbcType=BIGINT},
+      </if>
+      <if test="invoiceUrl != null" >
+        #{invoiceUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="invoiceTravelUrl != null" >
+        #{invoiceTravelUrl,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="org.entity.dto.InvoiceExample" resultType="java.lang.Integer" >
+    select count(*) from invoice
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update invoice
+    <set >
+      <if test="record.invoiceId != null" >
+        invoice_id = #{record.invoiceId,jdbcType=BIGINT},
+      </if>
+      <if test="record.invoiceName != null" >
+        invoice_name = #{record.invoiceName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.invoiceUserId != null" >
+        invoice_user_id = #{record.invoiceUserId,jdbcType=BIGINT},
+      </if>
+      <if test="record.invoiceContent != null" >
+        invoice_content = #{record.invoiceContent,jdbcType=VARCHAR},
+      </if>
+      <if test="record.invoiceMoney != null" >
+        invoice_money = #{record.invoiceMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="record.invoiceMark != null" >
+        invoice_mark = #{record.invoiceMark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.invoiceTaxpayerNumber != null" >
+        invoice_taxpayer_number = #{record.invoiceTaxpayerNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.invoiceAddrePhone != null" >
+        invoice_addre_phone = #{record.invoiceAddrePhone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.invoiceBankAccount != null" >
+        invoice_bank_account = #{record.invoiceBankAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="record.invoiceEmail != null" >
+        invoice_email = #{record.invoiceEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="record.invoiceReceiveName != null" >
+        invoice_receive_name = #{record.invoiceReceiveName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.invoiceReceiveTel != null" >
+        invoice_receive_tel = #{record.invoiceReceiveTel,jdbcType=VARCHAR},
+      </if>
+      <if test="record.invoiceReceiveCity != null" >
+        invoice_receive_city = #{record.invoiceReceiveCity,jdbcType=VARCHAR},
+      </if>
+      <if test="record.invoiceReceiveAddress != null" >
+        invoice_receive_address = #{record.invoiceReceiveAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.invoiceApplicationTime != null" >
+        invoice_application_time = #{record.invoiceApplicationTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.invoiceType != null" >
+        invoice_type = #{record.invoiceType,jdbcType=INTEGER},
+      </if>
+      <if test="record.invoiceState != null" >
+        invoice_state = #{record.invoiceState,jdbcType=INTEGER},
+      </if>
+      <if test="record.invoiceDeliverTypeId != null" >
+        invoice_deliver_type_id = #{record.invoiceDeliverTypeId,jdbcType=BIGINT},
+      </if>
+      <if test="record.invoiceUrl != null" >
+        invoice_url = #{record.invoiceUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.invoiceTravelUrl != null" >
+        invoice_travel_url = #{record.invoiceTravelUrl,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update invoice
+    set invoice_id = #{record.invoiceId,jdbcType=BIGINT},
+      invoice_name = #{record.invoiceName,jdbcType=VARCHAR},
+      invoice_user_id = #{record.invoiceUserId,jdbcType=BIGINT},
+      invoice_content = #{record.invoiceContent,jdbcType=VARCHAR},
+      invoice_money = #{record.invoiceMoney,jdbcType=DECIMAL},
+      invoice_mark = #{record.invoiceMark,jdbcType=VARCHAR},
+      invoice_taxpayer_number = #{record.invoiceTaxpayerNumber,jdbcType=VARCHAR},
+      invoice_addre_phone = #{record.invoiceAddrePhone,jdbcType=VARCHAR},
+      invoice_bank_account = #{record.invoiceBankAccount,jdbcType=VARCHAR},
+      invoice_email = #{record.invoiceEmail,jdbcType=VARCHAR},
+      invoice_receive_name = #{record.invoiceReceiveName,jdbcType=VARCHAR},
+      invoice_receive_tel = #{record.invoiceReceiveTel,jdbcType=VARCHAR},
+      invoice_receive_city = #{record.invoiceReceiveCity,jdbcType=VARCHAR},
+      invoice_receive_address = #{record.invoiceReceiveAddress,jdbcType=VARCHAR},
+      invoice_application_time = #{record.invoiceApplicationTime,jdbcType=TIMESTAMP},
+      invoice_type = #{record.invoiceType,jdbcType=INTEGER},
+      invoice_state = #{record.invoiceState,jdbcType=INTEGER},
+      invoice_deliver_type_id = #{record.invoiceDeliverTypeId,jdbcType=BIGINT},
+      invoice_url = #{record.invoiceUrl,jdbcType=VARCHAR},
+      invoice_travel_url = #{record.invoiceTravelUrl,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="org.entity.dto.Invoice" >
+    update invoice
+    <set >
+      <if test="invoiceName != null" >
+        invoice_name = #{invoiceName,jdbcType=VARCHAR},
+      </if>
+      <if test="invoiceUserId != null" >
+        invoice_user_id = #{invoiceUserId,jdbcType=BIGINT},
+      </if>
+      <if test="invoiceContent != null" >
+        invoice_content = #{invoiceContent,jdbcType=VARCHAR},
+      </if>
+      <if test="invoiceMoney != null" >
+        invoice_money = #{invoiceMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="invoiceMark != null" >
+        invoice_mark = #{invoiceMark,jdbcType=VARCHAR},
+      </if>
+      <if test="invoiceTaxpayerNumber != null" >
+        invoice_taxpayer_number = #{invoiceTaxpayerNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="invoiceAddrePhone != null" >
+        invoice_addre_phone = #{invoiceAddrePhone,jdbcType=VARCHAR},
+      </if>
+      <if test="invoiceBankAccount != null" >
+        invoice_bank_account = #{invoiceBankAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="invoiceEmail != null" >
+        invoice_email = #{invoiceEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="invoiceReceiveName != null" >
+        invoice_receive_name = #{invoiceReceiveName,jdbcType=VARCHAR},
+      </if>
+      <if test="invoiceReceiveTel != null" >
+        invoice_receive_tel = #{invoiceReceiveTel,jdbcType=VARCHAR},
+      </if>
+      <if test="invoiceReceiveCity != null" >
+        invoice_receive_city = #{invoiceReceiveCity,jdbcType=VARCHAR},
+      </if>
+      <if test="invoiceReceiveAddress != null" >
+        invoice_receive_address = #{invoiceReceiveAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="invoiceApplicationTime != null" >
+        invoice_application_time = #{invoiceApplicationTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="invoiceType != null" >
+        invoice_type = #{invoiceType,jdbcType=INTEGER},
+      </if>
+      <if test="invoiceState != null" >
+        invoice_state = #{invoiceState,jdbcType=INTEGER},
+      </if>
+      <if test="invoiceDeliverTypeId != null" >
+        invoice_deliver_type_id = #{invoiceDeliverTypeId,jdbcType=BIGINT},
+      </if>
+      <if test="invoiceUrl != null" >
+        invoice_url = #{invoiceUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="invoiceTravelUrl != null" >
+        invoice_travel_url = #{invoiceTravelUrl,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where invoice_id = #{invoiceId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.entity.dto.Invoice" >
+    update invoice
+    set invoice_name = #{invoiceName,jdbcType=VARCHAR},
+      invoice_user_id = #{invoiceUserId,jdbcType=BIGINT},
+      invoice_content = #{invoiceContent,jdbcType=VARCHAR},
+      invoice_money = #{invoiceMoney,jdbcType=DECIMAL},
+      invoice_mark = #{invoiceMark,jdbcType=VARCHAR},
+      invoice_taxpayer_number = #{invoiceTaxpayerNumber,jdbcType=VARCHAR},
+      invoice_addre_phone = #{invoiceAddrePhone,jdbcType=VARCHAR},
+      invoice_bank_account = #{invoiceBankAccount,jdbcType=VARCHAR},
+      invoice_email = #{invoiceEmail,jdbcType=VARCHAR},
+      invoice_receive_name = #{invoiceReceiveName,jdbcType=VARCHAR},
+      invoice_receive_tel = #{invoiceReceiveTel,jdbcType=VARCHAR},
+      invoice_receive_city = #{invoiceReceiveCity,jdbcType=VARCHAR},
+      invoice_receive_address = #{invoiceReceiveAddress,jdbcType=VARCHAR},
+      invoice_application_time = #{invoiceApplicationTime,jdbcType=TIMESTAMP},
+      invoice_type = #{invoiceType,jdbcType=INTEGER},
+      invoice_state = #{invoiceState,jdbcType=INTEGER},
+      invoice_deliver_type_id = #{invoiceDeliverTypeId,jdbcType=BIGINT},
+      invoice_url = #{invoiceUrl,jdbcType=VARCHAR},
+      invoice_travel_url = #{invoiceTravelUrl,jdbcType=VARCHAR}
+    where invoice_id = #{invoiceId,jdbcType=BIGINT}
+  </update>
+</mapper>

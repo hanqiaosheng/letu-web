@@ -1,0 +1,583 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.dao.FixedReturnMapper" >
+  <resultMap id="BaseResultMap" type="org.entity.dto.FixedReturn" >
+    <id column="fixed_return_id" property="fixedReturnId" jdbcType="BIGINT" />
+    <result column="fixed_return_lat" property="fixedReturnLat" jdbcType="DOUBLE" />
+    <result column="fixed_return_lng" property="fixedReturnLng" jdbcType="DOUBLE" />
+    <result column="fixed_return_distance" property="fixedReturnDistance" jdbcType="DOUBLE" />
+    <result column="fixed_return_models_id" property="fixedReturnModelsId" jdbcType="VARCHAR" />
+    <result column="fixed_return_name" property="fixedReturnName" jdbcType="VARCHAR" />
+    <result column="fixed_return_createtime" property="fixedReturnCreatetime" jdbcType="TIMESTAMP" />
+    <result column="fixed_return_admin_id" property="fixedReturnAdminId" jdbcType="BIGINT" />
+    <result column="fixed_return_state" property="fixedReturnState" jdbcType="INTEGER" />
+    <result column="fixed_return_brief" property="fixedReturnBrief" jdbcType="VARCHAR" />
+    <result column="fixed_return_tel" property="fixedReturnTel" jdbcType="VARCHAR" />
+    <result column="fixed_return_image" property="fixedReturnImage" jdbcType="VARCHAR" />
+    <result column="fixed_return_block_id" property="fixedReturnBlockId" jdbcType="BIGINT" />
+    <result column="fixed_return_channel_id" property="fixedReturnChannelId" jdbcType="BIGINT" />
+    <result column="fixed_return_bike_num" property="fixedReturnBikeNum" jdbcType="INTEGER" />
+    <result column="fixed_return_originator_id" property="fixedReturnOriginatorId" jdbcType="BIGINT" />
+    <result column="fixed_return_fixed_time" property="fixedReturnFixedTime" jdbcType="TIMESTAMP" />
+    <result column="fixed_return_block" property="fixedReturnBlock" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="org.entity.dto.FixedReturn" extends="BaseResultMap" >
+    <result column="fixed_return_content" property="fixedReturnContent" jdbcType="LONGVARCHAR" />
+  </resultMap>
+   <resultMap id="LatLngMap" type="org.entity.dto.LatLng" >
+    <id column="fixed_return_id" property="fixedReturnId" jdbcType="BIGINT" />
+    <result column="fixed_return_lat" property="lat" jdbcType="DOUBLE" />
+    <result column="fixed_return_lng" property="lng" jdbcType="DOUBLE" />
+    <result column="fixed_return_content" property="fixedReturnContent" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <resultMap id="BaseUnionResultMap" type="org.entity.dto.FixedReturn" extends="BaseResultMap">
+   <association property="channel" javaType="org.entity.dto.Channel">
+    <id column="channel_id" property="channelId" jdbcType="BIGINT" />
+    <result column="channel_name" property="channelName" jdbcType="VARCHAR" />
+    <result column="channel_charger_name" property="channelChargerName" jdbcType="VARCHAR" />
+    <result column="channel_charger_tel" property="channelChargerTel" jdbcType="VARCHAR" />
+    <result column="channel_charger_adminId" property="channelChargerAdminid" jdbcType="BIGINT" />
+    <result column="channel_state" property="channelState" jdbcType="INTEGER" />
+    <result column="channel_level" property="channelLevel" jdbcType="INTEGER" />
+    <result column="channel_parent_id" property="channelParentId" jdbcType="BIGINT" />
+    <result column="channel_num" property="channelNum" jdbcType="VARCHAR" />
+   </association>
+   <association property="admin" javaType="org.entity.dto.Admin">
+    <id column="admin_id" property="adminId" jdbcType="BIGINT" />
+    <result column="admin_channel_id" property="adminChannelId" jdbcType="BIGINT" />
+    <result column="admin_username" property="adminUsername" jdbcType="VARCHAR" />
+    <result column="admin_pwd" property="adminPwd" jdbcType="VARCHAR" />
+    <result column="admin_realname" property="adminRealname" jdbcType="VARCHAR" />
+    <result column="admin_tel" property="adminTel" jdbcType="VARCHAR" />
+    <result column="admin_reg_time" property="adminRegTime" jdbcType="DATE" />
+    <result column="admin_state" property="adminState" jdbcType="INTEGER" />
+    <result column="admin_salt" property="adminSalt" jdbcType="VARCHAR" />
+    <result column="admin_district_code" property="adminDistrictCode" jdbcType="VARCHAR" />
+    <result column="admin_create_adminId" property="adminCreateAdminid" jdbcType="BIGINT" />
+    <result column="admin_create_email" property="adminCreateEmail" jdbcType="VARCHAR" />
+   </association>
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    fixed_return_id, fixed_return_lat, fixed_return_lng, fixed_return_distance, fixed_return_models_id, 
+    fixed_return_name, fixed_return_createtime, fixed_return_admin_id, fixed_return_state, 
+    fixed_return_brief, fixed_return_tel, fixed_return_image, fixed_return_block_id, 
+    fixed_return_channel_id, fixed_return_bike_num, fixed_return_originator_id, fixed_return_fixed_time, 
+    fixed_return_block
+  </sql>
+  <sql id="Blob_Column_List" >
+    fixed_return_content
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="org.entity.dto.FixedReturnExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from fixed_return
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="org.entity.dto.FixedReturnExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from fixed_return
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="limitStart != null and limitStart>=0" >
+      limit #{limitStart} , #{limitEnd}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from fixed_return
+    where fixed_return_id = #{fixedReturnId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from fixed_return
+    where fixed_return_id = #{fixedReturnId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="org.entity.dto.FixedReturnExample" >
+    delete from fixed_return
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="org.entity.dto.FixedReturn" >
+    insert into fixed_return (fixed_return_id, fixed_return_lat, fixed_return_lng, 
+      fixed_return_distance, fixed_return_models_id, 
+      fixed_return_name, fixed_return_createtime, 
+      fixed_return_admin_id, fixed_return_state, fixed_return_brief, 
+      fixed_return_tel, fixed_return_image, fixed_return_block_id, 
+      fixed_return_channel_id, fixed_return_bike_num, 
+      fixed_return_originator_id, fixed_return_fixed_time, 
+      fixed_return_content,fixed_return_block)
+    values (#{fixedReturnId,jdbcType=BIGINT}, #{fixedReturnLat,jdbcType=DOUBLE}, #{fixedReturnLng,jdbcType=DOUBLE}, 
+      #{fixedReturnDistance,jdbcType=DOUBLE}, #{fixedReturnModelsId,jdbcType=VARCHAR}, 
+      #{fixedReturnName,jdbcType=VARCHAR}, #{fixedReturnCreatetime,jdbcType=TIMESTAMP}, 
+      #{fixedReturnAdminId,jdbcType=BIGINT}, #{fixedReturnState,jdbcType=INTEGER}, #{fixedReturnBrief,jdbcType=VARCHAR}, 
+      #{fixedReturnTel,jdbcType=VARCHAR}, #{fixedReturnImage,jdbcType=VARCHAR}, #{fixedReturnBlockId,jdbcType=BIGINT}, 
+      #{fixedReturnChannelId,jdbcType=BIGINT}, #{fixedReturnBikeNum,jdbcType=INTEGER}, 
+      #{fixedReturnOriginatorId,jdbcType=BIGINT}, #{fixedReturnFixedTime,jdbcType=TIMESTAMP}, 
+      #{fixedReturnContent,jdbcType=LONGVARCHAR},#{fixedReturnBlock,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="org.entity.dto.FixedReturn" >
+    insert into fixed_return
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="fixedReturnId != null" >
+        fixed_return_id,
+      </if>
+      <if test="fixedReturnLat != null" >
+        fixed_return_lat,
+      </if>
+      <if test="fixedReturnLng != null" >
+        fixed_return_lng,
+      </if>
+      <if test="fixedReturnDistance != null" >
+        fixed_return_distance,
+      </if>
+      <if test="fixedReturnModelsId != null" >
+        fixed_return_models_id,
+      </if>
+      <if test="fixedReturnName != null" >
+        fixed_return_name,
+      </if>
+      <if test="fixedReturnCreatetime != null" >
+        fixed_return_createtime,
+      </if>
+      <if test="fixedReturnAdminId != null" >
+        fixed_return_admin_id,
+      </if>
+      <if test="fixedReturnState != null" >
+        fixed_return_state,
+      </if>
+      <if test="fixedReturnBrief != null" >
+        fixed_return_brief,
+      </if>
+      <if test="fixedReturnTel != null" >
+        fixed_return_tel,
+      </if>
+      <if test="fixedReturnImage != null" >
+        fixed_return_image,
+      </if>
+      <if test="fixedReturnBlockId != null" >
+        fixed_return_block_id,
+      </if>
+      <if test="fixedReturnChannelId != null" >
+        fixed_return_channel_id,
+      </if>
+      <if test="fixedReturnBikeNum != null" >
+        fixed_return_bike_num,
+      </if>
+      <if test="fixedReturnOriginatorId != null" >
+        fixed_return_originator_id,
+      </if>
+      <if test="fixedReturnFixedTime != null" >
+        fixed_return_fixed_time,
+      </if>
+      <if test="fixedReturnBlock != null" >
+        fixed_return_block,
+      </if>
+      <if test="fixedReturnContent != null" >
+        fixed_return_content,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="fixedReturnId != null" >
+        #{fixedReturnId,jdbcType=BIGINT},
+      </if>
+      <if test="fixedReturnLat != null" >
+        #{fixedReturnLat,jdbcType=DOUBLE},
+      </if>
+      <if test="fixedReturnLng != null" >
+        #{fixedReturnLng,jdbcType=DOUBLE},
+      </if>
+      <if test="fixedReturnDistance != null" >
+        #{fixedReturnDistance,jdbcType=DOUBLE},
+      </if>
+      <if test="fixedReturnModelsId != null" >
+        #{fixedReturnModelsId,jdbcType=VARCHAR},
+      </if>
+      <if test="fixedReturnName != null" >
+        #{fixedReturnName,jdbcType=VARCHAR},
+      </if>
+      <if test="fixedReturnCreatetime != null" >
+        #{fixedReturnCreatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="fixedReturnAdminId != null" >
+        #{fixedReturnAdminId,jdbcType=BIGINT},
+      </if>
+      <if test="fixedReturnState != null" >
+        #{fixedReturnState,jdbcType=INTEGER},
+      </if>
+      <if test="fixedReturnBrief != null" >
+        #{fixedReturnBrief,jdbcType=VARCHAR},
+      </if>
+      <if test="fixedReturnTel != null" >
+        #{fixedReturnTel,jdbcType=VARCHAR},
+      </if>
+      <if test="fixedReturnImage != null" >
+        #{fixedReturnImage,jdbcType=VARCHAR},
+      </if>
+      <if test="fixedReturnBlockId != null" >
+        #{fixedReturnBlockId,jdbcType=BIGINT},
+      </if>
+      <if test="fixedReturnChannelId != null" >
+        #{fixedReturnChannelId,jdbcType=BIGINT},
+      </if>
+      <if test="fixedReturnBikeNum != null" >
+        #{fixedReturnBikeNum,jdbcType=INTEGER},
+      </if>
+      <if test="fixedReturnOriginatorId != null" >
+        #{fixedReturnOriginatorId,jdbcType=BIGINT},
+      </if>
+      <if test="fixedReturnFixedTime != null" >
+        #{fixedReturnFixedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="fixedReturnBlock != null" >
+        #{fixedReturnBlock,jdbcType=VARCHAR},
+      </if>
+      <if test="fixedReturnContent != null" >
+        #{fixedReturnContent,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="org.entity.dto.FixedReturnExample" resultType="java.lang.Integer" >
+    select count(*) from fixed_return
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update fixed_return
+    <set >
+      <if test="record.fixedReturnId != null" >
+        fixed_return_id = #{record.fixedReturnId,jdbcType=BIGINT},
+      </if>
+      <if test="record.fixedReturnLat != null" >
+        fixed_return_lat = #{record.fixedReturnLat,jdbcType=DOUBLE},
+      </if>
+      <if test="record.fixedReturnLng != null" >
+        fixed_return_lng = #{record.fixedReturnLng,jdbcType=DOUBLE},
+      </if>
+      <if test="record.fixedReturnDistance != null" >
+        fixed_return_distance = #{record.fixedReturnDistance,jdbcType=DOUBLE},
+      </if>
+      <if test="record.fixedReturnModelsId != null" >
+        fixed_return_models_id = #{record.fixedReturnModelsId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fixedReturnName != null" >
+        fixed_return_name = #{record.fixedReturnName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fixedReturnCreatetime != null" >
+        fixed_return_createtime = #{record.fixedReturnCreatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.fixedReturnAdminId != null" >
+        fixed_return_admin_id = #{record.fixedReturnAdminId,jdbcType=BIGINT},
+      </if>
+      <if test="record.fixedReturnState != null" >
+        fixed_return_state = #{record.fixedReturnState,jdbcType=INTEGER},
+      </if>
+      <if test="record.fixedReturnBrief != null" >
+        fixed_return_brief = #{record.fixedReturnBrief,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fixedReturnTel != null" >
+        fixed_return_tel = #{record.fixedReturnTel,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fixedReturnImage != null" >
+        fixed_return_image = #{record.fixedReturnImage,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fixedReturnBlockId != null" >
+        fixed_return_block_id = #{record.fixedReturnBlockId,jdbcType=BIGINT},
+      </if>
+      <if test="record.fixedReturnChannelId != null" >
+        fixed_return_channel_id = #{record.fixedReturnChannelId,jdbcType=BIGINT},
+      </if>
+      <if test="record.fixedReturnBikeNum != null" >
+        fixed_return_bike_num = #{record.fixedReturnBikeNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.fixedReturnOriginatorId != null" >
+        fixed_return_originator_id = #{record.fixedReturnOriginatorId,jdbcType=BIGINT},
+      </if>
+      <if test="record.fixedReturnFixedTime != null" >
+        fixed_return_fixed_time = #{record.fixedReturnFixedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.fixedReturnBlock != null" >
+        fixed_return_block = #{record.fixedReturnBlock,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fixedReturnContent != null" >
+        fixed_return_content = #{record.fixedReturnContent,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update fixed_return
+    set fixed_return_id = #{record.fixedReturnId,jdbcType=BIGINT},
+      fixed_return_lat = #{record.fixedReturnLat,jdbcType=DOUBLE},
+      fixed_return_lng = #{record.fixedReturnLng,jdbcType=DOUBLE},
+      fixed_return_distance = #{record.fixedReturnDistance,jdbcType=DOUBLE},
+      fixed_return_models_id = #{record.fixedReturnModelsId,jdbcType=VARCHAR},
+      fixed_return_name = #{record.fixedReturnName,jdbcType=VARCHAR},
+      fixed_return_createtime = #{record.fixedReturnCreatetime,jdbcType=TIMESTAMP},
+      fixed_return_admin_id = #{record.fixedReturnAdminId,jdbcType=BIGINT},
+      fixed_return_state = #{record.fixedReturnState,jdbcType=INTEGER},
+      fixed_return_brief = #{record.fixedReturnBrief,jdbcType=VARCHAR},
+      fixed_return_tel = #{record.fixedReturnTel,jdbcType=VARCHAR},
+      fixed_return_image = #{record.fixedReturnImage,jdbcType=VARCHAR},
+      fixed_return_block_id = #{record.fixedReturnBlockId,jdbcType=BIGINT},
+      fixed_return_channel_id = #{record.fixedReturnChannelId,jdbcType=BIGINT},
+      fixed_return_bike_num = #{record.fixedReturnBikeNum,jdbcType=INTEGER},
+      fixed_return_originator_id = #{record.fixedReturnOriginatorId,jdbcType=BIGINT},
+      fixed_return_fixed_time = #{record.fixedReturnFixedTime,jdbcType=TIMESTAMP},
+      fixed_return_block = #{record.fixedReturnBlock,jdbcType=VARCHAR},
+      fixed_return_content = #{record.fixedReturnContent,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update fixed_return
+    set fixed_return_id = #{record.fixedReturnId,jdbcType=BIGINT},
+      fixed_return_lat = #{record.fixedReturnLat,jdbcType=DOUBLE},
+      fixed_return_lng = #{record.fixedReturnLng,jdbcType=DOUBLE},
+      fixed_return_distance = #{record.fixedReturnDistance,jdbcType=DOUBLE},
+      fixed_return_models_id = #{record.fixedReturnModelsId,jdbcType=VARCHAR},
+      fixed_return_name = #{record.fixedReturnName,jdbcType=VARCHAR},
+      fixed_return_createtime = #{record.fixedReturnCreatetime,jdbcType=TIMESTAMP},
+      fixed_return_admin_id = #{record.fixedReturnAdminId,jdbcType=BIGINT},
+      fixed_return_state = #{record.fixedReturnState,jdbcType=INTEGER},
+      fixed_return_brief = #{record.fixedReturnBrief,jdbcType=VARCHAR},
+      fixed_return_tel = #{record.fixedReturnTel,jdbcType=VARCHAR},
+      fixed_return_image = #{record.fixedReturnImage,jdbcType=VARCHAR},
+      fixed_return_block_id = #{record.fixedReturnBlockId,jdbcType=BIGINT},
+      fixed_return_channel_id = #{record.fixedReturnChannelId,jdbcType=BIGINT},
+      fixed_return_bike_num = #{record.fixedReturnBikeNum,jdbcType=INTEGER},
+      fixed_return_originator_id = #{record.fixedReturnOriginatorId,jdbcType=BIGINT},
+      fixed_return_fixed_time = #{record.fixedReturnFixedTime,jdbcType=TIMESTAMP},
+      fixed_return_block = #{record.fixedReturnBlock,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="org.entity.dto.FixedReturn" >
+    update fixed_return
+    <set >
+      <if test="fixedReturnLat != null" >
+        fixed_return_lat = #{fixedReturnLat,jdbcType=DOUBLE},
+      </if>
+      <if test="fixedReturnLng != null" >
+        fixed_return_lng = #{fixedReturnLng,jdbcType=DOUBLE},
+      </if>
+      <if test="fixedReturnDistance != null" >
+        fixed_return_distance = #{fixedReturnDistance,jdbcType=DOUBLE},
+      </if>
+      <if test="fixedReturnModelsId != null" >
+        fixed_return_models_id = #{fixedReturnModelsId,jdbcType=VARCHAR},
+      </if>
+      <if test="fixedReturnName != null" >
+        fixed_return_name = #{fixedReturnName,jdbcType=VARCHAR},
+      </if>
+      <if test="fixedReturnCreatetime != null" >
+        fixed_return_createtime = #{fixedReturnCreatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="fixedReturnAdminId != null" >
+        fixed_return_admin_id = #{fixedReturnAdminId,jdbcType=BIGINT},
+      </if>
+      <if test="fixedReturnState != null" >
+        fixed_return_state = #{fixedReturnState,jdbcType=INTEGER},
+      </if>
+      <if test="fixedReturnBrief != null" >
+        fixed_return_brief = #{fixedReturnBrief,jdbcType=VARCHAR},
+      </if>
+      <if test="fixedReturnTel != null" >
+        fixed_return_tel = #{fixedReturnTel,jdbcType=VARCHAR},
+      </if>
+      <if test="fixedReturnImage != null" >
+        fixed_return_image = #{fixedReturnImage,jdbcType=VARCHAR},
+      </if>
+      <if test="fixedReturnBlockId != null" >
+        fixed_return_block_id = #{fixedReturnBlockId,jdbcType=BIGINT},
+      </if>
+      <if test="fixedReturnChannelId != null" >
+        fixed_return_channel_id = #{fixedReturnChannelId,jdbcType=BIGINT},
+      </if>
+      <if test="fixedReturnBikeNum != null" >
+        fixed_return_bike_num = #{fixedReturnBikeNum,jdbcType=INTEGER},
+      </if>
+      <if test="fixedReturnOriginatorId != null" >
+        fixed_return_originator_id = #{fixedReturnOriginatorId,jdbcType=BIGINT},
+      </if>
+      <if test="fixedReturnFixedTime != null" >
+        fixed_return_fixed_time = #{fixedReturnFixedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="fixedReturnBlock != null" >
+        fixed_return_block = #{fixedReturnBlock,jdbcType=VARCHAR},
+      </if>
+      <if test="fixedReturnContent != null" >
+        fixed_return_content = #{fixedReturnContent,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where fixed_return_id = #{fixedReturnId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="org.entity.dto.FixedReturn" >
+    update fixed_return
+    set fixed_return_lat = #{fixedReturnLat,jdbcType=DOUBLE},
+      fixed_return_lng = #{fixedReturnLng,jdbcType=DOUBLE},
+      fixed_return_distance = #{fixedReturnDistance,jdbcType=DOUBLE},
+      fixed_return_models_id = #{fixedReturnModelsId,jdbcType=VARCHAR},
+      fixed_return_name = #{fixedReturnName,jdbcType=VARCHAR},
+      fixed_return_createtime = #{fixedReturnCreatetime,jdbcType=TIMESTAMP},
+      fixed_return_admin_id = #{fixedReturnAdminId,jdbcType=BIGINT},
+      fixed_return_state = #{fixedReturnState,jdbcType=INTEGER},
+      fixed_return_brief = #{fixedReturnBrief,jdbcType=VARCHAR},
+      fixed_return_tel = #{fixedReturnTel,jdbcType=VARCHAR},
+      fixed_return_image = #{fixedReturnImage,jdbcType=VARCHAR},
+      fixed_return_block_id = #{fixedReturnBlockId,jdbcType=BIGINT},
+      fixed_return_channel_id = #{fixedReturnChannelId,jdbcType=BIGINT},
+      fixed_return_bike_num = #{fixedReturnBikeNum,jdbcType=INTEGER},
+      fixed_return_originator_id = #{fixedReturnOriginatorId,jdbcType=BIGINT},
+      fixed_return_fixed_time = #{fixedReturnFixedTime,jdbcType=TIMESTAMP},
+      fixed_return_block = #{fixedReturnBlock,jdbcType=VARCHAR},
+      fixed_return_content = #{fixedReturnContent,jdbcType=LONGVARCHAR}
+    where fixed_return_id = #{fixedReturnId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.entity.dto.FixedReturn" >
+    update fixed_return
+    set fixed_return_lat = #{fixedReturnLat,jdbcType=DOUBLE},
+      fixed_return_lng = #{fixedReturnLng,jdbcType=DOUBLE},
+      fixed_return_distance = #{fixedReturnDistance,jdbcType=DOUBLE},
+      fixed_return_models_id = #{fixedReturnModelsId,jdbcType=VARCHAR},
+      fixed_return_name = #{fixedReturnName,jdbcType=VARCHAR},
+      fixed_return_createtime = #{fixedReturnCreatetime,jdbcType=TIMESTAMP},
+      fixed_return_admin_id = #{fixedReturnAdminId,jdbcType=BIGINT},
+      fixed_return_state = #{fixedReturnState,jdbcType=INTEGER},
+      fixed_return_brief = #{fixedReturnBrief,jdbcType=VARCHAR},
+      fixed_return_tel = #{fixedReturnTel,jdbcType=VARCHAR},
+      fixed_return_image = #{fixedReturnImage,jdbcType=VARCHAR},
+      fixed_return_block_id = #{fixedReturnBlockId,jdbcType=BIGINT},
+      fixed_return_channel_id = #{fixedReturnChannelId,jdbcType=BIGINT},
+      fixed_return_bike_num = #{fixedReturnBikeNum,jdbcType=INTEGER},
+      fixed_return_originator_id = #{fixedReturnOriginatorId,jdbcType=BIGINT},
+      fixed_return_fixed_time = #{fixedReturnFixedTime,jdbcType=TIMESTAMP},
+      fixed_return_block = #{fixedReturnBlock,jdbcType=VARCHAR}
+    where fixed_return_id = #{fixedReturnId,jdbcType=BIGINT}
+  </update>
+  
+  <select id="selectFixedsLatLng" resultMap="LatLngMap" parameterType="org.entity.dto.FixedReturnExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    fixed_return_id,fixed_return_lat,fixed_return_lng,fixed_return_content
+    from fixed_return
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="limitStart != null and limitStart>=0" >
+      limit #{limitStart} , #{limitEnd}
+    </if>
+  </select>
+  
+  <select id="selectUnionByExample" resultMap="BaseUnionResultMap" parameterType="org.entity.dto.FixedReturnExample" >
+    select * from fixed_return fr left join channel c on fr.fixed_return_channel_id = c.channel_id
+                                  left join admin a on fr.fixed_return_originator_id = a.admin_id
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="limitStart != null and limitStart>=0" >
+      limit #{limitStart} , #{limitEnd}
+    </if>
+  </select>
+  
+   <select id="countUnionByExample" parameterType="org.entity.dto.FixedReturnExample" resultType="java.lang.Integer" >
+    select count(*) from fixed_return fr left join channel c on fr.fixed_return_channel_id = c.channel_id
+                                         left join admin a on fr.fixed_return_originator_id = a.admin_id
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  
+  
+</mapper>

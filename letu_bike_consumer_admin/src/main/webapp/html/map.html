@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta http-equiv="Access-Control-Allow-Origin" content="*">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="viewport" content="initial-scale=1, width=device-width, maximum-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-touch-fullscreen" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="format-detection" content="address=no">
+    <meta name="screen-orientation" content="portrait">
+    <meta name="x5-orientation" content="portrait">
+    <title>乐途</title>
+    <link rel="stylesheet" href="font/iconfont.css">
+    <link rel="stylesheet" href="css/animate.min.css">
+    <link rel="stylesheet" href="css/base.css">
+    <script type="text/javascript" src="js/zepto.min.js"></script>
+    <script type="text/javascript" src="js/fastclick.js"></script>
+    <link rel="stylesheet" href="js/dialog.css">
+    <script type="text/javascript" src="js/dialog.js"></script>
+    <script type="text/javascript" src="js/iscroll.js"></script>
+    <link rel="stylesheet" href="js/swiper-3.2.7.min.css">
+    <script type="text/javascript" src="js/swiper-3.2.7.jquery.min.js"></script>
+    <link rel="stylesheet" href="http://cache.amap.com/lbs/static/main.css?v=1.0"/>
+	<link rel="stylesheet" href="../map/AMap.WalkingRender1120.css"/>
+	<link rel="stylesheet" href="../map/map.css"/>
+	<script type="text/javascript" src="http://webapi.amap.com/maps?v=1.3&key=5d6fa7d0648f1101f5174c6bc2eb7e32&plugin=AMap.Walking,AMap.Autocomplete,AMap.PlaceSearch"></script>
+	<script type="text/javascript" src="../map/WalkingRender1230.js"></script>
+    <script type="text/javascript" src="js/path.js"></script>
+	<script type="text/javascript" src="js/mobile.js"></script>
+	<!-- 页面js -->
+	
+	
+</head>
+
+<body>
+   <div class="g-body mapbox">
+   <div id="mapContainer"></div>
+   <div class="fix-bottom map-bar">
+        <div class="scanbox flex-box"> <a class="guide" onclick="markerClick(this)">点我导航</a></div>
+    </div>
+</body>
+<script type="text/javascript">
+	var Lng,Lat,bikeid;
+    var map, geolocation,dragListener,clickListener;
+    var infoWindow = new AMap.InfoWindow({offset:new AMap.Pixel(-15,-53)});
+
+    //加载地图，调用浏览器定位服务
+    map = new AMap.Map('mapContainer', {
+      resizeEnable: true,
+      mapStyle:'light',
+      zoom: 15
+    });
+    
+    AMap.service('AMap.Geocoder',function(){//回调函数  加载插件   根据经纬获取地址
+        //实例化Geocoder
+        geocoder = new AMap.Geocoder({
+        });
+        //TODO: 使用geocoder 对象完成相关功能
+      })
+
+    
+    
+    bikeid=$.getQueryString('bikeid');
+    $.ajax({
+		type : "post",
+		url : '/api/bikeMessage/bikePosition.action',
+		async:false,
+		data :"bikeId="+bikeid,
+		dataType : 'json',
+		success : function(data) {
+			Lat=data.data.bike.bikeAtitude;
+			Lng=data.data.bike.bikeLongitude;
+		},
+		error:function(data){
+			reLogin(data);
+		}
+	});
+    var markerPosition = [Lng,Lat];
+    var icon = new AMap.Icon({
+        image: '/images/bike.png',
+        map:map,
+        size:new AMap.Size(45, 50.5),
+        imageSize: new AMap.Size(45, 50.5)
+      });
+    var marker = new AMap.Marker({
+      position: markerPosition,
+      icon: icon,
+      offset: {x: -22.5,y: -50.5},
+      zIndex:800
+    });
+    map.setCenter(markerPosition);
+    
+    marker.setMap(map);
+    
+    
+ function regeocoder() {  //逆地理编码
+    	
+        var geocoder = new AMap.Geocoder({
+            radius: 1000,
+            extensions: "base"
+        });        
+        geocoder.getAddress(markerPosition, function(status, result) {
+            if (status === 'complete' && result.info === 'OK') {
+                geocoder_CallBack(result);
+            }else{
+            	 infoWindow.setContent("无法获取地址");
+                 infoWindow.open(map, markerPosition);
+            }
+        });        
+    }
+    function geocoder_CallBack(data) {
+        var address = data.regeocode.formattedAddress.split("市",2)[1]; //返回地址描述
+        infoWindow.setContent("车辆位置:"+address);
+        infoWindow.open(map, markerPosition);
+    }
+    regeocoder();
+    
+    var geoPoint;//存放定位点的经纬度信息
+    map.plugin('AMap.Geolocation', function() {
+      geolocation = new AMap.Geolocation({
+            enableHighAccuracy: true,//是否使用高精度定位，默认:true
+            timeout: 1000,          //超过10秒后停止定位，默认：无穷大
+            buttonOffset: new AMap.Pixel(10,20),//定位按钮与设置的停靠位置的偏移量，默认：Pixel(10, 20)
+            buttonDom:'<div class="localmap"><i class="icon-focus"></i></div>',
+            showCircle: true,  
+            zoomToAccuracy: false,      //定位成功后调整地图视野范围使定位位置及精度范围视野内可见，默认：false
+            showMarker: false, 
+            buttonPosition:'LB'
+          });
+     // map.addControl(geolocation);
+      geolocation.getCurrentPosition();
+        AMap.event.addListener(geolocation, 'complete', onComplete);//返回定位信息
+        AMap.event.addListener(geolocation, 'error', onError);      //返回定位出错信息
+      });
+//    //解析定位结果
+    function onComplete(data) {
+       geoPoint=data.position;
+    }
+    
+  //解析定位错误信息
+    function onError(data) {
+     
+    }
+    
+    //步行路线规划
+    var walking = new AMap.Walking({
+     //map: map,
+     hideMarkers:true,//隐藏起点终点
+     //panel: "panel"//路线详情的显示
+   }); 
+    var route=new Lib.AMap.WalkingRender();
+    var lastMarker=null;
+    var time;
+    function markerClick(){//点击车辆后规划路线
+    	routeSearch(markerPosition,geoPoint);
+   }
+     map.setFitView();
+
+   function routeSearch(markerPosition,geoPoint){
+       	if(null==geoPoint)
+       		startPoint=map.getCenter();
+       	else
+       		startPoint=geoPoint;
+       walking.search(startPoint,markerPosition, function(status, result){
+         if(status === 'complete'){
+        	 walking.searchOnAMAP({
+                 origin:result.origin,
+                 destination:result.destination
+             });
+         }
+   });
+   }
+
+</script>
+</html>

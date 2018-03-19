@@ -1,0 +1,410 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.dao.BikeFixInfoMapper" >
+  <resultMap id="BaseResultMap" type="org.entity.dto.BikeFixInfo" >
+    <id column="fix_id" property="fixId" jdbcType="BIGINT" />
+    <result column="fix_bike_id" property="fixBikeId" jdbcType="BIGINT" />
+    <result column="fix_man" property="fixMan" jdbcType="VARCHAR" />
+    <result column="fix_tel" property="fixTel" jdbcType="VARCHAR" />
+    <result column="fix_starttime" property="fixStarttime" jdbcType="TIMESTAMP" />
+    <result column="fix_endtime" property="fixEndtime" jdbcType="TIMESTAMP" />
+    <result column="fix_longitude" property="fixLongitude" jdbcType="DOUBLE" />
+    <result column="fix_remark" property="fixRemark" jdbcType="VARCHAR" />
+    <result column="fix_batch_number" property="fixBatchNumber" jdbcType="VARCHAR" />
+    <result column="fix_atitude" property="fixAtitude" jdbcType="DOUBLE" />
+    <result column="fix_del" property="fixDel" jdbcType="INTEGER" />
+    <result column="fix_block_id" property="fixBlockId" jdbcType="BIGINT" />
+    <result column="fix_block" property="fixBlock" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="BaseUnionResultMap" type="org.entity.dto.BikeFixInfo" extends="BaseResultMap">
+  <association property="bike" javaType="org.entity.dto.Bike">
+    <id column="bike_id" property="bikeId" jdbcType="BIGINT" />
+    <result column="bike_manager_id" property="bikeManagerId" jdbcType="BIGINT" />
+    <result column="bike_admin_id" property="bikeAdminId" jdbcType="BIGINT" />
+    <result column="bike_block_id" property="bikeBlockId" jdbcType="BIGINT" />
+    <result column="bike_code" property="bikeCode" jdbcType="VARCHAR" />
+    <result column="bike_state" property="bikeState" jdbcType="INTEGER" />
+    <result column="bike_del" property="bikeDel" jdbcType="INTEGER" />
+    <result column="bike_address" property="bikeAddress" jdbcType="VARCHAR" />
+    <result column="bike_atitude" property="bikeAtitude" jdbcType="DOUBLE" />
+    <result column="bike_longitude" property="bikeLongitude" jdbcType="DOUBLE" />
+    <result column="bike_rent_num" property="bikeRentNum" jdbcType="INTEGER" />
+    <result column="bike_createtime" property="bikeCreatetime" jdbcType="TIMESTAMP" />
+    <result column="bike_batch_number" property="bikeBatchNumber" jdbcType="VARCHAR" />
+    <result column="bike_lock_id" property="bikeLockId" jdbcType="BIGINT" />
+    <result column="bike_chip_code" property="bikeChipCode" jdbcType="VARCHAR" />
+    <result column="bike_dynamotor_code" property="bikeDynamotorCode" jdbcType="VARCHAR" />
+    <result column="bike_put_time" property="bikePutTime" jdbcType="TIMESTAMP" />
+    <result column="bike_models_id" property="bikeModelsId" jdbcType="BIGINT" />
+    <result column="bike_last_rent_time" property="bikeLastRentTime" jdbcType="TIMESTAMP" />
+    <result column="bike_manager_name" property="bikeManagerName" jdbcType="VARCHAR" />
+    <result column="bike_manager_tel" property="bikeManagerTel" jdbcType="VARCHAR" />
+    <result column="bike_block" property="bikeBlock" jdbcType="VARCHAR" />
+    <association property="models" javaType="org.entity.dto.Models">
+     <id column="models_id" property="modelsId" jdbcType="BIGINT" />
+    <result column="models_code" property="modelsCode" jdbcType="VARCHAR" />
+    <result column="models_name" property="modelsName" jdbcType="VARCHAR" />
+    <result column="models_deposit" property="modelsDeposit" jdbcType="DECIMAL" />
+    <result column="models_content" property="modelsContent" jdbcType="VARCHAR" />
+    <result column="models_channel_id" property="modelsChannelId" jdbcType="BIGINT" />
+  </association>
+  </association>
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    fix_id, fix_bike_id, fix_man, fix_tel, fix_starttime, fix_endtime, fix_longitude, fix_remark, 
+    fix_batch_number, fix_atitude, fix_del, fix_block_id, fix_block
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="org.entity.dto.BikeFixInfoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from bike_fix_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="limitStart != null and limitStart>=0" >
+      limit #{limitStart} , #{limitEnd}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from bike_fix_info
+    where fix_id = #{fixId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from bike_fix_info
+    where fix_id = #{fixId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="org.entity.dto.BikeFixInfoExample" >
+    delete from bike_fix_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="org.entity.dto.BikeFixInfo" >
+    insert into bike_fix_info (fix_id, fix_bike_id, fix_man, 
+      fix_tel, fix_starttime, fix_endtime, 
+      fix_longitude, fix_remark, fix_batch_number, 
+      fix_atitude, fix_del, fix_block_id, 
+      fix_block)
+    values (#{fixId,jdbcType=BIGINT}, #{fixBikeId,jdbcType=BIGINT}, #{fixMan,jdbcType=VARCHAR}, 
+      #{fixTel,jdbcType=VARCHAR}, #{fixStarttime,jdbcType=TIMESTAMP}, #{fixEndtime,jdbcType=TIMESTAMP}, 
+      #{fixLongitude,jdbcType=DOUBLE}, #{fixRemark,jdbcType=VARCHAR}, #{fixBatchNumber,jdbcType=VARCHAR}, 
+      #{fixAtitude,jdbcType=DOUBLE}, #{fixDel,jdbcType=INTEGER}, #{fixBlockId,jdbcType=BIGINT}, 
+      #{fixBlock,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="org.entity.dto.BikeFixInfo" >
+    insert into bike_fix_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="fixId != null" >
+        fix_id,
+      </if>
+     <if test="fixBikeId != null" >
+        fix_bike_id,
+      </if>
+      <if test="fixMan != null" >
+        fix_man,
+      </if>
+      <if test="fixTel != null" >
+        fix_tel,
+      </if>
+      <if test="fixStarttime != null" >
+        fix_starttime,
+      </if>
+      <if test="fixEndtime != null" >
+        fix_endtime,
+      </if>
+      <if test="fixLongitude != null" >
+        fix_longitude,
+      </if>
+      <if test="fixRemark != null" >
+        fix_remark,
+      </if>
+      <if test="fixBatchNumber != null" >
+        fix_batch_number,
+      </if>
+      <if test="fixAtitude != null" >
+        fix_atitude,
+      </if>
+      <if test="fixDel != null" >
+        fix_del,
+      </if>
+      <if test="fixBlockId != null" >
+        fix_block_id,
+      </if>
+      <if test="fixBlock != null" >
+        fix_block,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="fixId != null" >
+        #{fixId,jdbcType=BIGINT},
+      </if>
+      <if test="fixBikeId != null" >
+        #{fixBikeId,jdbcType=BIGINT},
+      </if>
+      <if test="fixMan != null" >
+        #{fixMan,jdbcType=VARCHAR},
+      </if>
+      <if test="fixTel != null" >
+        #{fixTel,jdbcType=VARCHAR},
+      </if>
+      <if test="fixStarttime != null" >
+        #{fixStarttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="fixEndtime != null" >
+        #{fixEndtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="fixLongitude != null" >
+        #{fixLongitude,jdbcType=DOUBLE},
+      </if>
+      <if test="fixRemark != null" >
+        #{fixRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="fixBatchNumber != null" >
+        #{fixBatchNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="fixAtitude != null" >
+        #{fixAtitude,jdbcType=DOUBLE},
+      </if>
+      <if test="fixDel != null" >
+        #{fixDel,jdbcType=INTEGER},
+      </if>
+      <if test="fixBlockId != null" >
+        #{fixBlockId,jdbcType=BIGINT},
+      </if>
+      <if test="fixBlock != null" >
+        #{fixBlock,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="org.entity.dto.BikeFixInfoExample" resultType="java.lang.Integer" >
+    select count(*) from bike_fix_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update bike_fix_info
+    <set >
+      <if test="record.fixId != null" >
+        fix_id = #{record.fixId,jdbcType=BIGINT},
+      </if>
+      <if test="record.fixBikeId != null" >
+        fix_bike_id = #{record.fixBikeId,jdbcType=BIGINT},
+      </if>
+      <if test="record.fixMan != null" >
+        fix_man = #{record.fixMan,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fixTel != null" >
+        fix_tel = #{record.fixTel,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fixStarttime != null" >
+        fix_starttime = #{record.fixStarttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.fixEndtime != null" >
+        fix_endtime = #{record.fixEndtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.fixLongitude != null" >
+        fix_longitude = #{record.fixLongitude,jdbcType=DOUBLE},
+      </if>
+      <if test="record.fixRemark != null" >
+        fix_remark = #{record.fixRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fixBatchNumber != null" >
+        fix_batch_number = #{record.fixBatchNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fixAtitude != null" >
+        fix_atitude = #{record.fixAtitude,jdbcType=DOUBLE},
+      </if>
+      <if test="record.fixDel != null" >
+        fix_del = #{record.fixDel,jdbcType=INTEGER},
+      </if>
+      <if test="record.fixBlockId != null" >
+        fix_block_id = #{record.fixBlockId,jdbcType=BIGINT},
+      </if>
+      <if test="record.fixBlock != null" >
+        fix_block = #{record.fixBlock,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update bike_fix_info
+    set fix_id = #{record.fixId,jdbcType=BIGINT},
+      fix_bike_id = #{record.fixBikeId,jdbcType=BIGINT},
+      fix_man = #{record.fixMan,jdbcType=VARCHAR},
+      fix_tel = #{record.fixTel,jdbcType=VARCHAR},
+      fix_starttime = #{record.fixStarttime,jdbcType=TIMESTAMP},
+      fix_endtime = #{record.fixEndtime,jdbcType=TIMESTAMP},
+      fix_longitude = #{record.fixLongitude,jdbcType=DOUBLE},
+      fix_remark = #{record.fixRemark,jdbcType=VARCHAR},
+      fix_batch_number = #{record.fixBatchNumber,jdbcType=VARCHAR},
+      fix_atitude = #{record.fixAtitude,jdbcType=DOUBLE},
+      fix_del = #{record.fixDel,jdbcType=INTEGER},
+      fix_block_id = #{record.fixBlockId,jdbcType=BIGINT},
+      fix_block = #{record.fixBlock,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="org.entity.dto.BikeFixInfo" >
+    update bike_fix_info
+    <set >
+      <if test="fixBikeId != null" >
+        fix_bike_id = #{fixBikeId,jdbcType=BIGINT},
+      </if>
+      <if test="fixMan != null" >
+        fix_man = #{fixMan,jdbcType=VARCHAR},
+      </if>
+      <if test="fixTel != null" >
+        fix_tel = #{fixTel,jdbcType=VARCHAR},
+      </if>
+      <if test="fixStarttime != null" >
+        fix_starttime = #{fixStarttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="fixEndtime != null" >
+        fix_endtime = #{fixEndtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="fixLongitude != null" >
+        fix_longitude = #{fixLongitude,jdbcType=DOUBLE},
+      </if>
+      <if test="fixRemark != null" >
+        fix_remark = #{fixRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="fixBatchNumber != null" >
+        fix_batch_number = #{fixBatchNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="fixAtitude != null" >
+        fix_atitude = #{fixAtitude,jdbcType=DOUBLE},
+      </if>
+      <if test="fixDel != null" >
+        fix_del = #{fixDel,jdbcType=INTEGER},
+      </if>
+      <if test="fixBlockId != null" >
+        fix_block_id = #{fixBlockId,jdbcType=BIGINT},
+      </if>
+      <if test="fixBlock != null" >
+        fix_block = #{fixBlock,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where fix_id = #{fixId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.entity.dto.BikeFixInfo" >
+    update bike_fix_info
+    set fix_bike_id = #{fixBikeId,jdbcType=BIGINT},
+      fix_man = #{fixMan,jdbcType=VARCHAR},
+      fix_tel = #{fixTel,jdbcType=VARCHAR},
+      fix_starttime = #{fixStarttime,jdbcType=TIMESTAMP},
+      fix_endtime = #{fixEndtime,jdbcType=TIMESTAMP},
+      fix_longitude = #{fixLongitude,jdbcType=DOUBLE},
+      fix_remark = #{fixRemark,jdbcType=VARCHAR},
+      fix_batch_number = #{fixBatchNumber,jdbcType=VARCHAR},
+      fix_atitude = #{fixAtitude,jdbcType=DOUBLE},
+      fix_del = #{fixDel,jdbcType=INTEGER},
+      fix_block_id = #{fixBlockId,jdbcType=BIGINT},
+      fix_block = #{fixBlock,jdbcType=VARCHAR}
+    where fix_id = #{fixId,jdbcType=BIGINT}
+  </update>
+  
+   <select id="selectUnionByExample" resultMap="BaseUnionResultMap" parameterType="org.entity.dto.BikeFixInfoExample" >
+    select * from bike_fix_info bfi left join bike b on bfi.fix_bike_id = b.bike_id
+     left join models m on m.models_id = b.bike_models_id
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="limitStart != null and limitStart>=0" >
+      limit #{limitStart} , #{limitEnd}
+    </if>
+  </select>
+  
+  <select id="countUnionByExample" parameterType="org.entity.dto.BikeFixInfoExample" resultType="java.lang.Integer" >
+    select count(*) from bike_fix_info bfi left join bike b on bfi.fix_bike_id = b.bike_id
+    left join models m on m.models_id = b.bike_models_id     
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  
+  <select id="selectMaxBatch" resultType="java.lang.String" parameterType="java.lang.Long">
+    select max(fix_batch_number+0) from bike_fix_info 
+  </select>
+  
+  <select id="selectMaxDate" resultType="java.lang.String" parameterType="java.lang.Long">
+    select max(fix_endtime) from bike_fix_info where fix_bike_id = #{fixBikeId,jdbcType=BIGINT}
+  </select>
+  
+  <select id="selectBatchNumber" resultMap="BaseResultMap" parameterType="org.entity.dto.BikeFixInfoExample">
+  SELECT DISTINCT fix_batch_number FROM bike_fix_info
+  </select>
+  
+</mapper>

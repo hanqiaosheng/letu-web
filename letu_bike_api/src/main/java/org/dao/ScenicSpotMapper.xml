@@ -1,0 +1,548 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.dao.ScenicSpotMapper" >
+  <resultMap id="BaseResultMap" type="org.entity.dto.ScenicSpot" >
+    <id column="scenic_spot_id" property="scenicSpotId" jdbcType="BIGINT" />
+    <result column="scenic_spot_name" property="scenicSpotName" jdbcType="VARCHAR" />
+    <result column="scenic_spot_image" property="scenicSpotImage" jdbcType="VARCHAR" />
+    <result column="scenic_spot_city_id" property="scenicSpotCityId" jdbcType="BIGINT" />
+    <result column="scenic_spot_tag" property="scenicSpotTag" jdbcType="VARCHAR" />
+    <result column="scenic_spot_distance" property="scenicSpotDistance" jdbcType="DOUBLE" />
+    <result column="scenic_spot_state" property="scenicSpotState" jdbcType="INTEGER" />
+    <result column="scenic_spot_create_time" property="scenicSpotCreateTime" jdbcType="TIMESTAMP" />
+    <result column="scenic_spot_top_num" property="scenicSpotTopNum" jdbcType="INTEGER" />
+    <result column="scenic_spot_type" property="scenicSpotType" jdbcType="INTEGER" />
+    <result column="scenic_spot_lng" property="scenicSpotLng" jdbcType="DOUBLE" />
+    <result column="scenic_spot_lat" property="scenicSpotLat" jdbcType="DOUBLE" />
+    <result column="scenic_spot_channel_id" property="scenicSpotChannelId" jdbcType="BIGINT" />
+    <result column="scenic_spot_update_time" property="scenicSpotUpdateTime" jdbcType="TIMESTAMP" />
+    <result column="scenic_spot_detail_image" property="scenicSpotDetailImage" jdbcType="VARCHAR" />
+    <result column="scenic_spot_is_all" property="scenicSpotIsAll" jdbcType="INTEGER" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="org.entity.dto.ScenicSpot" extends="BaseResultMap" >
+    <result column="scenic_spot_msg" property="scenicSpotMsg" jdbcType="LONGVARCHAR" />
+    <result column="scenic_spot_content" property="scenicSpotContent" jdbcType="LONGVARCHAR" />
+    <result column="scenic_spot_policy" property="scenicSpotPolicy" jdbcType="LONGVARCHAR" />
+    <result column="scenic_spot_open_time" property="scenicSpotOpenTime" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <resultMap id="BaseUnionResultMap" type="org.entity.dto.ScenicSpot" extends="ResultMapWithBLOBs">
+    <association property="city" javaType="org.entity.dto.City">
+	    <id column="city_id" property="cityId" jdbcType="BIGINT" />
+	    <result column="city_name" property="cityName" jdbcType="VARCHAR" />
+	    <result column="city_of_province_id" property="cityOfProvinceId" jdbcType="BIGINT" />
+	    <result column="city_code" property="cityCode" jdbcType="VARCHAR" />
+	    <result column="city_center_lng" property="cityCenterLng" jdbcType="DOUBLE" />
+	    <result column="city_center_lat" property="cityCenterLat" jdbcType="DOUBLE" />
+    </association>
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    scenic_spot_id, scenic_spot_name, scenic_spot_image, scenic_spot_city_id, scenic_spot_tag, 
+    scenic_spot_distance, scenic_spot_state, scenic_spot_create_time, scenic_spot_top_num, 
+    scenic_spot_type, scenic_spot_lng, scenic_spot_lat, scenic_spot_channel_id, scenic_spot_update_time, 
+    scenic_spot_detail_image, scenic_spot_is_all
+  </sql>
+  <sql id="Blob_Column_List" >
+    scenic_spot_msg, scenic_spot_content, scenic_spot_policy, scenic_spot_open_time
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="org.entity.dto.ScenicSpotExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from scenic_spot
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="org.entity.dto.ScenicSpotExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from scenic_spot
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="limitStart != null and limitStart>=0" >
+      limit #{limitStart} , #{limitEnd}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from scenic_spot
+    where scenic_spot_id = #{scenicSpotId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from scenic_spot
+    where scenic_spot_id = #{scenicSpotId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="org.entity.dto.ScenicSpotExample" >
+    delete from scenic_spot
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="org.entity.dto.ScenicSpot" >
+    insert into scenic_spot (scenic_spot_id, scenic_spot_name, scenic_spot_image, 
+      scenic_spot_city_id, scenic_spot_tag, scenic_spot_distance, 
+      scenic_spot_state, scenic_spot_create_time, 
+      scenic_spot_top_num, scenic_spot_type, scenic_spot_lng, 
+      scenic_spot_lat, scenic_spot_channel_id, scenic_spot_update_time, 
+      scenic_spot_detail_image, scenic_spot_is_all, scenic_spot_msg, 
+      scenic_spot_content, scenic_spot_policy, 
+      scenic_spot_open_time)
+    values (#{scenicSpotId,jdbcType=BIGINT}, #{scenicSpotName,jdbcType=VARCHAR}, #{scenicSpotImage,jdbcType=VARCHAR}, 
+      #{scenicSpotCityId,jdbcType=BIGINT}, #{scenicSpotTag,jdbcType=VARCHAR}, #{scenicSpotDistance,jdbcType=DOUBLE}, 
+      #{scenicSpotState,jdbcType=INTEGER}, #{scenicSpotCreateTime,jdbcType=TIMESTAMP}, 
+      #{scenicSpotTopNum,jdbcType=INTEGER}, #{scenicSpotType,jdbcType=INTEGER}, #{scenicSpotLng,jdbcType=DOUBLE}, 
+      #{scenicSpotLat,jdbcType=DOUBLE}, #{scenicSpotChannelId,jdbcType=BIGINT}, #{scenicSpotUpdateTime,jdbcType=TIMESTAMP}, 
+      #{scenicSpotDetailImage,jdbcType=VARCHAR}, #{scenicSpotIsAll,jdbcType=INTEGER}, #{scenicSpotMsg,jdbcType=LONGVARCHAR}, 
+      #{scenicSpotContent,jdbcType=LONGVARCHAR}, #{scenicSpotPolicy,jdbcType=LONGVARCHAR}, 
+      #{scenicSpotOpenTime,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="org.entity.dto.ScenicSpot" >
+    insert into scenic_spot
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="scenicSpotId != null" >
+        scenic_spot_id,
+      </if>
+      <if test="scenicSpotName != null" >
+        scenic_spot_name,
+      </if>
+      <if test="scenicSpotImage != null" >
+        scenic_spot_image,
+      </if>
+      <if test="scenicSpotCityId != null" >
+        scenic_spot_city_id,
+      </if>
+      <if test="scenicSpotTag != null" >
+        scenic_spot_tag,
+      </if>
+      <if test="scenicSpotDistance != null" >
+        scenic_spot_distance,
+      </if>
+      <if test="scenicSpotState != null" >
+        scenic_spot_state,
+      </if>
+      <if test="scenicSpotCreateTime != null" >
+        scenic_spot_create_time,
+      </if>
+      <if test="scenicSpotTopNum != null" >
+        scenic_spot_top_num,
+      </if>
+      <if test="scenicSpotType != null" >
+        scenic_spot_type,
+      </if>
+      <if test="scenicSpotLng != null" >
+        scenic_spot_lng,
+      </if>
+      <if test="scenicSpotLat != null" >
+        scenic_spot_lat,
+      </if>
+      <if test="scenicSpotChannelId != null" >
+        scenic_spot_channel_id,
+      </if>
+      <if test="scenicSpotUpdateTime != null" >
+        scenic_spot_update_time,
+      </if>
+      <if test="scenicSpotDetailImage != null" >
+        scenic_spot_detail_image,
+      </if>
+      <if test="scenicSpotIsAll != null" >
+        scenic_spot_is_all,
+      </if>
+      <if test="scenicSpotMsg != null" >
+        scenic_spot_msg,
+      </if>
+      <if test="scenicSpotContent != null" >
+        scenic_spot_content,
+      </if>
+      <if test="scenicSpotPolicy != null" >
+        scenic_spot_policy,
+      </if>
+      <if test="scenicSpotOpenTime != null" >
+        scenic_spot_open_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="scenicSpotId != null" >
+        #{scenicSpotId,jdbcType=BIGINT},
+      </if>
+      <if test="scenicSpotName != null" >
+        #{scenicSpotName,jdbcType=VARCHAR},
+      </if>
+      <if test="scenicSpotImage != null" >
+        #{scenicSpotImage,jdbcType=VARCHAR},
+      </if>
+      <if test="scenicSpotCityId != null" >
+        #{scenicSpotCityId,jdbcType=BIGINT},
+      </if>
+      <if test="scenicSpotTag != null" >
+        #{scenicSpotTag,jdbcType=VARCHAR},
+      </if>
+      <if test="scenicSpotDistance != null" >
+        #{scenicSpotDistance,jdbcType=DOUBLE},
+      </if>
+      <if test="scenicSpotState != null" >
+        #{scenicSpotState,jdbcType=INTEGER},
+      </if>
+      <if test="scenicSpotCreateTime != null" >
+        #{scenicSpotCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="scenicSpotTopNum != null" >
+        #{scenicSpotTopNum,jdbcType=INTEGER},
+      </if>
+      <if test="scenicSpotType != null" >
+        #{scenicSpotType,jdbcType=INTEGER},
+      </if>
+      <if test="scenicSpotLng != null" >
+        #{scenicSpotLng,jdbcType=DOUBLE},
+      </if>
+      <if test="scenicSpotLat != null" >
+        #{scenicSpotLat,jdbcType=DOUBLE},
+      </if>
+      <if test="scenicSpotChannelId != null" >
+        #{scenicSpotChannelId,jdbcType=BIGINT},
+      </if>
+      <if test="scenicSpotUpdateTime != null" >
+        #{scenicSpotUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="scenicSpotDetailImage != null" >
+        #{scenicSpotDetailImage,jdbcType=VARCHAR},
+      </if>
+      <if test="scenicSpotIsAll != null" >
+        #{scenicSpotIsAll,jdbcType=INTEGER},
+      </if>
+      <if test="scenicSpotMsg != null" >
+        #{scenicSpotMsg,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="scenicSpotContent != null" >
+        #{scenicSpotContent,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="scenicSpotPolicy != null" >
+        #{scenicSpotPolicy,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="scenicSpotOpenTime != null" >
+        #{scenicSpotOpenTime,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="org.entity.dto.ScenicSpotExample" resultType="java.lang.Integer" >
+    select count(*) from scenic_spot
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update scenic_spot
+    <set >
+      <if test="record.scenicSpotId != null" >
+        scenic_spot_id = #{record.scenicSpotId,jdbcType=BIGINT},
+      </if>
+      <if test="record.scenicSpotName != null" >
+        scenic_spot_name = #{record.scenicSpotName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.scenicSpotImage != null" >
+        scenic_spot_image = #{record.scenicSpotImage,jdbcType=VARCHAR},
+      </if>
+      <if test="record.scenicSpotCityId != null" >
+        scenic_spot_city_id = #{record.scenicSpotCityId,jdbcType=BIGINT},
+      </if>
+      <if test="record.scenicSpotTag != null" >
+        scenic_spot_tag = #{record.scenicSpotTag,jdbcType=VARCHAR},
+      </if>
+      <if test="record.scenicSpotDistance != null" >
+        scenic_spot_distance = #{record.scenicSpotDistance,jdbcType=DOUBLE},
+      </if>
+      <if test="record.scenicSpotState != null" >
+        scenic_spot_state = #{record.scenicSpotState,jdbcType=INTEGER},
+      </if>
+      <if test="record.scenicSpotCreateTime != null" >
+        scenic_spot_create_time = #{record.scenicSpotCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.scenicSpotTopNum != null" >
+        scenic_spot_top_num = #{record.scenicSpotTopNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.scenicSpotType != null" >
+        scenic_spot_type = #{record.scenicSpotType,jdbcType=INTEGER},
+      </if>
+      <if test="record.scenicSpotLng != null" >
+        scenic_spot_lng = #{record.scenicSpotLng,jdbcType=DOUBLE},
+      </if>
+      <if test="record.scenicSpotLat != null" >
+        scenic_spot_lat = #{record.scenicSpotLat,jdbcType=DOUBLE},
+      </if>
+      <if test="record.scenicSpotChannelId != null" >
+        scenic_spot_channel_id = #{record.scenicSpotChannelId,jdbcType=BIGINT},
+      </if>
+      <if test="record.scenicSpotUpdateTime != null" >
+        scenic_spot_update_time = #{record.scenicSpotUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.scenicSpotDetailImage != null" >
+        scenic_spot_detail_image = #{record.scenicSpotDetailImage,jdbcType=VARCHAR},
+      </if>
+      <if test="record.scenicSpotIsAll != null" >
+        scenic_spot_is_all = #{record.scenicSpotIsAll,jdbcType=INTEGER},
+      </if>
+      <if test="record.scenicSpotMsg != null" >
+        scenic_spot_msg = #{record.scenicSpotMsg,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.scenicSpotContent != null" >
+        scenic_spot_content = #{record.scenicSpotContent,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.scenicSpotPolicy != null" >
+        scenic_spot_policy = #{record.scenicSpotPolicy,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.scenicSpotOpenTime != null" >
+        scenic_spot_open_time = #{record.scenicSpotOpenTime,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update scenic_spot
+    set scenic_spot_id = #{record.scenicSpotId,jdbcType=BIGINT},
+      scenic_spot_name = #{record.scenicSpotName,jdbcType=VARCHAR},
+      scenic_spot_image = #{record.scenicSpotImage,jdbcType=VARCHAR},
+      scenic_spot_city_id = #{record.scenicSpotCityId,jdbcType=BIGINT},
+      scenic_spot_tag = #{record.scenicSpotTag,jdbcType=VARCHAR},
+      scenic_spot_distance = #{record.scenicSpotDistance,jdbcType=DOUBLE},
+      scenic_spot_state = #{record.scenicSpotState,jdbcType=INTEGER},
+      scenic_spot_create_time = #{record.scenicSpotCreateTime,jdbcType=TIMESTAMP},
+      scenic_spot_top_num = #{record.scenicSpotTopNum,jdbcType=INTEGER},
+      scenic_spot_type = #{record.scenicSpotType,jdbcType=INTEGER},
+      scenic_spot_lng = #{record.scenicSpotLng,jdbcType=DOUBLE},
+      scenic_spot_lat = #{record.scenicSpotLat,jdbcType=DOUBLE},
+      scenic_spot_channel_id = #{record.scenicSpotChannelId,jdbcType=BIGINT},
+      scenic_spot_update_time = #{record.scenicSpotUpdateTime,jdbcType=TIMESTAMP},
+      scenic_spot_detail_image = #{record.scenicSpotDetailImage,jdbcType=VARCHAR},
+      scenic_spot_is_all = #{record.scenicSpotIsAll,jdbcType=INTEGER},
+      scenic_spot_msg = #{record.scenicSpotMsg,jdbcType=LONGVARCHAR},
+      scenic_spot_content = #{record.scenicSpotContent,jdbcType=LONGVARCHAR},
+      scenic_spot_policy = #{record.scenicSpotPolicy,jdbcType=LONGVARCHAR},
+      scenic_spot_open_time = #{record.scenicSpotOpenTime,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update scenic_spot
+    set scenic_spot_id = #{record.scenicSpotId,jdbcType=BIGINT},
+      scenic_spot_name = #{record.scenicSpotName,jdbcType=VARCHAR},
+      scenic_spot_image = #{record.scenicSpotImage,jdbcType=VARCHAR},
+      scenic_spot_city_id = #{record.scenicSpotCityId,jdbcType=BIGINT},
+      scenic_spot_tag = #{record.scenicSpotTag,jdbcType=VARCHAR},
+      scenic_spot_distance = #{record.scenicSpotDistance,jdbcType=DOUBLE},
+      scenic_spot_state = #{record.scenicSpotState,jdbcType=INTEGER},
+      scenic_spot_create_time = #{record.scenicSpotCreateTime,jdbcType=TIMESTAMP},
+      scenic_spot_top_num = #{record.scenicSpotTopNum,jdbcType=INTEGER},
+      scenic_spot_type = #{record.scenicSpotType,jdbcType=INTEGER},
+      scenic_spot_lng = #{record.scenicSpotLng,jdbcType=DOUBLE},
+      scenic_spot_lat = #{record.scenicSpotLat,jdbcType=DOUBLE},
+      scenic_spot_channel_id = #{record.scenicSpotChannelId,jdbcType=BIGINT},
+      scenic_spot_update_time = #{record.scenicSpotUpdateTime,jdbcType=TIMESTAMP},
+      scenic_spot_detail_image = #{record.scenicSpotDetailImage,jdbcType=VARCHAR},
+      scenic_spot_is_all = #{record.scenicSpotIsAll,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="org.entity.dto.ScenicSpot" >
+    update scenic_spot
+    <set >
+      <if test="scenicSpotName != null" >
+        scenic_spot_name = #{scenicSpotName,jdbcType=VARCHAR},
+      </if>
+      <if test="scenicSpotImage != null" >
+        scenic_spot_image = #{scenicSpotImage,jdbcType=VARCHAR},
+      </if>
+      <if test="scenicSpotCityId != null" >
+        scenic_spot_city_id = #{scenicSpotCityId,jdbcType=BIGINT},
+      </if>
+      <if test="scenicSpotTag != null" >
+        scenic_spot_tag = #{scenicSpotTag,jdbcType=VARCHAR},
+      </if>
+      <if test="scenicSpotDistance != null" >
+        scenic_spot_distance = #{scenicSpotDistance,jdbcType=DOUBLE},
+      </if>
+      <if test="scenicSpotState != null" >
+        scenic_spot_state = #{scenicSpotState,jdbcType=INTEGER},
+      </if>
+      <if test="scenicSpotCreateTime != null" >
+        scenic_spot_create_time = #{scenicSpotCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="scenicSpotTopNum != null" >
+        scenic_spot_top_num = #{scenicSpotTopNum,jdbcType=INTEGER},
+      </if>
+      <if test="scenicSpotType != null" >
+        scenic_spot_type = #{scenicSpotType,jdbcType=INTEGER},
+      </if>
+      <if test="scenicSpotLng != null" >
+        scenic_spot_lng = #{scenicSpotLng,jdbcType=DOUBLE},
+      </if>
+      <if test="scenicSpotLat != null" >
+        scenic_spot_lat = #{scenicSpotLat,jdbcType=DOUBLE},
+      </if>
+      <if test="scenicSpotChannelId != null" >
+        scenic_spot_channel_id = #{scenicSpotChannelId,jdbcType=BIGINT},
+      </if>
+      <if test="scenicSpotUpdateTime != null" >
+        scenic_spot_update_time = #{scenicSpotUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="scenicSpotDetailImage != null" >
+        scenic_spot_detail_image = #{scenicSpotDetailImage,jdbcType=VARCHAR},
+      </if>
+      <if test="scenicSpotIsAll != null" >
+        scenic_spot_is_all = #{scenicSpotIsAll,jdbcType=INTEGER},
+      </if>
+      <if test="scenicSpotMsg != null" >
+        scenic_spot_msg = #{scenicSpotMsg,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="scenicSpotContent != null" >
+        scenic_spot_content = #{scenicSpotContent,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="scenicSpotPolicy != null" >
+        scenic_spot_policy = #{scenicSpotPolicy,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="scenicSpotOpenTime != null" >
+        scenic_spot_open_time = #{scenicSpotOpenTime,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where scenic_spot_id = #{scenicSpotId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="org.entity.dto.ScenicSpot" >
+    update scenic_spot
+    set scenic_spot_name = #{scenicSpotName,jdbcType=VARCHAR},
+      scenic_spot_image = #{scenicSpotImage,jdbcType=VARCHAR},
+      scenic_spot_city_id = #{scenicSpotCityId,jdbcType=BIGINT},
+      scenic_spot_tag = #{scenicSpotTag,jdbcType=VARCHAR},
+      scenic_spot_distance = #{scenicSpotDistance,jdbcType=DOUBLE},
+      scenic_spot_state = #{scenicSpotState,jdbcType=INTEGER},
+      scenic_spot_create_time = #{scenicSpotCreateTime,jdbcType=TIMESTAMP},
+      scenic_spot_top_num = #{scenicSpotTopNum,jdbcType=INTEGER},
+      scenic_spot_type = #{scenicSpotType,jdbcType=INTEGER},
+      scenic_spot_lng = #{scenicSpotLng,jdbcType=DOUBLE},
+      scenic_spot_lat = #{scenicSpotLat,jdbcType=DOUBLE},
+      scenic_spot_channel_id = #{scenicSpotChannelId,jdbcType=BIGINT},
+      scenic_spot_update_time = #{scenicSpotUpdateTime,jdbcType=TIMESTAMP},
+      scenic_spot_detail_image = #{scenicSpotDetailImage,jdbcType=VARCHAR},
+      scenic_spot_is_all = #{scenicSpotIsAll,jdbcType=INTEGER},
+      scenic_spot_msg = #{scenicSpotMsg,jdbcType=LONGVARCHAR},
+      scenic_spot_content = #{scenicSpotContent,jdbcType=LONGVARCHAR},
+      scenic_spot_policy = #{scenicSpotPolicy,jdbcType=LONGVARCHAR},
+      scenic_spot_open_time = #{scenicSpotOpenTime,jdbcType=LONGVARCHAR}
+    where scenic_spot_id = #{scenicSpotId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.entity.dto.ScenicSpot" >
+    update scenic_spot
+    set scenic_spot_name = #{scenicSpotName,jdbcType=VARCHAR},
+      scenic_spot_image = #{scenicSpotImage,jdbcType=VARCHAR},
+      scenic_spot_city_id = #{scenicSpotCityId,jdbcType=BIGINT},
+      scenic_spot_tag = #{scenicSpotTag,jdbcType=VARCHAR},
+      scenic_spot_distance = #{scenicSpotDistance,jdbcType=DOUBLE},
+      scenic_spot_state = #{scenicSpotState,jdbcType=INTEGER},
+      scenic_spot_create_time = #{scenicSpotCreateTime,jdbcType=TIMESTAMP},
+      scenic_spot_top_num = #{scenicSpotTopNum,jdbcType=INTEGER},
+      scenic_spot_type = #{scenicSpotType,jdbcType=INTEGER},
+      scenic_spot_lng = #{scenicSpotLng,jdbcType=DOUBLE},
+      scenic_spot_lat = #{scenicSpotLat,jdbcType=DOUBLE},
+      scenic_spot_channel_id = #{scenicSpotChannelId,jdbcType=BIGINT},
+      scenic_spot_update_time = #{scenicSpotUpdateTime,jdbcType=TIMESTAMP},
+      scenic_spot_detail_image = #{scenicSpotDetailImage,jdbcType=VARCHAR},
+      scenic_spot_is_all = #{scenicSpotIsAll,jdbcType=INTEGER}
+    where scenic_spot_id = #{scenicSpotId,jdbcType=BIGINT}
+  </update>
+  
+  
+  <select id="selectUnionByExample" resultMap="BaseUnionResultMap" parameterType="org.entity.dto.ScenicSpotExample" >
+    select * from scenic_spot ss left join city c on c.city_id = ss.scenic_spot_city_id
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="limitStart != null and limitStart>=0" >
+      limit #{limitStart} , #{limitEnd}
+    </if>
+  </select>
+   <select id="countUnionByExample" parameterType="org.entity.dto.ScenicSpotExample" resultType="java.lang.Integer" >
+    select count(*) from scenic_spot ss left join city c on c.city_id = ss.scenic_spot_city_id
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+</mapper>

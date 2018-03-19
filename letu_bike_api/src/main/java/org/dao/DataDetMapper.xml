@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.dao.DataDetMapper" >
+  <resultMap id="BaseResultMap" type="org.entity.dto.DataDet" >
+    <id column="data_det_id" property="dataDetId" jdbcType="BIGINT" />
+    <result column="data_id" property="dataId" jdbcType="BIGINT" />
+    <result column="data_det_name" property="dataDetName" jdbcType="VARCHAR" />
+    <result column="data_det_val" property="dataDetVal" jdbcType="VARCHAR" />
+    <result column="data_det_description" property="dataDetDescription" jdbcType="VARCHAR" />
+    <result column="data_det_dr" property="dataDetDr" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    data_det_id, data_id, data_det_name, data_det_val, data_det_description, data_det_dr
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="org.entity.dto.DataDetExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from data_det
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="limitStart != null and limitStart>=0" >
+      limit #{limitStart} , #{limitEnd}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from data_det
+    where data_det_id = #{dataDetId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from data_det
+    where data_det_id = #{dataDetId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="org.entity.dto.DataDetExample" >
+    delete from data_det
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="org.entity.dto.DataDet" >
+    insert into data_det (data_det_id, data_id, data_det_name, 
+      data_det_val, data_det_description, data_det_dr
+      )
+    values (#{dataDetId,jdbcType=BIGINT}, #{dataId,jdbcType=BIGINT}, #{dataDetName,jdbcType=VARCHAR}, 
+      #{dataDetVal,jdbcType=VARCHAR}, #{dataDetDescription,jdbcType=VARCHAR}, #{dataDetDr,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="org.entity.dto.DataDet" >
+    insert into data_det
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="dataDetId != null" >
+        data_det_id,
+      </if>
+      <if test="dataId != null" >
+        data_id,
+      </if>
+      <if test="dataDetName != null" >
+        data_det_name,
+      </if>
+      <if test="dataDetVal != null" >
+        data_det_val,
+      </if>
+      <if test="dataDetDescription != null" >
+        data_det_description,
+      </if>
+      <if test="dataDetDr != null" >
+        data_det_dr,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="dataDetId != null" >
+        #{dataDetId,jdbcType=BIGINT},
+      </if>
+      <if test="dataId != null" >
+        #{dataId,jdbcType=BIGINT},
+      </if>
+      <if test="dataDetName != null" >
+        #{dataDetName,jdbcType=VARCHAR},
+      </if>
+      <if test="dataDetVal != null" >
+        #{dataDetVal,jdbcType=VARCHAR},
+      </if>
+      <if test="dataDetDescription != null" >
+        #{dataDetDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="dataDetDr != null" >
+        #{dataDetDr,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="org.entity.dto.DataDetExample" resultType="java.lang.Integer" >
+    select count(*) from data_det
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update data_det
+    <set >
+      <if test="record.dataDetId != null" >
+        data_det_id = #{record.dataDetId,jdbcType=BIGINT},
+      </if>
+      <if test="record.dataId != null" >
+        data_id = #{record.dataId,jdbcType=BIGINT},
+      </if>
+      <if test="record.dataDetName != null" >
+        data_det_name = #{record.dataDetName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dataDetVal != null" >
+        data_det_val = #{record.dataDetVal,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dataDetDescription != null" >
+        data_det_description = #{record.dataDetDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dataDetDr != null" >
+        data_det_dr = #{record.dataDetDr,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update data_det
+    set data_det_id = #{record.dataDetId,jdbcType=BIGINT},
+      data_id = #{record.dataId,jdbcType=BIGINT},
+      data_det_name = #{record.dataDetName,jdbcType=VARCHAR},
+      data_det_val = #{record.dataDetVal,jdbcType=VARCHAR},
+      data_det_description = #{record.dataDetDescription,jdbcType=VARCHAR},
+      data_det_dr = #{record.dataDetDr,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="org.entity.dto.DataDet" >
+    update data_det
+    <set >
+      <if test="dataId != null" >
+        data_id = #{dataId,jdbcType=BIGINT},
+      </if>
+      <if test="dataDetName != null" >
+        data_det_name = #{dataDetName,jdbcType=VARCHAR},
+      </if>
+      <if test="dataDetVal != null" >
+        data_det_val = #{dataDetVal,jdbcType=VARCHAR},
+      </if>
+      <if test="dataDetDescription != null" >
+        data_det_description = #{dataDetDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="dataDetDr != null" >
+        data_det_dr = #{dataDetDr,jdbcType=INTEGER},
+      </if>
+    </set>
+    where data_det_id = #{dataDetId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.entity.dto.DataDet" >
+    update data_det
+    set data_id = #{dataId,jdbcType=BIGINT},
+      data_det_name = #{dataDetName,jdbcType=VARCHAR},
+      data_det_val = #{dataDetVal,jdbcType=VARCHAR},
+      data_det_description = #{dataDetDescription,jdbcType=VARCHAR},
+      data_det_dr = #{dataDetDr,jdbcType=INTEGER}
+    where data_det_id = #{dataDetId,jdbcType=BIGINT}
+  </update>
+</mapper>

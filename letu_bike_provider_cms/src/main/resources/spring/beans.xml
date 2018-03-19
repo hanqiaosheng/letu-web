@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+
+<!-- 	<context:component-scan base-package="org" /> -->
+
+	<!-- 多数据源配置 -->
+	<bean id="ds_read" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
+		<property name="driverClass" value="${jdbc.driver}"></property>
+		<property name="jdbcUrl" value="${jdbc.url.master}"></property>
+		<property name="user" value="${jdbc.username.master}"></property>
+		<property name="password" value="${jdbc.password.master}"></property>
+	</bean>
+	<bean id="ds_write" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
+		<property name="driverClass" value="${jdbc.driver}"></property>
+		<property name="jdbcUrl" value="${jdbc.url.slaves}"></property>
+		<property name="user" value="${jdbc.username.slaves}"></property>
+		<property name="password" value="${jdbc.password.slaves}"></property>
+	</bean>
+<!-- 	<bean id="ds_mop" class="org.apache.commons.dbcp.BasicDataSource"> -->
+<!-- 		<property name="driverClassName" value="com.mysql.jdbc.Driver"></property> -->
+<!-- 		<property name="url" value="jdbc:mysql://192.168.0.28:3306/100msh_mop"></property> -->
+<!-- 		<property name="username" value="root"></property> -->
+<!-- 		<property name="password" value="root"></property> -->
+<!-- 	</bean> -->
+
+
+	<!-- 动态配置数据源 -->
+	<bean id="dataSource" class="org.datasource.DynamicDataSource">
+		<property name="targetDataSources">
+			<map key-type="java.lang.String">
+				<entry value-ref="ds_read" key="ds_read"></entry>
+				<entry value-ref="ds_write" key="ds_write"></entry>
+<!-- 				<entry value-ref="ds_mop" key="ds_mop"></entry> -->
+			</map>
+		</property>
+		<property name="defaultTargetDataSource" ref="ds_read"></property>      <!-- 默认使用ds1的数据源 -->
+	</bean>
+
+
+	<!-- 创建SqlSessionFactory -->
+	<bean id="sqlSessionFactoryBean" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<!-- 指定数据源 -->
+		<property name="dataSource" ref="dataSource" />
+		<!-- 指定mybatis的配置文件 -->
+		<property name="typeAliasesPackage" value="org.entity.dto" />
+	</bean>
+
+	<!-- 配置事务 -->
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource"></property>
+	</bean>
+
+	<!-- 映射接口 -->
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage" value="org.dao"></property>
+		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactoryBean" />
+	</bean>
+
+	<!-- 配置事务的传播特性 -->
+	<tx:advice id="txAdvice" transaction-manager="transactionManager">
+		<tx:attributes>
+			<tx:method name="find*" read-only="true" />
+			<tx:method name="get*" read-only="true" />
+			<tx:method name="query*" read-only="true" />
+			<tx:method name="add*" propagation="REQUIRED"/>
+			<tx:method name="update*" propagation="REQUIRED" />
+			<tx:method name="del*" propagation="REQUIRED" />
+		</tx:attributes>
+	</tx:advice>
+
+	<!-- 配置AOP -->
+<!-- 	<aop:config> -->
+		<!-- 切点 -->
+<!-- 		<aop:pointcut expression="execution(* com.baimi.routerweb.service..*.*(..))" -->
+<!-- 			id="pointcut" /> -->
+<!-- 		<aop:advisor advice-ref="txAdvice" pointcut-ref="pointcut" /> -->
+<!-- 	</aop:config> -->
+	
+	<aop:config>
+	    <!-- Spring框架自身提供的切面 -->
+    	<aop:advisor advice-ref="txAdvice" pointcut="execution(* org.service..*.*(..))" order="2"/> 
+    	<!-- 用户自定义的切面，根据切入点，动态切换数据源。order优先级，order越小，则该该切面中的通知越先被执行  --> 
+    	<aop:aspect id="dataSourceAspect" ref="dataSourceInterceptor" order="1"> 
+	        <aop:before method="setAdminDataSource" pointcut="execution(* *..read*..*(..))"/> 
+	        <aop:before method="setParterDataSource" pointcut="execution(* *..write*..*(..))"/>
+<!-- 	        <aop:before method="setMopDataSource" pointcut="execution(* com.baimi.routerweb.service.UserService3.*(..))"/> -->
+    	</aop:aspect> 
+	</aop:config>
+	
+		<!-- 配置切换数据源Key的拦截器 -->
+	<bean id="dataSourceInterceptor" class="org.datasource.DataSourceInterceptor"></bean> 
+
+</beans>

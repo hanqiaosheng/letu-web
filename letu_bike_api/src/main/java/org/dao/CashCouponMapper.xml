@@ -1,0 +1,311 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.dao.CashCouponMapper" >
+  <resultMap id="BaseResultMap" type="org.entity.dto.CashCoupon" >
+    <id column="coupon_id" property="couponId" jdbcType="BIGINT" />
+    <result column="coupon_name" property="couponName" jdbcType="VARCHAR" />
+    <result column="coupon_money" property="couponMoney" jdbcType="DECIMAL" />
+    <result column="coupon_start_time" property="couponStartTime" jdbcType="TIMESTAMP" />
+    <result column="coupon_create_time" property="couponCreateTime" jdbcType="TIMESTAMP" />
+    <result column="coupon_is_validity" property="couponIsValidity" jdbcType="INTEGER" />
+    <result column="coupon_validity_time" property="couponValidityTime" jdbcType="INTEGER" />
+    <result column="coupon_state" property="couponState" jdbcType="INTEGER" />
+    <result column="coupon_end_time" property="couponEndTime" jdbcType="TIMESTAMP" />
+    <result column="coupon_is_condition" property="couponIsCondition" jdbcType="INTEGER" />
+    <result column="coupon_start_money" property="couponStartMoney" jdbcType="DECIMAL" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    coupon_id, coupon_name, coupon_money, coupon_start_time, coupon_create_time, coupon_is_validity, 
+    coupon_validity_time, coupon_state, coupon_end_time, coupon_is_condition, coupon_start_money
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="org.entity.dto.CashCouponExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from cash_coupon
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="limitStart != null and limitStart>=0" >
+      limit #{limitStart} , #{limitEnd}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from cash_coupon
+    where coupon_id = #{couponId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from cash_coupon
+    where coupon_id = #{couponId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="org.entity.dto.CashCouponExample" >
+    delete from cash_coupon
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="org.entity.dto.CashCoupon" >
+    insert into cash_coupon (coupon_id, coupon_name, coupon_money, 
+      coupon_start_time, coupon_create_time, 
+      coupon_is_validity, coupon_validity_time, coupon_state, 
+      coupon_end_time, coupon_is_condition, coupon_start_money
+      )
+    values (#{couponId,jdbcType=BIGINT}, #{couponName,jdbcType=VARCHAR}, #{couponMoney,jdbcType=DECIMAL}, 
+      #{couponStartTime,jdbcType=TIMESTAMP}, #{couponCreateTime,jdbcType=TIMESTAMP}, 
+      #{couponIsValidity,jdbcType=INTEGER}, #{couponValidityTime,jdbcType=INTEGER}, #{couponState,jdbcType=INTEGER}, 
+      #{couponEndTime,jdbcType=TIMESTAMP}, #{couponIsCondition,jdbcType=INTEGER}, #{couponStartMoney,jdbcType=DECIMAL}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="org.entity.dto.CashCoupon" >
+    insert into cash_coupon
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="couponId != null" >
+        coupon_id,
+      </if>
+      <if test="couponName != null" >
+        coupon_name,
+      </if>
+      <if test="couponMoney != null" >
+        coupon_money,
+      </if>
+      <if test="couponStartTime != null" >
+        coupon_start_time,
+      </if>
+      <if test="couponCreateTime != null" >
+        coupon_create_time,
+      </if>
+      <if test="couponIsValidity != null" >
+        coupon_is_validity,
+      </if>
+      <if test="couponValidityTime != null" >
+        coupon_validity_time,
+      </if>
+      <if test="couponState != null" >
+        coupon_state,
+      </if>
+      <if test="couponEndTime != null" >
+        coupon_end_time,
+      </if>
+      <if test="couponIsCondition != null" >
+        coupon_is_condition,
+      </if>
+      <if test="couponStartMoney != null" >
+        coupon_start_money,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="couponId != null" >
+        #{couponId,jdbcType=BIGINT},
+      </if>
+      <if test="couponName != null" >
+        #{couponName,jdbcType=VARCHAR},
+      </if>
+      <if test="couponMoney != null" >
+        #{couponMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="couponStartTime != null" >
+        #{couponStartTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="couponCreateTime != null" >
+        #{couponCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="couponIsValidity != null" >
+        #{couponIsValidity,jdbcType=INTEGER},
+      </if>
+      <if test="couponValidityTime != null" >
+        #{couponValidityTime,jdbcType=INTEGER},
+      </if>
+      <if test="couponState != null" >
+        #{couponState,jdbcType=INTEGER},
+      </if>
+      <if test="couponEndTime != null" >
+        #{couponEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="couponIsCondition != null" >
+        #{couponIsCondition,jdbcType=INTEGER},
+      </if>
+      <if test="couponStartMoney != null" >
+        #{couponStartMoney,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="org.entity.dto.CashCouponExample" resultType="java.lang.Integer" >
+    select count(*) from cash_coupon
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update cash_coupon
+    <set >
+      <if test="record.couponId != null" >
+        coupon_id = #{record.couponId,jdbcType=BIGINT},
+      </if>
+      <if test="record.couponName != null" >
+        coupon_name = #{record.couponName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.couponMoney != null" >
+        coupon_money = #{record.couponMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="record.couponStartTime != null" >
+        coupon_start_time = #{record.couponStartTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.couponCreateTime != null" >
+        coupon_create_time = #{record.couponCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.couponIsValidity != null" >
+        coupon_is_validity = #{record.couponIsValidity,jdbcType=INTEGER},
+      </if>
+      <if test="record.couponValidityTime != null" >
+        coupon_validity_time = #{record.couponValidityTime,jdbcType=INTEGER},
+      </if>
+      <if test="record.couponState != null" >
+        coupon_state = #{record.couponState,jdbcType=INTEGER},
+      </if>
+      <if test="record.couponEndTime != null" >
+        coupon_end_time = #{record.couponEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.couponIsCondition != null" >
+        coupon_is_condition = #{record.couponIsCondition,jdbcType=INTEGER},
+      </if>
+      <if test="record.couponStartMoney != null" >
+        coupon_start_money = #{record.couponStartMoney,jdbcType=DECIMAL},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update cash_coupon
+    set coupon_id = #{record.couponId,jdbcType=BIGINT},
+      coupon_name = #{record.couponName,jdbcType=VARCHAR},
+      coupon_money = #{record.couponMoney,jdbcType=DECIMAL},
+      coupon_start_time = #{record.couponStartTime,jdbcType=TIMESTAMP},
+      coupon_create_time = #{record.couponCreateTime,jdbcType=TIMESTAMP},
+      coupon_is_validity = #{record.couponIsValidity,jdbcType=INTEGER},
+      coupon_validity_time = #{record.couponValidityTime,jdbcType=INTEGER},
+      coupon_state = #{record.couponState,jdbcType=INTEGER},
+      coupon_end_time = #{record.couponEndTime,jdbcType=TIMESTAMP},
+      coupon_is_condition = #{record.couponIsCondition,jdbcType=INTEGER},
+      coupon_start_money = #{record.couponStartMoney,jdbcType=DECIMAL}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="org.entity.dto.CashCoupon" >
+    update cash_coupon
+    <set >
+      <if test="couponName != null" >
+        coupon_name = #{couponName,jdbcType=VARCHAR},
+      </if>
+      <if test="couponMoney != null" >
+        coupon_money = #{couponMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="couponStartTime != null" >
+        coupon_start_time = #{couponStartTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="couponCreateTime != null" >
+        coupon_create_time = #{couponCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="couponIsValidity != null" >
+        coupon_is_validity = #{couponIsValidity,jdbcType=INTEGER},
+      </if>
+      <if test="couponValidityTime != null" >
+        coupon_validity_time = #{couponValidityTime,jdbcType=INTEGER},
+      </if>
+      <if test="couponState != null" >
+        coupon_state = #{couponState,jdbcType=INTEGER},
+      </if>
+      <if test="couponEndTime != null" >
+        coupon_end_time = #{couponEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="couponIsCondition != null" >
+        coupon_is_condition = #{couponIsCondition,jdbcType=INTEGER},
+      </if>
+      <if test="couponStartMoney != null" >
+        coupon_start_money = #{couponStartMoney,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where coupon_id = #{couponId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.entity.dto.CashCoupon" >
+    update cash_coupon
+    set coupon_name = #{couponName,jdbcType=VARCHAR},
+      coupon_money = #{couponMoney,jdbcType=DECIMAL},
+      coupon_start_time = #{couponStartTime,jdbcType=TIMESTAMP},
+      coupon_create_time = #{couponCreateTime,jdbcType=TIMESTAMP},
+      coupon_is_validity = #{couponIsValidity,jdbcType=INTEGER},
+      coupon_validity_time = #{couponValidityTime,jdbcType=INTEGER},
+      coupon_state = #{couponState,jdbcType=INTEGER},
+      coupon_end_time = #{couponEndTime,jdbcType=TIMESTAMP},
+      coupon_is_condition = #{couponIsCondition,jdbcType=INTEGER},
+      coupon_start_money = #{couponStartMoney,jdbcType=DECIMAL}
+    where coupon_id = #{couponId,jdbcType=BIGINT}
+  </update>
+</mapper>

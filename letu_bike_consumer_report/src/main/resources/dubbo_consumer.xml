@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+    http://code.alibabatech.com/schema/dubbo
+    http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+
+
+
+	<!-- 提供方应用信息，用于计算依赖关系 -->
+	<dubbo:application name="consumer" />
+
+	<!-- 使用zookeeper注册中心暴露服务地址 -->
+	
+	<dubbo:registry protocol="zookeeper" address="${zookeeper_path}" />
+
+    <dubbo:reference interface="org.service.report.AdminServiceReport"
+		id="adminServiceReport" check="false" timeout="60000">
+	</dubbo:reference>
+	<dubbo:reference interface="org.service.report.ChannelServiceReport"
+		id="channelServiceReport" check="false" timeout="60000">
+	</dubbo:reference>
+	<dubbo:reference interface="org.service.report.PermissionServiceReport"
+		id="permissionServiceReport" check="false" timeout="60000">
+	</dubbo:reference>
+	<dubbo:reference interface="org.service.report.RoleServiceReport"
+		id="roleServiceReport" check="false" timeout="60000">
+	</dubbo:reference>
+	<dubbo:reference interface="org.service.report.BikeRentInfoServiceReport"
+		id="bikeRentInfoServiceReport" check="false" timeout="60000">
+	</dubbo:reference>
+	<dubbo:reference interface="org.service.report.MoneyLogServiceReport"
+		id="moneyLogServiceReport" check="false" timeout="60000">
+	</dubbo:reference>
+	<dubbo:reference interface="org.service.report.UserServiceReport"
+		id="userServiceReport" check="false" timeout="60000">
+	</dubbo:reference>
+	<dubbo:reference interface="org.service.report.FixedReturnServiceReport"
+		id="fixedReturnServiceReport" check="false" timeout="60000">
+	</dubbo:reference>
+</beans>

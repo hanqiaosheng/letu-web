@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
+    <wb-module deploy-name="letu_bike_consumer_weixin">
+        <wb-resource deploy-path="/" source-path="/target/m2e-wtp/web-resources"/>
+        <wb-resource deploy-path="/" source-path="/src/main/webapp" tag="defaultRootSource"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/java"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/resources"/>
+        <dependent-module archiveName="letu_bike_service_weixin-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/letu_bike_service_weixin/letu_bike_service_weixin">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="letu_bike_api-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/letu_bike_api/letu_bike_api">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="letu_bike_service_lock-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/letu_bike_service_lock/letu_bike_service_lock">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <property name="context-root" value="letu_bike_consumer_weixin"/>
+        <property name="java-output-path" value="/letu_bike_consumer_weixin/target/classes"/>
+    </wb-module>
+</project-modules>

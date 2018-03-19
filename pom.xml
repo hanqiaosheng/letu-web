@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>org.letu</groupId>
+  <artifactId>letu_bike</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <packaging>pom</packaging>
+  <modules>
+  	<module>letu_bike_parent</module>
+  	<module>letu_bike_provider_cms</module>
+  	<module>letu_bike_provider_weixin</module>
+    <module>letu_bike_provider_lock</module>
+  	<module>letu_bike_api</module>
+  	<module>letu_bike_consumer_cms</module>
+  	<module>letu_bike_consumer_weixin</module>
+  	<module>letu_bike_impl_cms</module>
+  	<module>letu_bike_impl_weixin</module>
+  	<module>letu_bike_service_weixin</module>
+  	<module>letu_bike_service_cms</module>
+    <module>letu_bike_service_lock</module>
+    <module>letu_bike_consumer_admin</module>
+    <module>letu_bike_consumer_report</module>
+    <module>letu_bike_provider_report</module>
+    <module>letu_bike_service_report</module>
+    <module>letu_bike_impl_report</module>
+      <!--<module>mybatis</module>-->
+  </modules>
+</project>

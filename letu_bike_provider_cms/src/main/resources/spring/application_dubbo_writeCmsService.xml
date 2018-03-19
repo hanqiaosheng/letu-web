@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+    http://code.alibabatech.com/schema/dubbo
+    http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+
+	
+	<!-- 声明需要暴露的服务接口 -->
+	<dubbo:service interface="org.service.cms.write.UserServiceWrite" ref="userServiceWrite" />
+	<dubbo:service interface="org.service.cms.write.UserAccountServiceWrite" ref="userAccountServiceWrite" />
+	<dubbo:service interface="org.service.cms.write.UserFeedbackServiceWrite" ref="userFeedbackServiceWrite" />
+	
+	<dubbo:service interface="org.service.cms.write.AdminServiceWrite" ref="adminServiceWrite" />
+	<dubbo:service interface="org.service.cms.write.RoleServiceWrite" ref="roleServiceWrite" />
+	<dubbo:service interface="org.service.cms.write.ChannelServiceWrite" ref="channelServiceWrite" />
+	<dubbo:service interface="org.service.cms.write.BikeServiceWrite" ref="bikeServiceWrite" />
+	<dubbo:service interface="org.service.cms.write.BikeRentInfoServiceWrite" ref="bikeRentInfoServiceWrite" />
+	<dubbo:service interface="org.service.cms.write.BikeFixInfoServiceWrite" ref="bikeFixInfoServiceWrite" />
+	<dubbo:service interface="org.service.cms.write.BikeRepairServiceWrite" ref="bikeRepairServiceWrite" />
+	<!-- <dubbo:service interface="org.service.cms.write.RentPlanServiceWrite" ref="rentPlanServiceWrite" /> -->
+	<dubbo:service interface="org.service.cms.write.SysMsgServiceWrite" ref="sysMsgServiceWrite" />
+	<dubbo:service interface="org.service.cms.write.RefundServiceWrite" ref="refundServiceWrite" />
+	<dubbo:service interface="org.service.cms.write.BlockServiceWrite" ref="blockServiceWrite" />
+	<dubbo:service interface="org.service.cms.write.MoneyLogServiceWrite" ref="moneyLogServiceWrite" />
+    <dubbo:service interface="org.service.cms.write.AccountServiceWrite" ref="accountServiceWrite" />
+    <dubbo:service interface="org.service.cms.write.MessageServiceWrite" ref="messageServiceWrite" />
+    <dubbo:service interface="org.service.cms.write.UserInsuranceServiceWrite" ref="userInsuranceServiceWrite" />     
+    <dubbo:service interface="org.service.cms.write.ModelsServiceWrite" ref="modelsServiceWrite" />    
+    <dubbo:service interface="org.service.cms.write.BikeLockInfoServiceWrite" ref="bikeLockInfoServiceWrite" />  
+    <dubbo:service interface="org.service.cms.write.FixedReturnServiceWrite" ref="fixedReturnServiceWrite" />
+    <dubbo:service interface="org.service.cms.write.ActivityServiceWrite" ref="activityServiceWrite" />
+    <dubbo:service interface="org.service.cms.write.OperateServiceWrite" ref="operateServiceWrite" />
+    <dubbo:service interface="org.service.cms.write.InsurancePriceServiceWrite" ref="insurancePriceServiceWrite" />
+    <dubbo:service interface="org.service.cms.write.RentPriceServiceWrite" ref="rentPriceServiceWrite" />
+    <dubbo:service interface="org.service.cms.write.InvoiceServiceWrite" ref="invoiceServiceWrite" />
+    <dubbo:service interface="org.service.cms.write.RedeemPlanServiceWrite" ref="redeemPlanServiceWrite" />
+    <dubbo:service interface="org.service.cms.write.CouponPlanServiceWrite" ref="couponPlanServiceWrite" />
+    <dubbo:service interface="org.service.cms.write.CashCouponServiceWrite" ref="cashCouponServiceWrite" />
+    <dubbo:service interface="org.service.cms.write.UserCouponServiceWrite" ref="userCouponServiceWrite" />
+    <dubbo:service interface="org.service.cms.write.SysParamentServiceWrite" ref="sysParamentServiceWrite" />
+    <dubbo:service interface="org.service.cms.write.UserToTaskServiceWrite" ref="userToTaskServiceWrite" />
+    <dubbo:service interface="org.service.cms.write.BannerServiceWrite" ref="bannerServiceWrite" />
+    <dubbo:service interface="org.service.cms.write.DiscountPackageServiceWrite" ref="discountPackageServiceWrite" />
+    <dubbo:service interface="org.service.cms.write.ScenicSpotServiceWrite" ref="scenicSpotServiceWrite" />
+    <dubbo:service interface="org.service.cms.write.HotWordServiceWrite" ref="hotWordServiceWrite" />
+	<dubbo:service interface="org.service.cms.write.GuideAgencyServiceWrite" ref="guideAgencyServiceWrite" />
+	<dubbo:service interface="org.service.cms.write.GuideGroupServiceWrite" ref="guideGroupServiceWrite" />
+	<dubbo:service interface="org.service.cms.write.LookAgencyServiceWrite" ref="lookAgencyServiceWrite"/>
+	<dubbo:service interface="org.service.cms.write.CouponListServiceWrite" ref="couponListServiceWrite"/>
+	<dubbo:service interface="org.service.cms.write.CouponSchemeServiceWrite" ref="couponSchemeServiceWrite"/>
+	<dubbo:service interface="org.service.cms.write.GuideGroupUserWrite" ref="guideGroupUserWrite"/>
+	<dubbo:service interface="org.service.cms.write.LookAgencyServiceWrite" ref="LookAgencyServiceWrite"/>
+	<dubbo:service interface="org.service.cms.write.CodeServiceWrite" ref="codeServiceWrite"/>
+	<dubbo:service interface="org.service.cms.write.CouponToUserServiceWrite" ref="couponToUserServiceWrite"/>
+	<!-- 具体的实现bean -->
+	
+	
+	<bean id="userServiceWrite" class="org.service.cms.impl.write.UserServiceWriteImpl" />
+	<bean id="userAccountServiceWrite" class="org.service.cms.impl.write.UserAccountServiceWriteImpl" />
+	<bean id="userFeedbackServiceWrite" class="org.service.cms.impl.write.UserFeedbackServiceWriteImpl" />
+	
+	<bean id="adminServiceWrite" class="org.service.cms.impl.write.AdminServiceWriteImpl" />
+	<bean id="roleServiceWrite" class="org.service.cms.impl.write.RoleServiceWriteImpl" />
+	<bean id="channelServiceWrite" class="org.service.cms.impl.write.ChannelServiceWriteImpl" />
+	<bean id="bikeServiceWrite" class="org.service.cms.impl.write.BikeServiceWriteImpl" />
+	<bean id="bikeRentInfoServiceWrite" class="org.service.cms.impl.write.BikeRentInfoServiceWriteImpl" />
+	<bean id="bikeFixInfoServiceWrite" class="org.service.cms.impl.write.BikeFixInfoServiceWriteImpl" />
+	<bean id="bikeRepairServiceWrite" class="org.service.cms.impl.write.BikeRepairServiceWriteImpl" />
+	<!-- <bean id="rentPlanServiceWrite" class="org.service.cms.impl.write.RentPlanServiceWriteImpl" /> -->
+	<bean id="sysMsgServiceWrite" class="org.service.cms.impl.write.SysMsgServiceWriteImpl" />
+	<bean id="refundServiceWrite" class="org.service.cms.impl.write.RefundServiceWriteImpl" />
+	<bean id="blockServiceWrite" class="org.service.cms.impl.write.BlockServiceWriteImpl" />
+	<bean id="moneyLogServiceWrite" class="org.service.cms.impl.write.MoneyLogServiceWriteImpl" />
+	<bean id="accountServiceWrite" class="org.service.cms.impl.write.AccountServiceWriteImpl" />
+	<bean id="messageServiceWrite" class="org.service.cms.impl.write.MessageServiceWriteImpl" />
+	<bean id="userInsuranceServiceWrite" class="org.service.cms.impl.write.UserInsuranceServiceWriteImpl" />	
+	<bean id="modelsServiceWrite" class="org.service.cms.impl.write.ModelsServiceWriteImpl" />	
+	<bean id="bikeLockInfoServiceWrite" class="org.service.cms.impl.write.BikeLockInfoServiceWriteImpl" />	
+	<bean id="fixedReturnServiceWrite" class="org.service.cms.impl.write.FixedReturnServiceWriteImpl" />
+	<bean id="activityServiceWrite" class="org.service.cms.impl.write.ActivityServiceWriteImpl" />
+	<bean id="operateServiceWrite" class="org.service.cms.impl.write.OperateServiceWriteImpl" />
+	<bean id="insurancePriceServiceWrite" class="org.service.cms.impl.write.InsurancePriceServiceWriteImpl" />
+	<bean id="rentPriceServiceWrite" class="org.service.cms.impl.write.RentPriceServiceWriteImpl" />
+	<bean id="invoiceServiceWrite" class="org.service.cms.impl.write.InvoiceServiceWriteImpl" />	
+	<bean id="redeemPlanServiceWrite" class="org.service.cms.impl.write.RedeemPlanServiceWriteImpl" />	
+	<bean id="couponPlanServiceWrite" class="org.service.cms.impl.write.CouponPlanServiceWriteImpl" />	
+	<bean id="cashCouponServiceWrite" class="org.service.cms.impl.write.CashCouponServiceWriteImpl" />	
+	<bean id="userCouponServiceWrite" class="org.service.cms.impl.write.UserCouponServiceWriteImpl" />	
+	<bean id="sysParamentServiceWrite" class="org.service.cms.impl.write.SysParamentServiceWriteImpl" />
+	<bean id="userToTaskServiceWrite" class="org.service.cms.impl.write.UserToTaskServiceWriteImpl" />	
+	<bean id="bannerServiceWrite" class="org.service.cms.impl.write.BannerServiceWriteImpl" />	
+	<bean id="discountPackageServiceWrite" class="org.service.cms.impl.write.DiscountPackageServiceWriteImpl" />
+	<bean id="scenicSpotServiceWrite" class="org.service.cms.impl.write.ScenicSpotServiceWriteImpl" />
+	<bean id="hotWordServiceWrite" class="org.service.cms.impl.write.HotWordServiceWriteImpl" />
+	<bean id="guideAgencyServiceWrite" class="org.service.cms.impl.write.GuideAgencyServiceWriteImpl" />
+	<bean id="guideGroupServiceWrite" class="org.service.cms.impl.write.GuideGroupServiceWriteImpl"/>
+	<bean id="lookAgencyServiceWrite" class="org.service.cms.impl.write.LookAgencyServiceWriteImpl"/>
+	<bean id="couponListServiceWrite" class="org.service.cms.impl.write.CouponListServiceWriteImpl"/>
+	<bean id="couponSchemeServiceWrite" class="org.service.cms.impl.write.CouponSchemeServiceWriteImpl"/>
+	<bean id="guideGroupUserWrite" class="org.service.cms.impl.write.GuideGroupUserWriteImpl"/>
+	<bean id="LookAgencyServiceWrite" class="org.service.cms.impl.write.LookAgencyServiceWriteImpl"/>
+	<bean id="codeServiceWrite" class="org.service.cms.impl.write.CodeServiceWriteImpl"/>
+	<bean id="couponToUserServiceWrite" class="org.service.cms.impl.write.CouponToUserServiceWriteImpl"/>
+</beans>

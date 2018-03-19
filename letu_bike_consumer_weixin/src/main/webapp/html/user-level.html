@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="viewport" content="initial-scale=1, width=device-width, maximum-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-touch-fullscreen" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="format-detection" content="address=no">
+    <meta name="screen-orientation" content="portrait">
+    <meta name="x5-orientation" content="portrait">
+    <title>用户等级</title>
+    <link rel="stylesheet" href="font/iconfont.css">
+    <link rel="stylesheet" href="css/animate.min.css">
+    <link rel="stylesheet" href="css/base.css">
+    <script type="text/javascript" src="js/zepto.min.js"></script>
+    <link rel="stylesheet" href="js/dialog.css">
+    <script type="text/javascript" src="js/dialog.js"></script>
+    <script type="text/javascript" src="js/iscroll.js"></script>
+    <link rel="stylesheet" href="js/swiper-3.2.7.min.css">
+    <script type="text/javascript" src="js/swiper-3.2.7.jquery.min.js"></script>
+    <script type="text/javascript" src="js/path.js"></script>
+    <script type="text/javascript" src="js/mobile.js"></script>
+    <script type="text/javascript" src="js/fastclick.js"></script>
+</head>
+
+<body>
+  <div class="g-body">
+     	<div class="leveltit">我的等级成长</div>
+        <div class="levelmain marginlr">
+            <div class="levelline flex-box">
+                <div class="level1"></div>
+                <div class="level2">
+                    
+                </div>
+                <div class="level3"></div>
+                <div class="level4"></div>
+                <div class="level5"></div>
+                <div class="level6"></div>
+                <div class="level7">
+                </div>
+            </div>
+            <img src="images/level.png">
+        </div>
+        <div id="levelwatch" class="fix-bottom buy-bar levelwatch" data-hash="slide8">
+             <p>查看等级权限</p>
+             <i class="icon-fold"></i>
+         </div>
+         <div id="servicecon" class="none">
+            <div class="tit">查看等级权限</div>
+            <div class="weui_cells boxsizing">
+                <div class="weui_cell">
+                    <select id="selectlevel" class="weui_select" name="pay_code">
+                        <option id="1" value="查看附近车辆,查看查看附近车辆,查看查看附近车辆,查看查看附近车辆,查看查看附近车辆,查看查看附近车辆,查看查看附近车辆,查看查看附近车辆,查看查看附近车辆,查看查看附近车辆,查看查看附近车辆,查看查看附近车辆,查看查看附近车辆,查看查看附近车辆,查看查看附近车辆,查看查看附近车辆,查看查看附近车辆,查看查看附近车辆,查看">lv1</option>
+                        <option id="2" value="附近,查看">lv2</option>
+                        <option id="3" value="附近,查看">lv3</option>
+                        <option id="4" value="附近,查看">lv4</option>
+                        <option id="5" value="附近,查看">lv5</option>
+                        <option id="6" value="附近,查看">lv6</option>
+                        <option id="7" value="附近,查看">lv7</option>
+                    </select>
+                    <span class="r-con active"></span>
+                </div>
+                <div class="weui_cell displaybox">
+                    <div id="wrapper-sub" class="wrapper-g" style="top: 10px; bottom: 10px;">
+                        <div id="scroller" class="scroller-g">
+                            <ul class="tabBox">
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+    var myScroll = null;
+    $('#selectlevel').change(function() {
+       var arr = $(this).val().split(','),
+           html = '';
+       $.each(arr, function(i, item) {
+           html += '<li class="btn-def">' + item + '</li>'
+       })
+       $('.tabBox').html(html);
+       if (myScroll) {
+           myScroll.refresh()
+       }
+   })
+   $('#levelwatch').Dialog({
+       target: "#servicecon",
+       mask: true,
+       width: '100%',
+       height: 320,
+       animate: 'bounceInUp',
+       animateout: 'bounceOutDown',
+       className: 'servicepop',
+       beforeShow: function(content) {
+           $('#selectlevel').trigger('change')
+           myScroll = new IScroll('#wrapper-sub');
+       }
+   })
+    </script>
+
+</body>
+
+</html>

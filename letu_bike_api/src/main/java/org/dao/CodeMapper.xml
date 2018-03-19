@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.dao.CodeMapper" >
+  <resultMap id="BaseResultMap" type="org.entity.dto.Code" >
+    <id column="code_id" property="codeId" jdbcType="BIGINT" />
+    <result column="code_phone" property="codePhone" jdbcType="VARCHAR" />
+    <result column="code_num" property="codeNum" jdbcType="VARCHAR" />
+    <result column="code_state" property="codeState" jdbcType="INTEGER" />
+    <result column="code_type" property="codeType" jdbcType="INTEGER" />
+    <result column="code_createtime" property="codeCreatetime" jdbcType="TIMESTAMP" />
+    <result column="code_ip" property="codeIp" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    code_id, code_phone, code_num, code_state, code_type, code_createtime, code_ip
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="org.entity.dto.CodeExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from code
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="limitStart != null and limitStart>=0" >
+      limit #{limitStart} , #{limitEnd}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from code
+    where code_id = #{codeId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from code
+    where code_id = #{codeId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="org.entity.dto.CodeExample" >
+    delete from code
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="org.entity.dto.Code" >
+    insert into code (code_id, code_phone, code_num, 
+      code_state, code_type, code_createtime, 
+      code_ip)
+    values (#{codeId,jdbcType=BIGINT}, #{codePhone,jdbcType=VARCHAR}, #{codeNum,jdbcType=VARCHAR}, 
+      #{codeState,jdbcType=INTEGER}, #{codeType,jdbcType=INTEGER}, #{codeCreatetime,jdbcType=TIMESTAMP}, 
+      #{codeIp,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="org.entity.dto.Code" >
+    insert into code
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="codeId != null" >
+        code_id,
+      </if>
+      <if test="codePhone != null" >
+        code_phone,
+      </if>
+      <if test="codeNum != null" >
+        code_num,
+      </if>
+      <if test="codeState != null" >
+        code_state,
+      </if>
+      <if test="codeType != null" >
+        code_type,
+      </if>
+      <if test="codeCreatetime != null" >
+        code_createtime,
+      </if>
+      <if test="codeIp != null" >
+        code_ip,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="codeId != null" >
+        #{codeId,jdbcType=BIGINT},
+      </if>
+      <if test="codePhone != null" >
+        #{codePhone,jdbcType=VARCHAR},
+      </if>
+      <if test="codeNum != null" >
+        #{codeNum,jdbcType=VARCHAR},
+      </if>
+      <if test="codeState != null" >
+        #{codeState,jdbcType=INTEGER},
+      </if>
+      <if test="codeType != null" >
+        #{codeType,jdbcType=INTEGER},
+      </if>
+      <if test="codeCreatetime != null" >
+        #{codeCreatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="codeIp != null" >
+        #{codeIp,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="org.entity.dto.CodeExample" resultType="java.lang.Integer" >
+    select count(*) from code
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update code
+    <set >
+      <if test="record.codeId != null" >
+        code_id = #{record.codeId,jdbcType=BIGINT},
+      </if>
+      <if test="record.codePhone != null" >
+        code_phone = #{record.codePhone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.codeNum != null" >
+        code_num = #{record.codeNum,jdbcType=VARCHAR},
+      </if>
+      <if test="record.codeState != null" >
+        code_state = #{record.codeState,jdbcType=INTEGER},
+      </if>
+      <if test="record.codeType != null" >
+        code_type = #{record.codeType,jdbcType=INTEGER},
+      </if>
+      <if test="record.codeCreatetime != null" >
+        code_createtime = #{record.codeCreatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.codeIp != null" >
+        code_ip = #{record.codeIp,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update code
+    set code_id = #{record.codeId,jdbcType=BIGINT},
+      code_phone = #{record.codePhone,jdbcType=VARCHAR},
+      code_num = #{record.codeNum,jdbcType=VARCHAR},
+      code_state = #{record.codeState,jdbcType=INTEGER},
+      code_type = #{record.codeType,jdbcType=INTEGER},
+      code_createtime = #{record.codeCreatetime,jdbcType=TIMESTAMP},
+      code_ip = #{record.codeIp,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="org.entity.dto.Code" >
+    update code
+    <set >
+      <if test="codePhone != null" >
+        code_phone = #{codePhone,jdbcType=VARCHAR},
+      </if>
+      <if test="codeNum != null" >
+        code_num = #{codeNum,jdbcType=VARCHAR},
+      </if>
+      <if test="codeState != null" >
+        code_state = #{codeState,jdbcType=INTEGER},
+      </if>
+      <if test="codeType != null" >
+        code_type = #{codeType,jdbcType=INTEGER},
+      </if>
+      <if test="codeCreatetime != null" >
+        code_createtime = #{codeCreatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="codeIp != null" >
+        code_ip = #{codeIp,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where code_id = #{codeId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.entity.dto.Code" >
+    update code
+    set code_phone = #{codePhone,jdbcType=VARCHAR},
+      code_num = #{codeNum,jdbcType=VARCHAR},
+      code_state = #{codeState,jdbcType=INTEGER},
+      code_type = #{codeType,jdbcType=INTEGER},
+      code_createtime = #{codeCreatetime,jdbcType=TIMESTAMP},
+      code_ip = #{codeIp,jdbcType=VARCHAR}
+    where code_id = #{codeId,jdbcType=BIGINT}
+  </update>
+</mapper>

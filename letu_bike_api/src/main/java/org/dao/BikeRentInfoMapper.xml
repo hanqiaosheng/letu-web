@@ -1,0 +1,881 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.dao.BikeRentInfoMapper" >
+  <resultMap id="BaseResultMap" type="org.entity.dto.BikeRentInfo" >
+    <id column="rent_info_id" property="rentInfoId" jdbcType="BIGINT" />
+    <result column="rent_info_bike_id" property="rentInfoBikeId" jdbcType="BIGINT" />
+    <result column="rent_info_user_id" property="rentInfoUserId" jdbcType="BIGINT" />
+    <result column="rent_starttime" property="rentStarttime" jdbcType="TIMESTAMP" />
+    <result column="rent_endtime" property="rentEndtime" jdbcType="TIMESTAMP" />
+    <result column="rent_startlat" property="rentStartlat" jdbcType="DOUBLE" />
+    <result column="rent_startlng" property="rentStartlng" jdbcType="DOUBLE" />
+    <result column="rent_endlat" property="rentEndlat" jdbcType="DOUBLE" />
+    <result column="rent_endlng" property="rentEndlng" jdbcType="DOUBLE" />
+    <result column="rent_price" property="rentPrice" jdbcType="DECIMAL" />
+    <result column="rent_insurance_price" property="rentInsurancePrice" jdbcType="DECIMAL" />
+    <result column="rent_pay_time" property="rentPayTime" jdbcType="TIMESTAMP" />
+    <result column="rent_state" property="rentState" jdbcType="INTEGER" />
+    <result column="rent_distance" property="rentDistance" jdbcType="INTEGER" />
+    <result column="rent_pay_type" property="rentPayType" jdbcType="INTEGER" />
+    <result column="rent_isdel" property="rentIsdel" jdbcType="INTEGER" />
+    <result column="rent_start_block_id" property="rentStartBlockId" jdbcType="BIGINT" />
+    <result column="rent_end_block_id" property="rentEndBlockId" jdbcType="BIGINT" />
+    <result column="rent_isvillager" property="rentIsvillager" jdbcType="INTEGER" />
+    <result column="rent_temporarylocktime" property="rentTemporarylocktime" jdbcType="TIMESTAMP" />
+    <result column="rent_invoice_id" property="rentInvoiceId" jdbcType="BIGINT" />
+    <result column="rent_longtime" property="rentLongtime" jdbcType="INTEGER" />
+    <result column="rent_start_fixed_id" property="rentStartFixedId" jdbcType="BIGINT" />
+    <result column="rent_end_fixed_id" property="rentEndFixedId" jdbcType="BIGINT" />
+    <result column="rent_bike_channel_id" property="rentBikeChannelId" jdbcType="BIGINT" />
+    <result column="rent_start_block" property="rentStartBlock" jdbcType="VARCHAR" />
+    <result column="rent_end_block" property="rentEndBlock" jdbcType="VARCHAR" />
+    <result column="rent_coupon_money" property="rentCouponMoney" jdbcType="DECIMAL" />
+    <result column="rent_guide_group_id" property="rentGuideGroupId" jdbcType="BIGINT"/>
+    <result column="rent_unlock_way" property="rentUnlockWay" jdbcType="INTEGER"/>
+    <result column="rent_coupon_id" property="rentCouponId" jdbcType="BIGINT"/>
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="org.entity.dto.BikeRentInfo" extends="BaseResultMap" >
+    <result column="rent_order_code" property="rentOrderCode" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <resultMap id="BaseUnionResultMap" type="org.entity.dto.BikeRentInfo" extends="BaseResultMap">
+  	<association property="bike" javaType="org.entity.dto.Bike">
+  	 <id column="bike_id" property="bikeId" jdbcType="BIGINT" />
+    <result column="bike_manager_id" property="bikeManagerId" jdbcType="BIGINT" />
+    <result column="bike_admin_id" property="bikeAdminId" jdbcType="BIGINT" />
+    <result column="bike_block_id" property="bikeBlockId" jdbcType="BIGINT" />
+    <result column="bike_code" property="bikeCode" jdbcType="VARCHAR" />
+    <result column="bike_state" property="bikeState" jdbcType="INTEGER" />
+    <result column="bike_del" property="bikeDel" jdbcType="INTEGER" />
+    <result column="bike_address" property="bikeAddress" jdbcType="VARCHAR" />
+    <result column="bike_atitude" property="bikeAtitude" jdbcType="DOUBLE" />
+    <result column="bike_longitude" property="bikeLongitude" jdbcType="DOUBLE" />
+    <result column="bike_rent_num" property="bikeRentNum" jdbcType="INTEGER" />
+    <result column="bike_createtime" property="bikeCreatetime" jdbcType="TIMESTAMP" />
+    <result column="bike_batch_number" property="bikeBatchNumber" jdbcType="VARCHAR" />
+    <result column="bike_lock_id" property="bikeLockId" jdbcType="BIGINT" />
+    <result column="bike_chip_code" property="bikeChipCode" jdbcType="VARCHAR" />
+    <result column="bike_dynamotor_code" property="bikeDynamotorCode" jdbcType="VARCHAR" />
+    <result column="bike_put_time" property="bikePutTime" jdbcType="TIMESTAMP" />
+    <result column="bike_models_id" property="bikeModelsId" jdbcType="BIGINT" />
+    <result column="bike_last_rent_time" property="bikeLastRentTime" jdbcType="TIMESTAMP" />
+    <result column="bike_manager_name" property="bikeManagerName" jdbcType="VARCHAR" />
+    <result column="bike_manager_tel" property="bikeManagerTel" jdbcType="VARCHAR" />
+    <result column="bike_temporarylocktime" property="bikeTemporarylocktime" jdbcType="TIMESTAMP" />
+    <result column="bike_block" property="bikeBlock" jdbcType="VARCHAR" />
+  	</association>
+    <association property="channel" javaType="org.entity.dto.Channel">
+        <id column="channel_id" property="channelId" jdbcType="BIGINT" />
+	    <result column="channel_admin_id" property="channelAdminId" jdbcType="BIGINT" />
+	    <result column="channel_name" property="channelName" jdbcType="VARCHAR" />
+	    <result column="channel_charger_name" property="channelChargerName" jdbcType="VARCHAR" />
+	    <result column="channel_charger_tel" property="channelChargerTel" jdbcType="VARCHAR" />
+	    <result column="channel_charger_adminId" property="channelChargerAdminid" jdbcType="BIGINT" />
+	    <result column="channel_state" property="channelState" jdbcType="INTEGER" />
+     </association> 
+   <association property="user" javaType="org.entity.dto.User">
+    <id column="user_id" property="userId" jdbcType="BIGINT" />
+    <result column="user_account_id" property="userAccountId" jdbcType="BIGINT" />
+    <result column="user_nickname" property="userNickname" jdbcType="VARCHAR" />
+    <result column="user_tel" property="userTel" jdbcType="VARCHAR" />
+    <result column="user_idcard" property="userIdcard" jdbcType="VARCHAR" />
+    <result column="user_realname" property="userRealname" jdbcType="VARCHAR" />
+    <result column="user_profile_image" property="userProfileImage" jdbcType="VARCHAR" />
+    <result column="user_gender" property="userGender" jdbcType="INTEGER" />
+    <result column="user_openId" property="userOpenid" jdbcType="VARCHAR" />
+    <result column="user_unionId" property="userUnionid" jdbcType="VARCHAR" />
+    <result column="user_state" property="userState" jdbcType="INTEGER" />
+    <result column="user_createtime" property="userCreatetime" jdbcType="TIMESTAMP" />
+    <result column="user_integral" property="userIntegral" jdbcType="INTEGER" />
+    <result column="user_logintime" property="userLogintime" jdbcType="TIMESTAMP" />
+    <result column="user_usetime" property="userUsetime" jdbcType="INTEGER" />
+    <result column="user_use_distance" property="userUseDistance" jdbcType="INTEGER" />
+    <result column="user_channel_id" property="userChannelId" jdbcType="BIGINT" />
+    <result column="user_bike_id" property="userBikeId" jdbcType="BIGINT" />
+    <result column="user_isblacklist" property="userIsblacklist" jdbcType="SMALLINT" />
+    <result column="user_birthday" property="userBirthday" jdbcType="TIMESTAMP" />
+   </association>
+  </resultMap>
+  
+  
+  
+   <resultMap id="BaseResultMapUser" type="org.entity.dto.BikeRentInfo" extends="BaseResultMap">
+   <association property="user" javaType="org.entity.dto.User">
+    <id column="user_id" property="userId" jdbcType="BIGINT" />
+    <result column="user_account_id" property="userAccountId" jdbcType="BIGINT" />
+    <result column="user_nickname" property="userNickname" jdbcType="VARCHAR" />
+    <result column="user_tel" property="userTel" jdbcType="VARCHAR" />
+    <result column="user_idcard" property="userIdcard" jdbcType="VARCHAR" />
+    <result column="user_realname" property="userRealname" jdbcType="VARCHAR" />
+    <result column="user_profile_image" property="userProfileImage" jdbcType="VARCHAR" />
+    <result column="user_gender" property="userGender" jdbcType="INTEGER" />
+    <result column="user_openId" property="userOpenid" jdbcType="VARCHAR" />
+    <result column="user_unionId" property="userUnionid" jdbcType="VARCHAR" />
+    <result column="user_state" property="userState" jdbcType="INTEGER" />
+    <result column="user_createtime" property="userCreatetime" jdbcType="TIMESTAMP" />
+    <result column="user_integral" property="userIntegral" jdbcType="INTEGER" />
+    <result column="user_logintime" property="userLogintime" jdbcType="TIMESTAMP" />
+    <result column="user_usetime" property="userUsetime" jdbcType="INTEGER" />
+    <result column="user_use_distance" property="userUseDistance" jdbcType="INTEGER" />
+    <result column="user_channel_id" property="userChannelId" jdbcType="BIGINT" />
+    <result column="user_bike_id" property="userBikeId" jdbcType="BIGINT" />
+    <result column="user_isblacklist" property="userIsblacklist" jdbcType="SMALLINT" />
+    <result column="user_birthday" property="userBirthday" jdbcType="TIMESTAMP" />
+   </association>
+  </resultMap>
+  
+  
+  
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    rent_info_id, rent_info_bike_id, rent_info_user_id, rent_starttime, rent_endtime, 
+    rent_startlat, rent_startlng, rent_endlat, rent_endlng, rent_price, rent_insurance_price, 
+    rent_pay_time,rent_state, rent_distance, rent_pay_type, rent_isdel, rent_start_block_id, rent_end_block_id,
+    rent_isvillager, rent_temporarylocktime, rent_invoice_id, rent_longtime,  rent_start_fixed_id, rent_end_fixed_id, 
+    rent_bike_channel_id, rent_start_block, rent_end_block, 
+    rent_coupon_money,rent_guide_group_id,rent_unlock_way,rent_coupon_id
+  </sql>
+  <sql id="Blob_Column_List" >
+    rent_order_code
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="org.entity.dto.BikeRentInfoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from bike_rent_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="org.entity.dto.BikeRentInfoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from bike_rent_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="limitStart != null and limitStart>=0" >
+      limit #{limitStart} , #{limitEnd}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from bike_rent_info
+    where rent_info_id = #{rentInfoId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from bike_rent_info
+    where rent_info_id = #{rentInfoId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="org.entity.dto.BikeRentInfoExample" >
+    delete from bike_rent_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="org.entity.dto.BikeRentInfo" >
+    insert into bike_rent_info (rent_info_id, rent_info_bike_id, rent_info_user_id, 
+      rent_starttime, rent_endtime, rent_startlat, 
+      rent_startlng, rent_endlat, rent_endlng, 
+      rent_price, rent_insurance_price,rent_pay_time, rent_state, 
+      rent_distance, rent_pay_type, rent_isdel, 
+      rent_start_block_id, rent_end_block_id, 
+      rent_isvillager, rent_temporarylocktime, rent_order_code, 
+      rent_invoice_id,rent_longtime, rent_start_fixed_id, 
+      rent_end_fixed_id, rent_bike_channel_id, rent_start_block, 
+      rent_end_block, rent_coupon_money,rent_guide_group_id,rent_unlock_way,rent_coupon_id)
+    values (#{rentInfoId,jdbcType=BIGINT}, #{rentInfoBikeId,jdbcType=BIGINT}, #{rentInfoUserId,jdbcType=BIGINT}, 
+      #{rentStarttime,jdbcType=TIMESTAMP}, #{rentEndtime,jdbcType=TIMESTAMP}, #{rentStartlat,jdbcType=DOUBLE}, 
+      #{rentStartlng,jdbcType=DOUBLE}, #{rentEndlat,jdbcType=DOUBLE}, #{rentEndlng,jdbcType=DOUBLE}, 
+      #{rentPrice,jdbcType=DECIMAL}, #{rentInsurancePrice,jdbcType=DECIMAL},#{rentPayTime,jdbcType=TIMESTAMP}, #{rentState,jdbcType=INTEGER}, 
+      #{rentDistance,jdbcType=INTEGER}, #{rentPayType,jdbcType=INTEGER}, #{rentIsdel,jdbcType=INTEGER}, 
+      #{rentStartBlockId,jdbcType=BIGINT}, #{rentEndBlockId,jdbcType=BIGINT}, 
+      #{rentIsvillager,jdbcType=INTEGER}, #{rentTemporarylocktime,jdbcType=TIMESTAMP}, #{rentOrderCode,jdbcType=LONGVARCHAR}, 
+      #{rentInvoiceId,jdbcType=BIGINT},#{rentLongtime,jdbcType=INTEGER}, #{rentStartFixedId,jdbcType=BIGINT}, 
+      #{rentEndFixedId,jdbcType=BIGINT}, #{rentBikeChannelId,jdbcType=BIGINT}, #{rentStartBlock,jdbcType=VARCHAR}, 
+      #{rentEndBlock,jdbcType=VARCHAR}, #{rentCouponMoney,jdbcType=DECIMAL},#{rentGuideGroupId,jdbcType=BIGINT},
+      #{rentUnlockWay,jdbcType=INTEGER}, #{rentCouponId,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective"   useGeneratedKeys="true" keyProperty="rentInfoId" parameterType="org.entity.dto.BikeRentInfo" >
+    insert into bike_rent_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="rentInfoId != null" >
+        rent_info_id,
+      </if>
+      <if test="rentInfoBikeId != null" >
+        rent_info_bike_id,
+      </if>
+      <if test="rentInfoUserId != null" >
+        rent_info_user_id,
+      </if>
+      <if test="rentStarttime != null" >
+        rent_starttime,
+      </if>
+      <if test="rentEndtime != null" >
+        rent_endtime,
+      </if>
+      <if test="rentStartlat != null" >
+        rent_startlat,
+      </if>
+      <if test="rentStartlng != null" >
+        rent_startlng,
+      </if>
+      <if test="rentEndlat != null" >
+        rent_endlat,
+      </if>
+      <if test="rentEndlng != null" >
+        rent_endlng,
+      </if>
+      <if test="rentPrice != null" >
+        rent_price,
+      </if>
+      <if test="rentInsurancePrice != null" >
+        rent_insurance_price,
+      </if>
+      <if test="rentPayTime != null" >
+        rent_pay_time,
+      </if>
+      <if test="rentState != null" >
+        rent_state,
+      </if>
+      <if test="rentDistance != null" >
+        rent_distance,
+      </if>
+      <if test="rentPayType != null" >
+        rent_pay_type,
+      </if>
+      <if test="rentIsdel != null" >
+        rent_isdel,
+      </if>
+      <if test="rentStartBlockId != null" >
+        rent_start_block_id,
+      </if>
+      <if test="rentEndBlockId != null" >
+        rent_end_block_id,
+      </if>
+      <if test="rentIsvillager != null" >
+        rent_isvillager,
+      </if>
+      <if test="rentTemporarylocktime != null" >
+        rent_temporarylocktime,
+      </if>
+      <if test="rentOrderCode != null" >
+        rent_order_code,
+      </if>
+      <if test="rentInvoiceId != null" >
+        rent_invoice_id,
+      </if>
+      <if test="rentLongtime != null" >
+        rent_longtime,
+      </if>
+      <if test="rentStartFixedId != null" >
+        rent_start_fixed_id,
+      </if>
+      <if test="rentEndFixedId != null" >
+        rent_end_fixed_id,
+      </if>
+      <if test="rentBikeChannelId != null" >
+        rent_bike_channel_id,
+      </if>
+      <if test="rentStartBlock != null" >
+        rent_start_block,
+      </if>
+      <if test="rentEndBlock != null" >
+        rent_end_block,
+      </if>
+      <if test="rentCouponMoney != null" >
+        rent_coupon_money,
+      </if>
+      <if test="rentGuideGroupId != null" >
+        rent_guide_group_id,
+      </if>
+      <if test="rentUnlockWay != null" >
+        rent_unlock_way,
+      </if>
+      <if test="rentCouponId != null" >
+        rent_coupon_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="rentInfoId != null" >
+        #{rentInfoId,jdbcType=BIGINT},
+      </if>
+      <if test="rentInfoBikeId != null" >
+        #{rentInfoBikeId,jdbcType=BIGINT},
+      </if>
+      <if test="rentInfoUserId != null" >
+        #{rentInfoUserId,jdbcType=BIGINT},
+      </if>
+      <if test="rentStarttime != null" >
+        #{rentStarttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="rentEndtime != null" >
+        #{rentEndtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="rentStartlat != null" >
+        #{rentStartlat,jdbcType=DOUBLE},
+      </if>
+      <if test="rentStartlng != null" >
+        #{rentStartlng,jdbcType=DOUBLE},
+      </if>
+      <if test="rentEndlat != null" >
+        #{rentEndlat,jdbcType=DOUBLE},
+      </if>
+      <if test="rentEndlng != null" >
+        #{rentEndlng,jdbcType=DOUBLE},
+      </if>
+      <if test="rentPrice != null" >
+        #{rentPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="rentInsurancePrice != null" >
+        #{rentInsurancePrice,jdbcType=DECIMAL},
+      </if>
+      <if test="rentPayTime != null" >
+        #{rentPayTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="rentState != null" >
+        #{rentState,jdbcType=INTEGER},
+      </if>
+      <if test="rentDistance != null" >
+        #{rentDistance,jdbcType=INTEGER},
+      </if>
+      <if test="rentPayType != null" >
+        #{rentPayType,jdbcType=INTEGER},
+      </if>
+      <if test="rentIsdel != null" >
+        #{rentIsdel,jdbcType=INTEGER},
+      </if>
+      <if test="rentStartBlockId != null" >
+        #{rentStartBlockId,jdbcType=BIGINT},
+      </if>
+      <if test="rentEndBlockId != null" >
+        #{rentEndBlockId,jdbcType=BIGINT},
+      </if>
+      <if test="rentIsvillager != null" >
+        #{rentIsvillager,jdbcType=INTEGER},
+      </if>
+      <if test="rentTemporarylocktime != null" >
+        #{rentTemporarylocktime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="rentOrderCode != null" >
+        #{rentOrderCode,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="rentInvoiceId != null" >
+        #{rentInvoiceId,jdbcType=BIGINT},
+      </if>
+      <if test="rentLongtime != null" >
+        #{rentLongtime,jdbcType=INTEGER},
+      </if>
+      <if test="rentStartFixedId != null" >
+        #{rentStartFixedId,jdbcType=BIGINT},
+      </if>
+      <if test="rentEndFixedId != null" >
+        #{rentEndFixedId,jdbcType=BIGINT},
+      </if>
+      <if test="rentBikeChannelId != null" >
+        #{rentBikeChannelId,jdbcType=BIGINT},
+      </if>
+      <if test="rentStartBlock != null" >
+        #{rentStartBlock,jdbcType=VARCHAR},
+      </if>
+      <if test="rentEndBlock != null" >
+        #{rentEndBlock,jdbcType=VARCHAR},
+      </if>
+      <if test="rentCouponMoney != null" >
+        #{rentCouponMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="rentGuideGroupId != null" >
+        #{rentGuideGroupId,jdbcType=BIGINT},
+      </if>
+      <if test="rentUnlockWay != null" >
+        #{rentUnlockWay,jdbcType=INTEGER},
+      </if>
+      <if test="rentCouponId != null" >
+        #{rentCouponId,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="org.entity.dto.BikeRentInfoExample" resultType="java.lang.Integer" >
+    select count(*) from bike_rent_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update bike_rent_info
+    <set >
+      <if test="record.rentInfoId != null" >
+        rent_info_id = #{record.rentInfoId,jdbcType=BIGINT},
+      </if>
+      <if test="record.rentInfoBikeId != null" >
+        rent_info_bike_id = #{record.rentInfoBikeId,jdbcType=BIGINT},
+      </if>
+      <if test="record.rentInfoUserId != null" >
+        rent_info_user_id = #{record.rentInfoUserId,jdbcType=BIGINT},
+      </if>
+      <if test="record.rentStarttime != null" >
+        rent_starttime = #{record.rentStarttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.rentEndtime != null" >
+        rent_endtime = #{record.rentEndtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.rentStartlat != null" >
+        rent_startlat = #{record.rentStartlat,jdbcType=DOUBLE},
+      </if>
+      <if test="record.rentStartlng != null" >
+        rent_startlng = #{record.rentStartlng,jdbcType=DOUBLE},
+      </if>
+      <if test="record.rentEndlat != null" >
+        rent_endlat = #{record.rentEndlat,jdbcType=DOUBLE},
+      </if>
+      <if test="record.rentEndlng != null" >
+        rent_endlng = #{record.rentEndlng,jdbcType=DOUBLE},
+      </if>
+      <if test="record.rentPrice != null" >
+        rent_price = #{record.rentPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="record.rentInsurancePrice != null" >
+        rent_insurance_price = #{record.rentInsurancePrice,jdbcType=DECIMAL},
+      </if>
+      <if test="record.rentPayTime != null" >
+        rent_pay_time = #{record.rentPayTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.rentState != null" >
+        rent_state = #{record.rentState,jdbcType=INTEGER},
+      </if>
+      <if test="record.rentDistance != null" >
+        rent_distance = #{record.rentDistance,jdbcType=INTEGER},
+      </if>
+      <if test="record.rentPayType != null" >
+        rent_pay_type = #{record.rentPayType,jdbcType=INTEGER},
+      </if>
+      <if test="record.rentIsdel != null" >
+        rent_isdel = #{record.rentIsdel,jdbcType=INTEGER},
+      </if>
+      <if test="record.rentStartBlockId != null" >
+        rent_start_block_id = #{record.rentStartBlockId,jdbcType=BIGINT},
+      </if>
+      <if test="record.rentEndBlockId != null" >
+        rent_end_block_id = #{record.rentEndBlockId,jdbcType=BIGINT},
+      </if>
+      <if test="record.rentIsvillager != null" >
+        rent_isvillager = #{record.rentIsvillager,jdbcType=INTEGER},
+      </if>
+      <if test="record.rentTemporarylocktime != null" >
+        rent_temporarylocktime = #{record.rentTemporarylocktime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.rentOrderCode != null" >
+        rent_order_code = #{record.rentOrderCode,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.rentInvoiceId != null" >
+        rent_invoice_id = #{record.rentInvoiceId,jdbcType=BIGINT},
+      </if>
+      <if test="record.rentLongtime != null" >
+        rent_longtime = #{record.rentLongtime,jdbcType=INTEGER},
+      </if>
+      <if test="record.rentStartFixedId != null" >
+        rent_start_fixed_id = #{record.rentStartFixedId,jdbcType=BIGINT},
+      </if>
+      <if test="record.rentEndFixedId != null" >
+        rent_end_fixed_id = #{record.rentEndFixedId,jdbcType=BIGINT},
+      </if>
+      <if test="record.rentBikeChannelId != null" >
+        rent_bike_channel_id = #{record.rentBikeChannelId,jdbcType=BIGINT},
+      </if>
+      <if test="record.rentStartBlock != null" >
+        rent_start_block = #{record.rentStartBlock,jdbcType=VARCHAR},
+      </if>
+      <if test="record.rentEndBlock != null" >
+        rent_end_block = #{record.rentEndBlock,jdbcType=VARCHAR},
+      </if>
+      <if test="record.rentCouponMoney != null" >
+        rent_coupon_money = #{record.rentCouponMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="record.rentGuideGroupId != null" >
+        rent_guide_group_id = #{record.rentGuideGroupId,jdbcType=BIGINT},
+      </if>
+      <if test="record.rentUnlockWay != null" >
+        rent_unlock_way = #{record.rentUnlockWay,jdbcType=INTEGER},
+      </if>
+      <if test="record.rentCouponId != null" >
+        rent_coupon_id = #{record.rentCouponId,jdbcType=BIGINT},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update bike_rent_info
+    set rent_info_id = #{record.rentInfoId,jdbcType=BIGINT},
+      rent_info_bike_id = #{record.rentInfoBikeId,jdbcType=BIGINT},
+      rent_info_user_id = #{record.rentInfoUserId,jdbcType=BIGINT},
+      rent_starttime = #{record.rentStarttime,jdbcType=TIMESTAMP},
+      rent_endtime = #{record.rentEndtime,jdbcType=TIMESTAMP},
+      rent_startlat = #{record.rentStartlat,jdbcType=DOUBLE},
+      rent_startlng = #{record.rentStartlng,jdbcType=DOUBLE},
+      rent_endlat = #{record.rentEndlat,jdbcType=DOUBLE},
+      rent_endlng = #{record.rentEndlng,jdbcType=DOUBLE},
+      rent_price = #{record.rentPrice,jdbcType=DECIMAL},
+      rent_insurance_price = #{record.rentInsurancePrice,jdbcType=DECIMAL},
+      rent_pay_time = #{record.rentPayTime,jdbcType=TIMESTAMP},
+      rent_state = #{record.rentState,jdbcType=INTEGER},
+      rent_distance = #{record.rentDistance,jdbcType=INTEGER},
+      rent_pay_type = #{record.rentPayType,jdbcType=INTEGER},
+      rent_isdel = #{record.rentIsdel,jdbcType=INTEGER},
+      rent_start_block_id = #{record.rentStartBlockId,jdbcType=BIGINT},
+      rent_end_block_id = #{record.rentEndBlockId,jdbcType=BIGINT},
+      rent_isvillager = #{record.rentIsvillager,jdbcType=INTEGER},
+      rent_temporarylocktime = #{record.rentTemporarylocktime,jdbcType=TIMESTAMP},
+      rent_invoice_id = #{record.rentInvoiceId,jdbcType=BIGINT},
+      rent_longtime = #{record.rentLongtime,jdbcType=INTEGER},
+      rent_start_fixed_id = #{record.rentStartFixedId,jdbcType=BIGINT},
+      rent_end_fixed_id = #{record.rentEndFixedId,jdbcType=BIGINT},
+      rent_bike_channel_id = #{record.rentBikeChannelId,jdbcType=BIGINT},
+      rent_start_block = #{record.rentStartBlock,jdbcType=VARCHAR},
+      rent_end_block = #{record.rentEndBlock,jdbcType=VARCHAR},
+      rent_coupon_money = #{record.rentCouponMoney,jdbcType=DECIMAL},
+      rent_order_code = #{record.rentOrderCode,jdbcType=LONGVARCHAR},
+      rent_guide_group_id = #{record.rentGuideGroupId,jdbcType=BIGINT},
+      rent_coupon_id = #{record.rentCouponId,jdbcType=BIGINT},
+      rent_unlock_way = #{record.rentUnlockWay,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update bike_rent_info
+    set rent_info_id = #{record.rentInfoId,jdbcType=BIGINT},
+      rent_info_bike_id = #{record.rentInfoBikeId,jdbcType=BIGINT},
+      rent_info_user_id = #{record.rentInfoUserId,jdbcType=BIGINT},
+      rent_starttime = #{record.rentStarttime,jdbcType=TIMESTAMP},
+      rent_endtime = #{record.rentEndtime,jdbcType=TIMESTAMP},
+      rent_startlat = #{record.rentStartlat,jdbcType=DOUBLE},
+      rent_startlng = #{record.rentStartlng,jdbcType=DOUBLE},
+      rent_endlat = #{record.rentEndlat,jdbcType=DOUBLE},
+      rent_endlng = #{record.rentEndlng,jdbcType=DOUBLE},
+      rent_price = #{record.rentPrice,jdbcType=DECIMAL},
+      rent_insurance_price = #{record.rentInsurancePrice,jdbcType=DECIMAL},
+      rent_pay_time = #{record.rentPayTime,jdbcType=TIMESTAMP},
+      rent_state = #{record.rentState,jdbcType=INTEGER},
+      rent_distance = #{record.rentDistance,jdbcType=INTEGER},
+      rent_pay_type = #{record.rentPayType,jdbcType=INTEGER},
+      rent_isdel = #{record.rentIsdel,jdbcType=INTEGER},
+      rent_start_block_id = #{record.rentStartBlockId,jdbcType=BIGINT},
+      rent_end_block_id = #{record.rentEndBlockId,jdbcType=BIGINT},
+      rent_isvillager = #{record.rentIsvillager,jdbcType=INTEGER},
+      rent_temporarylocktime = #{record.rentTemporarylocktime,jdbcType=TIMESTAMP},
+      rent_invoice_id = #{record.rentInvoiceId,jdbcType=BIGINT},
+      rent_longtime = #{record.rentLongtime,jdbcType=INTEGER},
+      rent_start_fixed_id = #{record.rentStartFixedId,jdbcType=BIGINT},
+      rent_end_fixed_id = #{record.rentEndFixedId,jdbcType=BIGINT},
+      rent_bike_channel_id = #{record.rentBikeChannelId,jdbcType=BIGINT},
+      rent_start_block = #{record.rentStartBlock,jdbcType=VARCHAR},
+      rent_end_block = #{record.rentEndBlock,jdbcType=VARCHAR},
+      rent_coupon_money = #{record.rentCouponMoney,jdbcType=DECIMAL},
+      rent_guide_group_id = #{record.rentGuideGroupId,jdbcType=BIGINT},
+      rent_coupon_id = #{record.rentCouponId,jdbcType=BIGINT},
+      rent_unlock_way = #{record.rentUnlockWay,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="org.entity.dto.BikeRentInfo" >
+    update bike_rent_info
+    <set >
+      <if test="rentInfoBikeId != null" >
+        rent_info_bike_id = #{rentInfoBikeId,jdbcType=BIGINT},
+      </if>
+      <if test="rentInfoUserId != null" >
+        rent_info_user_id = #{rentInfoUserId,jdbcType=BIGINT},
+      </if>
+      <if test="rentStarttime != null" >
+        rent_starttime = #{rentStarttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="rentEndtime != null" >
+        rent_endtime = #{rentEndtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="rentStartlat != null" >
+        rent_startlat = #{rentStartlat,jdbcType=DOUBLE},
+      </if>
+      <if test="rentStartlng != null" >
+        rent_startlng = #{rentStartlng,jdbcType=DOUBLE},
+      </if>
+      <if test="rentEndlat != null" >
+        rent_endlat = #{rentEndlat,jdbcType=DOUBLE},
+      </if>
+      <if test="rentEndlng != null" >
+        rent_endlng = #{rentEndlng,jdbcType=DOUBLE},
+      </if>
+      <if test="rentPrice != null" >
+        rent_price = #{rentPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="rentInsurancePrice != null" >
+        rent_insurance_price = #{rentInsurancePrice,jdbcType=DECIMAL},
+      </if>
+      <if test="rentPayTime != null" >
+        rent_pay_time = #{rentPayTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="rentState != null" >
+        rent_state = #{rentState,jdbcType=INTEGER},
+      </if>
+      <if test="rentDistance != null" >
+        rent_distance = #{rentDistance,jdbcType=INTEGER},
+      </if>
+      <if test="rentPayType != null" >
+        rent_pay_type = #{rentPayType,jdbcType=INTEGER},
+      </if>
+      <if test="rentIsdel != null" >
+        rent_isdel = #{rentIsdel,jdbcType=INTEGER},
+      </if>
+      <if test="rentStartBlockId != null" >
+        rent_start_block_id = #{rentStartBlockId,jdbcType=BIGINT},
+      </if>
+      <if test="rentEndBlockId != null" >
+        rent_end_block_id = #{rentEndBlockId,jdbcType=BIGINT},
+      </if>
+      <if test="rentIsvillager != null" >
+        rent_isvillager = #{rentIsvillager,jdbcType=INTEGER},
+      </if>
+      <if test="rentTemporarylocktime != null" >
+        rent_temporarylocktime = #{rentTemporarylocktime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="rentInvoiceId != null" >
+        rent_invoice_id = #{rentInvoiceId,jdbcType=BIGINT},
+      </if>
+      <if test="rentLongtime != null" >
+        rent_longtime = #{rentLongtime,jdbcType=INTEGER},
+      </if>
+      <if test="rentStartFixedId != null" >
+        rent_start_fixed_id = #{rentStartFixedId,jdbcType=BIGINT},
+      </if>
+      <if test="rentEndFixedId != null" >
+        rent_end_fixed_id = #{rentEndFixedId,jdbcType=BIGINT},
+      </if>
+      <if test="rentBikeChannelId != null" >
+        rent_bike_channel_id = #{rentBikeChannelId,jdbcType=BIGINT},
+      </if>
+      <if test="rentStartBlock != null" >
+        rent_start_block = #{rentStartBlock,jdbcType=VARCHAR},
+      </if>
+      <if test="rentEndBlock != null" >
+        rent_end_block = #{rentEndBlock,jdbcType=VARCHAR},
+      </if>
+      <if test="rentCouponMoney != null" >
+        rent_coupon_money = #{rentCouponMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="rentOrderCode != null" >
+        rent_order_code = #{rentOrderCode,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="rentGuideGroupId != null" >
+        rent_guide_group_id = #{rentGuideGroupId,jdbcType=BIGINT},
+      </if>
+      <if test="rentCouponId != null" >
+        rent_coupon_id = #{rentCouponId,jdbcType=BIGINT},
+      </if>
+      <if test="rentUnlockWay != null" >
+        rent_unlock_way = #{rentUnlockWay,jdbcType=INTEGER},
+      </if>
+    </set>
+    where rent_info_id = #{rentInfoId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="org.entity.dto.BikeRentInfo" >
+    update bike_rent_info
+    set rent_info_bike_id = #{rentInfoBikeId,jdbcType=BIGINT},
+      rent_info_user_id = #{rentInfoUserId,jdbcType=BIGINT},
+      rent_starttime = #{rentStarttime,jdbcType=TIMESTAMP},
+      rent_endtime = #{rentEndtime,jdbcType=TIMESTAMP},
+      rent_startlat = #{rentStartlat,jdbcType=DOUBLE},
+      rent_startlng = #{rentStartlng,jdbcType=DOUBLE},
+      rent_endlat = #{rentEndlat,jdbcType=DOUBLE},
+      rent_endlng = #{rentEndlng,jdbcType=DOUBLE},
+      rent_price = #{rentPrice,jdbcType=DECIMAL},
+      rent_insurance_price = #{rentInsurancePrice,jdbcType=DECIMAL},
+      rent_pay_time = #{rentPayTime,jdbcType=TIMESTAMP},
+      rent_state = #{rentState,jdbcType=INTEGER},
+      rent_distance = #{rentDistance,jdbcType=INTEGER},
+      rent_pay_type = #{rentPayType,jdbcType=INTEGER},
+      rent_isdel = #{rentIsdel,jdbcType=INTEGER},
+      rent_start_block_id = #{rentStartBlockId,jdbcType=BIGINT},
+      rent_end_block_id = #{rentEndBlockId,jdbcType=BIGINT},
+      rent_isvillager = #{rentIsvillager,jdbcType=INTEGER},
+      rent_temporarylocktime = #{rentTemporarylocktime,jdbcType=TIMESTAMP},
+      rent_invoice_id = #{rentInvoiceId,jdbcType=BIGINT},
+      rent_longtime = #{rentLongtime,jdbcType=INTEGER},
+      rent_start_fixed_id = #{rentStartFixedId,jdbcType=BIGINT},
+      rent_end_fixed_id = #{rentEndFixedId,jdbcType=BIGINT},
+      rent_bike_channel_id = #{rentBikeChannelId,jdbcType=BIGINT},
+      rent_start_block = #{rentStartBlock,jdbcType=VARCHAR},
+      rent_end_block = #{rentEndBlock,jdbcType=VARCHAR},
+      rent_coupon_money = #{rentCouponMoney,jdbcType=DECIMAL},
+      rent_order_code = #{rentOrderCode,jdbcType=LONGVARCHAR},
+      rent_guide_group_id = #{rentGuideGroupId,jdbcType=BIGINT},
+      rent_coupon_id = #{rentCouponId,jdbcType=BIGINT},
+      rent_unlock_way = #{rentUnlockWay,jdbcType=INTEGER}
+    where rent_info_id = #{rentInfoId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.entity.dto.BikeRentInfo" >
+    update bike_rent_info
+    set rent_info_bike_id = #{rentInfoBikeId,jdbcType=BIGINT},
+      rent_info_user_id = #{rentInfoUserId,jdbcType=BIGINT},
+      rent_starttime = #{rentStarttime,jdbcType=TIMESTAMP},
+      rent_endtime = #{rentEndtime,jdbcType=TIMESTAMP},
+      rent_startlat = #{rentStartlat,jdbcType=DOUBLE},
+      rent_startlng = #{rentStartlng,jdbcType=DOUBLE},
+      rent_endlat = #{rentEndlat,jdbcType=DOUBLE},
+      rent_endlng = #{rentEndlng,jdbcType=DOUBLE},
+      rent_price = #{rentPrice,jdbcType=DECIMAL},
+      rent_insurance_price = #{rentInsurancePrice,jdbcType=DECIMAL},
+      rent_pay_time = #{rentPayTime,jdbcType=TIMESTAMP},
+      rent_state = #{rentState,jdbcType=INTEGER},
+      rent_distance = #{rentDistance,jdbcType=INTEGER},
+      rent_pay_type = #{rentPayType,jdbcType=INTEGER},
+      rent_isdel = #{rentIsdel,jdbcType=INTEGER},
+      rent_start_block_id = #{rentStartBlockId,jdbcType=BIGINT},
+      rent_end_block_id = #{rentEndBlockId,jdbcType=BIGINT},
+      rent_isvillager = #{rentIsvillager,jdbcType=INTEGER},
+      rent_temporarylocktime = #{rentTemporarylocktime,jdbcType=TIMESTAMP},
+      rent_invoice_id = #{rentInvoiceId,jdbcType=BIGINT},
+      rent_longtime = #{rentLongtime,jdbcType=INTEGER},
+      rent_start_fixed_id = #{rentStartFixedId,jdbcType=BIGINT},
+      rent_end_fixed_id = #{rentEndFixedId,jdbcType=BIGINT},
+      rent_bike_channel_id = #{rentBikeChannelId,jdbcType=BIGINT},
+      rent_start_block = #{rentStartBlock,jdbcType=VARCHAR},
+      rent_end_block = #{rentEndBlock,jdbcType=VARCHAR},
+      rent_coupon_money = #{rentCouponMoney,jdbcType=DECIMAL},
+      rent_guide_group_id = #{rentGuideGroupId,jdbcType=BIGINT},
+      rent_coupon_id = #{rentCouponId,jdbcType=BIGINT},
+      rent_unlock_way = #{rentUnlockWay,jdbcType=INTEGER}
+    where rent_info_id = #{rentInfoId,jdbcType=BIGINT}
+  </update>
+  
+  
+    <select id="selectUnionByExample" resultMap="BaseUnionResultMap" parameterType="org.entity.dto.BikeRentInfoExample" >
+    select * from bike_rent_info bri left join user u on bri.rent_info_user_id = u.user_id 
+                                     left join bike b on bri.rent_info_bike_id = b.bike_id 
+                                     left join channel c on bri.rent_bike_channel_id = c.channel_id                            
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="limitStart != null and limitStart>=0" >
+      limit #{limitStart} , #{limitEnd}
+    </if>
+  </select>
+  
+    <select id="countUnionByExample" parameterType="org.entity.dto.BikeRentInfoExample" resultType="java.lang.Integer" >
+    select count(*) from bike_rent_info bri left join user u on bri.rent_info_user_id = u.user_id 
+                                            left join bike b on bri.rent_info_bike_id = b.bike_id
+                                            left join channel c on bri.rent_bike_channel_id = c.channel_id  
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    </select>
+   <select id="selectUnionByPrimaryKey" resultMap="BaseUnionResultMap" parameterType="java.lang.Long" >
+    select * from bike_rent_info bri left join user u on bri.rent_info_user_id = u.user_id 
+                                     left join bike b on bri.rent_info_bike_id = b.bike_id
+                                     left join channel c on bri.rent_bike_channel_id = c.channel_id 
+    where rent_info_id = #{rentInfoId,jdbcType=BIGINT}
+  </select>
+  
+  
+  <select id="selectByExampleUser" resultMap="BaseResultMapUser" parameterType="org.entity.dto.BikeRentInfoExample" >
+    select * from bike_rent_info bri left join user u on bri.rent_info_user_id = u.user_id 
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="limitStart != null and limitStart>=0" >
+      limit #{limitStart} , #{limitEnd}
+    </if>
+  </select>
+
+  <select id="selectByUserIdsAndState" resultMap="BaseResultMap" >
+    select * from bike_rent_info WHERE rent_state = #{state,jdbcType=INTEGER} and rent_info_user_id in
+    <foreach collection="userIds" item="id" open="(" close=")" separator=",">
+      #{id}
+    </foreach>
+  </select>
+
+  <select id="selectByUserIdAndGroupId" resultMap="BaseUnionResultMap" >
+    select * from bike_rent_info rent left join bike b on rent.rent_info_bike_id = b.bike_id
+    WHERE rent_guide_group_id = #{groupId} and rent_info_user_id = #{userId}
+  </select>
+
+</mapper>

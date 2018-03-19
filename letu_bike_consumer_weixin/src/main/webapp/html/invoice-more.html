@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="viewport" content="initial-scale=1, width=device-width, maximum-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-touch-fullscreen" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="format-detection" content="address=no">
+    <meta name="screen-orientation" content="portrait">
+    <meta name="x5-orientation" content="portrait">
+    <title>发票详情</title>
+    <link rel="stylesheet" href="font/iconfont.css">
+    <link rel="stylesheet" href="font/iconfont-2.css">
+    <link rel="stylesheet" href="css/animate.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/base.css">
+    <script type="text/javascript" src="js/zepto.min.js"></script>
+    <link rel="stylesheet" href="js/dialog.css">
+    <script type="text/javascript" src="js/dialog.js"></script>
+    <script type="text/javascript" src="js/iscroll.js"></script>
+    <link rel="stylesheet" href="js/swiper-3.2.7.min.css">
+    <script type="text/javascript" src="js/swiper-3.2.7.jquery.min.js"></script>
+    <script type="text/javascript" src="js/path.js"></script>
+    <script type="text/javascript" src="js/mobile.js"></script>
+    <script type="text/javascript" src="js/usercenter.js"></script>
+    <script type="text/javascript" src="js/fastclick.js"></script>
+</head>
+<body style="background: #f5f5f5;">
+<div class="g-body">
+    <form class="invoice-more">
+        <div class="weui-cells weui-cells_form">
+            <div class="weui-cell margin-bottom-20">
+                <div class="weui-cell__hd"><label for="" class="weui-label">备注说明</label></div>
+                <div class="weui-cell__bd">
+                    <input class="weui-input" type="text" value="" placeholder="填写备注说明">
+                </div>
+            </div>
+            <div class="weui-cell weui-cell-top">
+                <div class="weui-cell__hd"><label for="" class="weui-label">纳税人识别号</label></div>
+                <div class="weui-cell__bd">
+                    <input class="weui-input" type="text" value="" placeholder="填写纳税人识别号">
+                </div>
+            </div>
+            <div class="weui-cell">
+                <div class="weui-cell__hd"><label for="" class="weui-label">地址、电话</label></div>
+                <div class="weui-cell__bd">
+                    <input class="weui-input" type="text" value="" placeholder="填写注册地址、注册电话">
+                </div>
+            </div>
+            <div class="weui-cell">
+                <div class="weui-cell__hd">
+                    <label class="weui-label">开户行及账号</label>
+                </div>
+                <div class="weui-cell__bd">
+                    <input class="weui-input" type="text" value="" placeholder="填写开户行及银行账号">
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <a class="invoice-show invoice-show-demo">查看示例</a>
+    <div class="surebtn more-surebtn">
+        <a class="btn">确认</a>
+    </div>
+</div>
+
+	<script>
+        $('.invoice-show-demo').click(function () {
+            $.confirm('<img src="images/fapiao.jpg"/>',true,function(types){
+                if(types=='yes') {
+                    this.hide();
+                }
+                else {
+                    this.hide();
+                }
+            },{className:"agree close",width:244,height:164});
+        })
+	</script>
+
+</body>
+
+</html>

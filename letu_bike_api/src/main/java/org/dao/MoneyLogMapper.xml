@@ -1,0 +1,451 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.dao.MoneyLogMapper" >
+  <resultMap id="BaseResultMap" type="org.entity.dto.MoneyLog" >
+    <id column="money_log_id" property="moneyLogId" jdbcType="BIGINT" />
+    <result column="money_log_account_id" property="moneyLogAccountId" jdbcType="BIGINT" />
+    <result column="money_log_stream_type" property="moneyLogStreamType" jdbcType="INTEGER" />
+    <result column="money_log_opreate_money" property="moneyLogOpreateMoney" jdbcType="DECIMAL" />
+    <result column="money_log_deposit" property="moneyLogDeposit" jdbcType="DECIMAL" />
+    <result column="money_log_create_time" property="moneyLogCreateTime" jdbcType="TIMESTAMP" />
+    <result column="money_log_remark" property="moneyLogRemark" jdbcType="VARCHAR" />
+    <result column="money_log_IP" property="moneyLogIp" jdbcType="VARCHAR" />
+    <result column="money_log_opreate_id" property="moneyLogOpreateId" jdbcType="BIGINT" />
+    <result column="money_log_state" property="moneyLogState" jdbcType="INTEGER" />
+    <result column="money_log_order" property="moneyLogOrder" jdbcType="VARCHAR" />
+    <result column="money_log_out_trade" property="moneyLogOutTrade" jdbcType="VARCHAR" />
+    <result column="money_log_refund_opreate" property="moneyLogRefundOpreate" jdbcType="BIGINT" />
+    <result column="money_log_isvillager" property="moneyLogIsvillager" jdbcType="INTEGER" />
+    <result column="money_log_refund_state" property="moneyLogRefundState" jdbcType="INTEGER" />
+    <result column="money_log_channel_id" property="moneyLogChannelId" jdbcType="BIGINT" />
+  </resultMap>
+  <resultMap id="BaseUnionResultMap" type="org.entity.dto.MoneyLog" extends="BaseResultMap">
+   <association property="account" javaType="org.entity.dto.Account">
+    <id column="account_id" property="accountId" jdbcType="BIGINT" />
+    <result column="account_user_id" property="accountUserId" jdbcType="BIGINT" />
+    <result column="account_totalmoney" property="accountTotalmoney" jdbcType="DECIMAL" />
+    <result column="account_deposit" property="accountDeposit" jdbcType="DECIMAL" />
+    <result column="account_bbin" property="accountBbin" jdbcType="DECIMAL" />
+    <result column="account_freezemoney" property="accountFreezemoney" jdbcType="DECIMAL" />
+    <result column="account_available_balance" property="accountAvailableBalance" jdbcType="DECIMAL" />
+    <result column="account_createtime" property="accountCreatetime" jdbcType="TIMESTAMP" />
+    <result column="account_updatetime" property="accountUpdatetime" jdbcType="TIMESTAMP" />
+    <result column="account_is_freeze" property="accountIsFreeze" jdbcType="INTEGER" />
+    <result column="account_final_recharge_time" property="accountFinalRechargeTime" jdbcType="TIMESTAMP" />
+    <result column="account_final_consume_time" property="accountFinalConsumeTime" jdbcType="TIMESTAMP" />
+    <result column="account_final_refund_time" property="accountFinalRefundTime" jdbcType="TIMESTAMP" />
+    <association property="aUser" javaType="org.entity.dto.User">
+        <id column="user_id" property="userId" jdbcType="BIGINT" />
+	    <result column="user_account_id" property="userAccountId" jdbcType="BIGINT" />
+	    <result column="user_nickname" property="userNickname" jdbcType="VARCHAR" />
+	    <result column="user_tel" property="userTel" jdbcType="VARCHAR" />
+	    <result column="user_idcard" property="userIdcard" jdbcType="VARCHAR" />
+	    <result column="user_realname" property="userRealname" jdbcType="VARCHAR" />
+	    <result column="user_profile_image" property="userProfileImage" jdbcType="VARCHAR" />
+	    <result column="user_gender" property="userGender" jdbcType="INTEGER" />
+	    <result column="user_openId" property="userOpenid" jdbcType="VARCHAR" />
+	    <result column="user_unionId" property="userUnionid" jdbcType="VARCHAR" />
+	    <result column="user_state" property="userState" jdbcType="INTEGER" />
+	    <result column="user_createtime" property="userCreatetime" jdbcType="TIMESTAMP" />
+	    <result column="user_logintime" property="userLogintime" jdbcType="TIMESTAMP" />
+	    <result column="user_usetime" property="userUsetime" jdbcType="INTEGER" />
+	    <result column="user_use_distance" property="userUseDistance" jdbcType="INTEGER" />
+	    <result column="user_channel_id" property="userChannelId" jdbcType="BIGINT" />
+	    <result column="user_isblacklist" property="userIsblacklist" jdbcType="SMALLINT" />
+	    <result column="user_defriend_time" property="userDefriendTime" jdbcType="TIMESTAMP" />
+    </association>
+   </association>
+   </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    money_log_id, money_log_account_id, money_log_stream_type, money_log_opreate_money, 
+    money_log_deposit, money_log_create_time, money_log_remark, money_log_IP, money_log_opreate_id, 
+    money_log_state, money_log_order, money_log_out_trade, money_log_refund_opreate, 
+    money_log_isvillager,money_log_refund_state, money_log_channel_id
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="org.entity.dto.MoneyLogExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from money_log
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="limitStart != null and limitStart>=0" >
+      limit #{limitStart} , #{limitEnd}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from money_log
+    where money_log_id = #{moneyLogId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from money_log
+    where money_log_id = #{moneyLogId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="org.entity.dto.MoneyLogExample" >
+    delete from money_log
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="org.entity.dto.MoneyLog" >
+    insert into money_log (money_log_id, money_log_account_id, money_log_stream_type, 
+      money_log_opreate_money, money_log_deposit, 
+      money_log_create_time, money_log_remark, money_log_IP, 
+      money_log_opreate_id, money_log_state, money_log_order, 
+      money_log_out_trade, money_log_refund_opreate, 
+      money_log_isvillager,money_log_refund_state, 
+      money_log_channel_id)
+    values (#{moneyLogId,jdbcType=BIGINT}, #{moneyLogAccountId,jdbcType=BIGINT}, #{moneyLogStreamType,jdbcType=INTEGER}, 
+      #{moneyLogOpreateMoney,jdbcType=DECIMAL}, #{moneyLogDeposit,jdbcType=DECIMAL}, 
+      #{moneyLogCreateTime,jdbcType=TIMESTAMP}, #{moneyLogRemark,jdbcType=VARCHAR}, #{moneyLogIp,jdbcType=VARCHAR}, 
+      #{moneyLogOpreateId,jdbcType=BIGINT}, #{moneyLogState,jdbcType=INTEGER}, #{moneyLogOrder,jdbcType=VARCHAR}, 
+      #{moneyLogOutTrade,jdbcType=VARCHAR}, #{moneyLogRefundOpreate,jdbcType=BIGINT}, 
+      #{moneyLogIsvillager,jdbcType=INTEGER}#{moneyLogRefundState,jdbcType=INTEGER}, 
+      #{moneyLogChannelId,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="org.entity.dto.MoneyLog" >
+    insert into money_log
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="moneyLogId != null" >
+        money_log_id,
+      </if>
+      <if test="moneyLogAccountId != null" >
+        money_log_account_id,
+      </if>
+      <if test="moneyLogStreamType != null" >
+        money_log_stream_type,
+      </if>
+      <if test="moneyLogOpreateMoney != null" >
+        money_log_opreate_money,
+      </if>
+      <if test="moneyLogDeposit != null" >
+        money_log_deposit,
+      </if>
+      <if test="moneyLogCreateTime != null" >
+        money_log_create_time,
+      </if>
+      <if test="moneyLogRemark != null" >
+        money_log_remark,
+      </if>
+      <if test="moneyLogIp != null" >
+        money_log_IP,
+      </if>
+      <if test="moneyLogOpreateId != null" >
+        money_log_opreate_id,
+      </if>
+      <if test="moneyLogState != null" >
+        money_log_state,
+      </if>
+      <if test="moneyLogOrder != null" >
+        money_log_order,
+      </if>
+      <if test="moneyLogOutTrade != null" >
+        money_log_out_trade,
+      </if>
+      <if test="moneyLogRefundOpreate != null" >
+        money_log_refund_opreate,
+      </if>
+      <if test="moneyLogIsvillager != null" >
+        money_log_isvillager,
+      </if>
+      <if test="moneyLogRefundState != null" >
+        money_log_refund_state,
+      </if>
+      <if test="moneyLogChannelId != null" >
+        money_log_channel_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="moneyLogId != null" >
+        #{moneyLogId,jdbcType=BIGINT},
+      </if>
+      <if test="moneyLogAccountId != null" >
+        #{moneyLogAccountId,jdbcType=BIGINT},
+      </if>
+      <if test="moneyLogStreamType != null" >
+        #{moneyLogStreamType,jdbcType=INTEGER},
+      </if>
+      <if test="moneyLogOpreateMoney != null" >
+        #{moneyLogOpreateMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="moneyLogDeposit != null" >
+        #{moneyLogDeposit,jdbcType=DECIMAL},
+      </if>
+      <if test="moneyLogCreateTime != null" >
+        #{moneyLogCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="moneyLogRemark != null" >
+        #{moneyLogRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="moneyLogIp != null" >
+        #{moneyLogIp,jdbcType=VARCHAR},
+      </if>
+      <if test="moneyLogOpreateId != null" >
+        #{moneyLogOpreateId,jdbcType=BIGINT},
+      </if>
+      <if test="moneyLogState != null" >
+        #{moneyLogState,jdbcType=INTEGER},
+      </if>
+      <if test="moneyLogOrder != null" >
+        #{moneyLogOrder,jdbcType=VARCHAR},
+      </if>
+      <if test="moneyLogOutTrade != null" >
+        #{moneyLogOutTrade,jdbcType=VARCHAR},
+      </if>
+      <if test="moneyLogRefundOpreate != null" >
+        #{moneyLogRefundOpreate,jdbcType=BIGINT},
+      </if>
+      <if test="moneyLogIsvillager != null" >
+        #{moneyLogIsvillager,jdbcType=INTEGER},
+      </if>
+      <if test="moneyLogRefundState != null" >
+        #{moneyLogRefundState,jdbcType=INTEGER},
+      </if>
+      <if test="moneyLogChannelId != null" >
+        #{moneyLogChannelId,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="org.entity.dto.MoneyLogExample" resultType="java.lang.Integer" >
+    select count(*) from money_log
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update money_log
+    <set >
+      <if test="record.moneyLogId != null" >
+        money_log_id = #{record.moneyLogId,jdbcType=BIGINT},
+      </if>
+      <if test="record.moneyLogAccountId != null" >
+        money_log_account_id = #{record.moneyLogAccountId,jdbcType=BIGINT},
+      </if>
+      <if test="record.moneyLogStreamType != null" >
+        money_log_stream_type = #{record.moneyLogStreamType,jdbcType=INTEGER},
+      </if>
+      <if test="record.moneyLogOpreateMoney != null" >
+        money_log_opreate_money = #{record.moneyLogOpreateMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="record.moneyLogDeposit != null" >
+        money_log_deposit = #{record.moneyLogDeposit,jdbcType=DECIMAL},
+      </if>
+      <if test="record.moneyLogCreateTime != null" >
+        money_log_create_time = #{record.moneyLogCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.moneyLogRemark != null" >
+        money_log_remark = #{record.moneyLogRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.moneyLogIp != null" >
+        money_log_IP = #{record.moneyLogIp,jdbcType=VARCHAR},
+      </if>
+      <if test="record.moneyLogOpreateId != null" >
+        money_log_opreate_id = #{record.moneyLogOpreateId,jdbcType=BIGINT},
+      </if>
+      <if test="record.moneyLogState != null" >
+        money_log_state = #{record.moneyLogState,jdbcType=INTEGER},
+      </if>
+      <if test="record.moneyLogOrder != null" >
+        money_log_order = #{record.moneyLogOrder,jdbcType=VARCHAR},
+      </if>
+      <if test="record.moneyLogOutTrade != null" >
+        money_log_out_trade = #{record.moneyLogOutTrade,jdbcType=VARCHAR},
+      </if>
+      <if test="record.moneyLogRefundOpreate != null" >
+        money_log_refund_opreate = #{record.moneyLogRefundOpreate,jdbcType=BIGINT},
+      </if>
+      <if test="record.moneyLogIsvillager != null" >
+        money_log_isvillager = #{record.moneyLogIsvillager,jdbcType=INTEGER},
+      </if>
+      <if test="record.moneyLogRefundState != null" >
+        money_log_refund_state = #{record.moneyLogRefundState,jdbcType=INTEGER},
+      </if>
+      <if test="record.moneyLogChannelId != null" >
+        money_log_channel_id = #{record.moneyLogChannelId,jdbcType=BIGINT},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update money_log
+    set money_log_id = #{record.moneyLogId,jdbcType=BIGINT},
+      money_log_account_id = #{record.moneyLogAccountId,jdbcType=BIGINT},
+      money_log_stream_type = #{record.moneyLogStreamType,jdbcType=INTEGER},
+      money_log_opreate_money = #{record.moneyLogOpreateMoney,jdbcType=DECIMAL},
+      money_log_deposit = #{record.moneyLogDeposit,jdbcType=DECIMAL},
+      money_log_create_time = #{record.moneyLogCreateTime,jdbcType=TIMESTAMP},
+      money_log_remark = #{record.moneyLogRemark,jdbcType=VARCHAR},
+      money_log_IP = #{record.moneyLogIp,jdbcType=VARCHAR},
+      money_log_opreate_id = #{record.moneyLogOpreateId,jdbcType=BIGINT},
+      money_log_state = #{record.moneyLogState,jdbcType=INTEGER},
+      money_log_order = #{record.moneyLogOrder,jdbcType=VARCHAR},
+      money_log_out_trade = #{record.moneyLogOutTrade,jdbcType=VARCHAR},
+      money_log_refund_opreate = #{record.moneyLogRefundOpreate,jdbcType=BIGINT},
+      money_log_isvillager = #{record.moneyLogIsvillager,jdbcType=INTEGER},
+      money_log_refund_state = #{record.moneyLogRefundState,jdbcType=INTEGER},
+      money_log_channel_id = #{record.moneyLogChannelId,jdbcType=BIGINT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="org.entity.dto.MoneyLog" >
+    update money_log
+    <set >
+      <if test="moneyLogAccountId != null" >
+        money_log_account_id = #{moneyLogAccountId,jdbcType=BIGINT},
+      </if>
+      <if test="moneyLogStreamType != null" >
+        money_log_stream_type = #{moneyLogStreamType,jdbcType=INTEGER},
+      </if>
+      <if test="moneyLogOpreateMoney != null" >
+        money_log_opreate_money = #{moneyLogOpreateMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="moneyLogDeposit != null" >
+        money_log_deposit = #{moneyLogDeposit,jdbcType=DECIMAL},
+      </if>
+      <if test="moneyLogCreateTime != null" >
+        money_log_create_time = #{moneyLogCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="moneyLogRemark != null" >
+        money_log_remark = #{moneyLogRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="moneyLogIp != null" >
+        money_log_IP = #{moneyLogIp,jdbcType=VARCHAR},
+      </if>
+      <if test="moneyLogOpreateId != null" >
+        money_log_opreate_id = #{moneyLogOpreateId,jdbcType=BIGINT},
+      </if>
+      <if test="moneyLogState != null" >
+        money_log_state = #{moneyLogState,jdbcType=INTEGER},
+      </if>
+      <if test="moneyLogOrder != null" >
+        money_log_order = #{moneyLogOrder,jdbcType=VARCHAR},
+      </if>
+      <if test="moneyLogOutTrade != null" >
+        money_log_out_trade = #{moneyLogOutTrade,jdbcType=VARCHAR},
+      </if>
+      <if test="moneyLogRefundOpreate != null" >
+        money_log_refund_opreate = #{moneyLogRefundOpreate,jdbcType=BIGINT},
+      </if>
+      <if test="moneyLogIsvillager != null" >
+        money_log_isvillager = #{moneyLogIsvillager,jdbcType=INTEGER},
+      </if>
+      <if test="moneyLogRefundState != null" >
+        money_log_refund_state = #{moneyLogRefundState,jdbcType=INTEGER},
+      </if>
+      <if test="moneyLogChannelId != null" >
+        money_log_channel_id = #{moneyLogChannelId,jdbcType=BIGINT},
+      </if>
+    </set>
+    where money_log_id = #{moneyLogId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.entity.dto.MoneyLog" >
+    update money_log
+    set money_log_account_id = #{moneyLogAccountId,jdbcType=BIGINT},
+      money_log_stream_type = #{moneyLogStreamType,jdbcType=INTEGER},
+      money_log_opreate_money = #{moneyLogOpreateMoney,jdbcType=DECIMAL},
+      money_log_deposit = #{moneyLogDeposit,jdbcType=DECIMAL},
+      money_log_create_time = #{moneyLogCreateTime,jdbcType=TIMESTAMP},
+      money_log_remark = #{moneyLogRemark,jdbcType=VARCHAR},
+      money_log_IP = #{moneyLogIp,jdbcType=VARCHAR},
+      money_log_opreate_id = #{moneyLogOpreateId,jdbcType=BIGINT},
+      money_log_state = #{moneyLogState,jdbcType=INTEGER},
+      money_log_order = #{moneyLogOrder,jdbcType=VARCHAR},
+      money_log_out_trade = #{moneyLogOutTrade,jdbcType=VARCHAR},
+      money_log_refund_opreate = #{moneyLogRefundOpreate,jdbcType=BIGINT},
+      money_log_isvillager = #{moneyLogIsvillager,jdbcType=INTEGER},
+      money_log_refund_state = #{moneyLogRefundState,jdbcType=INTEGER},
+      money_log_channel_id = #{moneyLogChannelId,jdbcType=BIGINT}
+    where money_log_id = #{moneyLogId,jdbcType=BIGINT}
+  </update>
+  
+  <select id="selectUnionByExample" resultMap="BaseUnionResultMap" parameterType="org.entity.dto.MoneyLogExample" >
+    select * from money_log ml left join account a on ml.money_log_account_id = a.account_id
+                               left join user u on u.user_id = a.account_user_id
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="limitStart != null and limitStart>=0" >
+      limit #{limitStart} , #{limitEnd}
+    </if>
+  </select>
+  
+  <select id="countUnionByExample" parameterType="org.entity.dto.MoneyLogExample" resultType="java.lang.Integer" >
+    select count(*) from money_log ml left join account a on ml.money_log_account_id = a.account_id
+                               left join user u on u.user_id = a.account_user_id
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+</mapper>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:dubbo="http://code.alibabatech.com/schema/dubbo" xmlns:task="http://www.springframework.org/schema/task"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+    http://code.alibabatech.com/schema/dubbo
+    http://code.alibabatech.com/schema/dubbo/dubbo.xsd
+    http://www.springframework.org/schema/task
+    http://www.springframework.org/schema/task/spring-task-3.0.xsd
+    http://www.springframework.org/schema/context 
+    http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+	<bean class="org.listener.InitListener" />
+	<bean class="org.server.lock.LockServerHandler" />
+	<bean class="org.component.AppConfig" />
+	<bean class="org.service.lock.impl.LockBikeServiceImpl" />
+	<!-- 定时任务获取硬件状态 -->
+<!-- 	<context:component-scan base-package="org.task" /> -->
+<!-- 	<task:executor id="executor" pool-size="5" /> -->
+<!-- 	<task:scheduler id="scheduler" pool-size="10" /> -->
+<!-- 	<task:annotation-driven executor="executor" -->
+<!-- 		scheduler="scheduler" /> -->
+	<!-- 提供方应用信息，用于计算依赖关系 -->
+	<dubbo:application name="provider_lock" />
+	<!-- 使用zookeeper注册中心暴露服务地址 -->
+	<dubbo:registry protocol="zookeeper" address="${zookeeper_path}" />
+
+	<!-- 用dubbo协议在20882端口暴露服务 -->
+	<dubbo:protocol name="dubbo" port="20882" payload="52226050"/>
+	<import resource="classpath:spring/applicationContext-properties.xml" />
+	<import resource="classpath:spring/application_dubbo_lockService.xml" />
+	<import resource="classpath:spring/applicationContext-mybatis-master.xml" />
+	<import resource="classpath:spring/redis-context.xml"/>
+</beans>

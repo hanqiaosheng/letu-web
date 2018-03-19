@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+    http://code.alibabatech.com/schema/dubbo
+    http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+
+
+
+	<!-- 提供方应用信息，用于计算依赖关系 -->
+	<dubbo:application name="consumer" />
+
+	<!-- 使用zookeeper注册中心暴露服务地址 -->
+	<dubbo:registry protocol="zookeeper" address="${zookeeper_path}" />
+
+
+
+	<!-- 声明需要暴露的服务接口 --><!-- 生成远程服务代理，可以像使用本地bean一样使用demoService -->
+	<dubbo:reference interface="org.service.cms.read.AdminServiceRead"
+		id="adminServiceRead" check="false" timeout="60000">
+	</dubbo:reference>
+
+	<dubbo:reference interface="org.service.cms.read.UserServiceRead"
+		id="userServiceRead" check="false" timeout="60000">
+	</dubbo:reference>
+
+	<dubbo:reference interface="org.service.cms.read.UserAccountServiceRead"
+		id="userAccountServiceRead" check="false" timeout="60000">
+	</dubbo:reference>
+
+	<dubbo:reference interface="org.service.cms.read.UserFeedbackServiceRead"
+		id="userFeedbackServiceRead" check="false" timeout="60000">
+	</dubbo:reference>
+
+
+	<dubbo:reference interface="org.service.cms.read.PermissionServiceRead"
+		id="permissionServiceRead" check="false" timeout="60000">
+	</dubbo:reference>
+
+	<dubbo:reference interface="org.service.cms.read.RoleServiceRead"
+		id="roleServiceRead" check="false" timeout="60000">
+	</dubbo:reference>
+
+
+	<dubbo:reference interface="org.service.cms.read.DataServiceRead"
+		id="dataServiceRead" check="false" timeout="60000">
+	</dubbo:reference>
+	<dubbo:reference interface="org.service.cms.read.DataDetServiceRead"
+		id="dataDetServiceRead" check="false" timeout="60000">
+	</dubbo:reference>
+
+	<dubbo:reference interface="org.service.cms.read.ChannelServiceRead"
+		id="channelServiceRead" check="false" timeout="60000">
+	</dubbo:reference>
+
+	<dubbo:reference interface="org.service.cms.read.BikeServiceRead"
+		id="bikeServiceRead" check="false" timeout="60000">
+	</dubbo:reference>
+
+	<dubbo:reference interface="org.service.cms.read.BikeRentInfoServiceRead"
+		id="bikeRentInfoServiceRead" check="false" timeout="60000">
+	</dubbo:reference>
+
+	<dubbo:reference interface="org.service.cms.read.BikeFixInfoServiceRead"
+		id="bikeFixInfoServiceRead" check="false" timeout="60000">
+	</dubbo:reference>
+
+
+	<dubbo:reference interface="org.service.cms.read.BikeRepairServiceRead"
+		id="bikeRepairServiceRead" check="false" timeout="60000">
+	</dubbo:reference>
+
+	<!--<dubbo:reference interface="org.service.cms.read.RentPlanServiceRead"-->
+		<!--id="rentPlanServiceRead" check="false" timeout="60000">-->
+	<!--</dubbo:reference>-->
+
+	<dubbo:reference interface="org.service.cms.read.BlockServiceRead"
+		id="blockServiceRead" check="false" timeout="60000">
+	</dubbo:reference>
+
+	<dubbo:reference interface="org.service.cms.read.SysMsgServiceRead"
+		id="sysMsgServiceRead" check="false" timeout="60000">
+	</dubbo:reference>
+
+
+	<dubbo:reference interface="org.service.cms.read.RefundServiceRead"
+		id="refundServiceRead" check="false" timeout="60000">
+	</dubbo:reference>
+
+	<dubbo:reference interface="org.service.cms.read.AccountServiceRead"
+		id="accountServiceRead" check="false" timeout="60000">
+	</dubbo:reference>
+
+
+	<dubbo:reference interface="org.service.cms.read.MoneyLogServiceRead"
+		id="moneyLogServiceRead" check="false" timeout="60000">
+	</dubbo:reference>
+
+	<dubbo:reference interface="org.service.cms.read.RechargeRecordServiceRead"
+		id="rechargeRecordServiceRead" check="false" timeout="60000">
+	</dubbo:reference>
+
+	<dubbo:reference interface="org.service.cms.read.ModelsServiceRead"
+		id="modelsServiceRead" check="false" timeout="60000">
+	</dubbo:reference>
+
+	<dubbo:reference interface="org.service.cms.read.UserInsuranceServiceRead"
+		id="userInsuranceServiceRead" check="false" timeout="60000">
+	</dubbo:reference>
+
+	<dubbo:reference interface="org.service.cms.read.BikeLockInfoServiceRead"
+		id="bikeLockInfoServiceRead" check="false" timeout="60000">
+	</dubbo:reference>
+	
+	<dubbo:reference interface="org.service.cms.read.FixedReturnServiceRead"
+		id="fixedReturnServiceRead" check="false" timeout="60000">
+	</dubbo:reference>
+
+	<dubbo:reference interface="org.service.cms.read.GuideGroupServiceRead"
+		id="guideGroupServiceRead" check="false" timeout="60000">
+	</dubbo:reference>
+
+	<dubbo:reference interface="org.service.cms.read.SysParamentServiceRead"
+		id="sysParamentServiceRead" check="false" timeout="60000">
+	</dubbo:reference>
+
+	<dubbo:reference interface="org.service.cms.read.CodeServiceRead"
+					 id="codeServiceRead" check="false" timeout="60000">
+	</dubbo:reference>
+
+	<dubbo:reference interface="org.service.cms.read.GuideGroupUserRead"
+					 id="guideGroupUserRead" check="false" timeout="60000">
+	</dubbo:reference>
+
+
+	<!-- 锁 -->
+	<dubbo:reference interface="org.service.lock.LockService"
+		id="lockService" check="false" timeout="60000">
+	</dubbo:reference>
+
+
+
+
+
+	<dubbo:reference interface="org.service.cms.write.AdminServiceWrite"
+		id="adminServiceWrite" check="false" timeout="60000">
+	</dubbo:reference>
+
+	<dubbo:reference interface="org.service.cms.write.RoleServiceWrite"
+		id="roleServiceWrite" check="false" timeout="60000">
+	</dubbo:reference>
+
+	<dubbo:reference interface="org.service.cms.write.UserServiceWrite"
+		id="userServiceWrite" check="false" timeout="60000">
+	</dubbo:reference>
+
+	<dubbo:reference interface="org.service.cms.write.UserAccountServiceWrite"
+		id="userAccountServiceWrite" check="false" timeout="60000">
+	</dubbo:reference>
+
+	<dubbo:reference interface="org.service.cms.write.UserFeedbackServiceWrite"
+		id="userFeedbackServiceWrite" check="false" timeout="60000">
+	</dubbo:reference>
+
+	<dubbo:reference interface="org.service.cms.write.ChannelServiceWrite"
+		id="channelServiceWrite" check="false" timeout="60000">
+	</dubbo:reference>
+
+	<dubbo:reference interface="org.service.cms.write.BikeServiceWrite"
+		id="bikeServiceWrite" check="false" timeout="60000">
+	</dubbo:reference>
+
+	<dubbo:reference interface="org.service.cms.write.BikeRentInfoServiceWrite"
+		id="bikeRentInfoServiceWrite" check="false" timeout="60000">
+	</dubbo:reference>
+
+	<dubbo:reference interface="org.service.cms.write.BikeFixInfoServiceWrite"
+		id="bikeFixInfoServiceWrite" check="false" timeout="60000">
+	</dubbo:reference>
+
+	<!--<dubbo:reference interface="org.service.cms.write.AppointmentServiceWrite"-->
+		<!--id="appointmentServiceWrite" check="false" timeout="60000">-->
+	<!--</dubbo:reference>-->
+
+	<dubbo:reference interface="org.service.cms.write.BikeRepairServiceWrite"
+		id="bikeRepairServiceWrite" check="false" timeout="60000">
+	</dubbo:reference>
+
+	<!--<dubbo:reference interface="org.service.cms.write.RentPlanServiceWrite"-->
+		<!--id="rentPlanServiceWrite" check="false" timeout="60000">-->
+	<!--</dubbo:reference>-->
+
+	<dubbo:reference interface="org.service.cms.write.SysMsgServiceWrite"
+		id="sysMsgServiceWrite" check="false" timeout="60000">
+	</dubbo:reference>
+
+	<!--<dubbo:reference interface="org.service.cms.write.AppointmentPlanServiceWrite"-->
+		<!--id="appointmentPlanServiceWrite" check="false" timeout="60000">-->
+	<!--</dubbo:reference>-->
+
+	<dubbo:reference interface="org.service.cms.write.RefundServiceWrite"
+		id="refundServiceWrite" check="false" timeout="60000">
+	</dubbo:reference>
+
+	<dubbo:reference interface="org.service.cms.write.BlockServiceWrite"
+		id="blockServiceWrite" check="false" timeout="60000">
+	</dubbo:reference>
+
+	<!--<dubbo:reference interface="org.service.cms.write.RechargePlanServiceWrite"-->
+		<!--id="rechargePlanServiceWrite" check="false" timeout="60000">-->
+	<!--</dubbo:reference>-->
+
+	<!--<dubbo:reference interface="org.service.cms.write.PreferentialServiceWrite"-->
+		<!--id="preferentialServiceWrite" check="false" timeout="60000">-->
+	<!--</dubbo:reference>-->
+
+	<dubbo:reference interface="org.service.cms.write.MoneyLogServiceWrite"
+		id="moneyLogServiceWrite" check="false" timeout="60000">
+	</dubbo:reference>
+
+	<dubbo:reference interface="org.service.cms.write.AccountServiceWrite"
+		id="accountServiceWrite" check="false" timeout="60000">
+	</dubbo:reference>
+
+	<dubbo:reference interface="org.service.cms.write.MessageServiceWrite"
+		id="messageServiceWrite" check="false" timeout="60000">
+	</dubbo:reference>
+
+	<dubbo:reference interface="org.service.cms.write.ModelsServiceWrite"
+		id="modelsServiceWrite" check="false" timeout="60000">
+	</dubbo:reference>
+	<dubbo:reference interface="org.service.cms.write.UserInsuranceServiceWrite"
+		id="userInsuranceServiceWrite" check="false" timeout="60000">
+	</dubbo:reference>
+	<dubbo:reference interface="org.service.cms.write.BikeLockInfoServiceWrite"
+		id="bikeLockInfoServiceWrite" check="false" timeout="60000">
+	</dubbo:reference>
+	<dubbo:reference interface="org.service.cms.write.FixedReturnServiceWrite"
+		id="fixedReturnServiceWrite" check="false" timeout="60000">
+	</dubbo:reference>
+	<dubbo:reference interface="org.service.cms.write.GuideGroupServiceWrite"
+		id="guideGroupServiceWrite" check="false" timeout="60000">
+	</dubbo:reference>
+	<dubbo:reference interface="org.service.cms.write.CouponListServiceWrite"
+		id="couponListServiceWrite" check="false" timeout="60000">
+	</dubbo:reference>
+	<dubbo:reference interface="org.service.cms.write.CodeServiceWrite"
+		id="codeServiceWrite" check="false" timeout="60000">
+	</dubbo:reference>
+	<dubbo:reference interface="org.service.cms.write.GuideGroupUserWrite"
+		id="guideGroupUserWrite" check="false" timeout="60000">
+	</dubbo:reference>
+</beans>

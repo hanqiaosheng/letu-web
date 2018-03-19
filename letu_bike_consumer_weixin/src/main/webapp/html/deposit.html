@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="viewport" content="initial-scale=1, width=device-width, maximum-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-touch-fullscreen" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="format-detection" content="address=no">
+    <meta name="screen-orientation" content="portrait">
+    <meta name="x5-orientation" content="portrait">
+    <title>充值</title>
+    <link rel="stylesheet" href="font/iconfont.css">
+    <link rel="stylesheet" href="css/animate.min.css">
+    <link rel="stylesheet" href="css/base.css">
+    <script type="text/javascript" src="js/zepto.min.js"></script>
+    <link rel="stylesheet" href="js/dialog.css">
+    <script type="text/javascript" src="js/dialog.js"></script>
+    <script type="text/javascript" src="js/iscroll.js"></script>
+    <link rel="stylesheet" href="js/swiper-3.2.7.min.css">
+    <script type="text/javascript" src="js/path.js"></script>
+    <script type="text/javascript" src="js/mobile.js"></script>
+    <script type="text/javascript" src="js/swiper-3.2.7.jquery.min.js"></script>
+
+    <script type="text/javascript">
+    function getStatesFn(){
+
+    }
+    $(function(){
+	   	$('#recharge').click(function(){
+                    var rechargeMoney = $("#rechargeMoney").val();
+                    var channelId = $("#channelId").val();
+					$.ajax({
+						type:"post",
+						url:url+"/pay/addRecharge.action",
+						data:"rechargeMoney="+rechargeMoney+"&flag=1"+"&channelId="+channelId,
+						beforeSend: function(request) {
+		                    request.setRequestHeader("fromFlag", "2");
+		                },
+						success:function(data){
+									if(data.state==1){
+										 WeixinJSBridge.invoke('getBrandWCPayRequest',{
+								  		 "appId" : data.appId,"timeStamp" : data.timeStamp, "nonceStr" : data.nonceStr, "package" : data.package,"signType" : "MD5", "paySign" : data.paySign
+								   			},function(res){
+												//WeixinJSBridge.log(res.err_msg);
+								 				//alert(res.err_code + res.err_desc + res.err_msg);
+									            if(res.err_msg == "get_brand_wcpay_request:ok"){
+									              //  alert("微信支付成功!");
+									                $.alert("微信支付成功!",true,function(){
+									                	javascript:window.location.href=url+"/html/bikeStart.html?bikeCode="+$.getQueryString('bikeCode');
+                                                    },50000,{className:'ui-alert',width:300});
+
+									            }else if(res.err_msg == "get_brand_wcpay_request:cancel"){
+
+									             //   alert("用户取消支付!");
+									            }else{
+									               alert("支付失败!");
+												   location.reload();
+									            }
+											})
+									}else {
+										alert("支付失败!");
+										location.reload();
+									}
+						}
+					});
+
+
+	})
+
+
+})
+ /*  $(function(){
+	$('#recharge').click(function(){
+            var rechargeMoney = $("#rechargeMoney").val();
+			$.ajax({
+				type:"post",
+				url:url+"/pay/addRecharge2.action",
+				data:"rechargeMoney="+rechargeMoney+"&flag=1",
+				success:function(data){
+					javascript:window.location.href=url+"/html/bikeStart.html?rentDeposite="+$.getQueryString('bikeDeposit')+'&bikeCode='+$.getQueryString('bikeCode')+'&rentPrice='+$.getQueryString('rentPrice');
+				}
+			});
+
+
+})
+
+
+})  */
+    </script>
+</head>
+
+<body>
+   <div class="g-body">
+      <!--  <form method="post" class="g-form" data-posturl="/pay/addRecharge.action" data-gotourl="goback"> -->
+            <div class="weui_cells weui_cells_radius marginlr">
+            <input name="leftMoney" type="hidden" id="rechargeMoney">
+            <input type="hidden" id="channelId">
+            	<div class="weui_cell">
+                 	   需预付款<span id="bikeDeposit"></span>元，您当前的预付款为<span id="deposit"></span>元
+                </div>
+
+            	<div class="weui_cell">
+                    <div class="weui_cell_hd"><label class="weui-label">车型</label></div>
+                    <div class="weui_cell_bd weui_cell_primary" id="code">
+                    </div>
+                </div>
+
+                <div class="weui_cell">
+                    <div class="weui_cell_hd"><label class="weui-label">车辆编号</label></div>
+                    <div class="weui_cell_bd weui_cell_primary" id="vbikeCode"></div>
+                </div>
+
+                <div class="weui_cell weui_check_label">
+                    <div class="weui_cell_hd">
+                        <label class="weui-label">收费标准</label>
+                    </div>
+                    <ul class="rent-list weui_cell_bd weui_cell_primary" id="rentPrice">
+                    </ul>
+                </div>
+                <div class="weui_cell">
+               <input type="hidden" name="surplusMoney">
+                    <div class="weui_cell_hd"><label class="weui-label">预付款(还车即退)</label></div>
+                    <div class="weui_cell_bd weui_cell_primary">
+                        &yen;<span id="leftMoney" ></span>
+                    </div>
+                </div>
+                <label class="weui_cell weui_check_label" for="s12">
+                    <div class="weui_cell_hd"><label class="weui-label">微信支付</label></div>
+
+                    <div class="weui_cell_bd weui_cell_primary">
+                        <div class="weui_cell_hd_s" id="agree">
+                        <input type="checkbox" checked="checked" class="weui_check" name="checkbox1" id="s12">
+                        <i class="round_check"></i>
+                    </div>
+                    </div>
+                </label>
+
+            </div>
+            <div class="surebtn">
+               <a class="btn margin-top-20" id="recharge">去充值</a>
+            </div>
+
+            <span class="weui_cell"> 温馨提示：平台不收取任何押金,预付款在您在指定区域内还车后立即原路退回到您的账户</span>
+        <!-- </form> -->
+   </div>
+
+   <script type="text/javascript">
+
+   $('#code').html($.getQueryString('modelsName'));
+   $('#deposit').html($.getQueryString('deposit'));
+   $('#bikeDeposit').html($.getQueryString('bikeDeposit'));
+   var leftMoney = Number($.getQueryString('bikeDeposit')) - Number($.getQueryString('deposit'));
+   $('#leftMoney').html(leftMoney);
+   $('#rechargeMoney').val(leftMoney);
+   $('#surplusMoney').html(leftMoney);
+   $('#channelId').val($.getQueryString('channelId'));
+   $("#vbikeCode").html($.getQueryString('bikeCode'));
+   </script>
+   <script type="text/javascript">
+       $(function(){
+           if(!$.getQueryString('bikeCode')){  //非车辆扫码进入充值页面时不显示车辆价格
+               return
+           }
+           $.ajax({
+               url : url+"/bike/getBikeModels.action",
+               data: "bikeCode=" + $.getQueryString('bikeCode'),
+               // data: "bikeCode=12",
+               type : "post",
+               dataType:"json",
+               beforeSend: function(request) {
+                   request.setRequestHeader("fromFlag", "2");
+               },
+               success : function(data) {
+                   if(data!=null&&data!=""){
+                       var str1 = "";
+                       var obj = data.modelRentPrice.priceList;
+                       if(data.modelRentPrice.rentPriceOption==1){
+                           for(var index in obj){
+                               str1 += '<li><label>'+obj[index].fromTime+'-'+obj[index].toTime+'小时</label><span>'+obj[index].rentPrice.toFixed(2)+'元/小时</span></li>';
+                           }
+                           if(obj.length>0){
+                               str1 += '<li><label>'+obj[obj.length-1].toTime+'小时后</label><span>'+data.modelRentPrice.lastPrice.toFixed(2)+'元/小时</span></li>';
+                           }else{
+                               str1 += '<li>'+data.modelRentPrice.lastPrice.toFixed(2)+'元/小时</li>';
+                           }
+                       }else if(data.modelRentPrice.rentPriceOption==2){
+                           for(var index in obj){
+                               str1 += '<li><label>'+obj[index].fromTime+'-'+obj[index].toTime+'个 半小时</label><span>'+obj[index].rentPrice.toFixed(2)+'元/半小时</span></li>';
+                           }
+                           if(obj.length>0){
+                               str1 += '<li><label>'+obj[obj.length-1].toTime+'个 半小时后</label><span>'+data.modelRentPrice.lastPrice.toFixed(2)+'元/半小时</span></li>';
+                           }else{
+                               str1 += '<li>'+data.modelRentPrice.lastPrice.toFixed(2)+'元/半小时</li>';
+                           }
+                       }
+
+                       $("#rentPrice").append(str1);
+                   }
+               }
+
+           })
+       })
+
+   </script>
+</body>
+
+</html>

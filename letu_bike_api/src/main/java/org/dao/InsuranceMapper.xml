@@ -1,0 +1,377 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.dao.InsuranceMapper" >
+  <resultMap id="BaseResultMap" type="org.entity.dto.Insurance" >
+    <id column="insurance_id" property="insuranceId" jdbcType="BIGINT" />
+    <result column="insurance_odd_num" property="insuranceOddNum" jdbcType="VARCHAR" />
+    <result column="insurance_user_id" property="insuranceUserId" jdbcType="BIGINT" />
+    <result column="insurance_content" property="insuranceContent" jdbcType="VARCHAR" />
+    <result column="insurance_money" property="insuranceMoney" jdbcType="DECIMAL" />
+    <result column="insurance_state" property="insuranceState" jdbcType="INTEGER" />
+    <result column="insurance_admin_id" property="insuranceAdminId" jdbcType="BIGINT" />
+    <result column="insurance_deal_time" property="insuranceDealTime" jdbcType="TIMESTAMP" />
+    <result column="insurance_apply_time" property="insuranceApplyTime" jdbcType="TIMESTAMP" />
+    <result column="insurance_result" property="insuranceResult" jdbcType="VARCHAR" />
+    <result column="insurance_accident_imgs" property="insuranceAccidentImgs" jdbcType="VARCHAR" />
+    <result column="insurance_detail_imgs" property="insuranceDetailImgs" jdbcType="VARCHAR" />
+    <result column="insurance_compensate" property="insuranceCompensate" jdbcType="VARCHAR" />
+    <result column="insurance_identity_contact" property="insuranceIdentityContact" jdbcType="VARCHAR" />
+    <result column="insurance_result_prove" property="insuranceResultProve" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    insurance_id, insurance_odd_num, insurance_user_id, insurance_content, insurance_money, 
+    insurance_state, insurance_admin_id, insurance_deal_time, insurance_apply_time, insurance_result, 
+    insurance_accident_imgs, insurance_detail_imgs, insurance_compensate, insurance_identity_contact, 
+    insurance_result_prove
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="org.entity.dto.InsuranceExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from insurance
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="limitStart != null and limitStart>=0" >
+      limit #{limitStart} , #{limitEnd}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from insurance
+    where insurance_id = #{insuranceId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from insurance
+    where insurance_id = #{insuranceId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="org.entity.dto.InsuranceExample" >
+    delete from insurance
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="org.entity.dto.Insurance" >
+    insert into insurance (insurance_id, insurance_odd_num, insurance_user_id, 
+      insurance_content, insurance_money, insurance_state, 
+      insurance_admin_id, insurance_deal_time, insurance_apply_time, 
+      insurance_result, insurance_accident_imgs, 
+      insurance_detail_imgs, insurance_compensate, 
+      insurance_identity_contact, insurance_result_prove
+      )
+    values (#{insuranceId,jdbcType=BIGINT}, #{insuranceOddNum,jdbcType=VARCHAR}, #{insuranceUserId,jdbcType=BIGINT}, 
+      #{insuranceContent,jdbcType=VARCHAR}, #{insuranceMoney,jdbcType=DECIMAL}, #{insuranceState,jdbcType=INTEGER}, 
+      #{insuranceAdminId,jdbcType=BIGINT}, #{insuranceDealTime,jdbcType=TIMESTAMP}, #{insuranceApplyTime,jdbcType=TIMESTAMP}, 
+      #{insuranceResult,jdbcType=VARCHAR}, #{insuranceAccidentImgs,jdbcType=VARCHAR}, 
+      #{insuranceDetailImgs,jdbcType=VARCHAR}, #{insuranceCompensate,jdbcType=VARCHAR}, 
+      #{insuranceIdentityContact,jdbcType=VARCHAR}, #{insuranceResultProve,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" useGeneratedKeys="true" keyProperty="insuranceId" parameterType="org.entity.dto.Insurance" >
+    insert into insurance
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="insuranceId != null" >
+        insurance_id,
+      </if>
+      <if test="insuranceOddNum != null" >
+        insurance_odd_num,
+      </if>
+      <if test="insuranceUserId != null" >
+        insurance_user_id,
+      </if>
+      <if test="insuranceContent != null" >
+        insurance_content,
+      </if>
+      <if test="insuranceMoney != null" >
+        insurance_money,
+      </if>
+      <if test="insuranceState != null" >
+        insurance_state,
+      </if>
+      <if test="insuranceAdminId != null" >
+        insurance_admin_id,
+      </if>
+      <if test="insuranceDealTime != null" >
+        insurance_deal_time,
+      </if>
+      <if test="insuranceApplyTime != null" >
+        insurance_apply_time,
+      </if>
+      <if test="insuranceResult != null" >
+        insurance_result,
+      </if>
+      <if test="insuranceAccidentImgs != null" >
+        insurance_accident_imgs,
+      </if>
+      <if test="insuranceDetailImgs != null" >
+        insurance_detail_imgs,
+      </if>
+      <if test="insuranceCompensate != null" >
+        insurance_compensate,
+      </if>
+      <if test="insuranceIdentityContact != null" >
+        insurance_identity_contact,
+      </if>
+      <if test="insuranceResultProve != null" >
+        insurance_result_prove,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="insuranceId != null" >
+        #{insuranceId,jdbcType=BIGINT},
+      </if>
+      <if test="insuranceOddNum != null" >
+        #{insuranceOddNum,jdbcType=VARCHAR},
+      </if>
+      <if test="insuranceUserId != null" >
+        #{insuranceUserId,jdbcType=BIGINT},
+      </if>
+      <if test="insuranceContent != null" >
+        #{insuranceContent,jdbcType=VARCHAR},
+      </if>
+      <if test="insuranceMoney != null" >
+        #{insuranceMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="insuranceState != null" >
+        #{insuranceState,jdbcType=INTEGER},
+      </if>
+      <if test="insuranceAdminId != null" >
+        #{insuranceAdminId,jdbcType=BIGINT},
+      </if>
+      <if test="insuranceDealTime != null" >
+        #{insuranceDealTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="insuranceApplyTime != null" >
+        #{insuranceApplyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="insuranceResult != null" >
+        #{insuranceResult,jdbcType=VARCHAR},
+      </if>
+      <if test="insuranceAccidentImgs != null" >
+        #{insuranceAccidentImgs,jdbcType=VARCHAR},
+      </if>
+      <if test="insuranceDetailImgs != null" >
+        #{insuranceDetailImgs,jdbcType=VARCHAR},
+      </if>
+      <if test="insuranceCompensate != null" >
+        #{insuranceCompensate,jdbcType=VARCHAR},
+      </if>
+      <if test="insuranceIdentityContact != null" >
+        #{insuranceIdentityContact,jdbcType=VARCHAR},
+      </if>
+      <if test="insuranceResultProve != null" >
+        #{insuranceResultProve,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="org.entity.dto.InsuranceExample" resultType="java.lang.Integer" >
+    select count(*) from insurance
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update insurance
+    <set >
+      <if test="record.insuranceId != null" >
+        insurance_id = #{record.insuranceId,jdbcType=BIGINT},
+      </if>
+      <if test="record.insuranceOddNum != null" >
+        insurance_odd_num = #{record.insuranceOddNum,jdbcType=VARCHAR},
+      </if>
+      <if test="record.insuranceUserId != null" >
+        insurance_user_id = #{record.insuranceUserId,jdbcType=BIGINT},
+      </if>
+      <if test="record.insuranceContent != null" >
+        insurance_content = #{record.insuranceContent,jdbcType=VARCHAR},
+      </if>
+      <if test="record.insuranceMoney != null" >
+        insurance_money = #{record.insuranceMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="record.insuranceState != null" >
+        insurance_state = #{record.insuranceState,jdbcType=INTEGER},
+      </if>
+      <if test="record.insuranceAdminId != null" >
+        insurance_admin_id = #{record.insuranceAdminId,jdbcType=BIGINT},
+      </if>
+      <if test="record.insuranceDealTime != null" >
+        insurance_deal_time = #{record.insuranceDealTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.insuranceApplyTime != null" >
+        insurance_apply_time = #{record.insuranceApplyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.insuranceResult != null" >
+        insurance_result = #{record.insuranceResult,jdbcType=VARCHAR},
+      </if>
+      <if test="record.insuranceAccidentImgs != null" >
+        insurance_accident_imgs = #{record.insuranceAccidentImgs,jdbcType=VARCHAR},
+      </if>
+      <if test="record.insuranceDetailImgs != null" >
+        insurance_detail_imgs = #{record.insuranceDetailImgs,jdbcType=VARCHAR},
+      </if>
+      <if test="record.insuranceCompensate != null" >
+        insurance_compensate = #{record.insuranceCompensate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.insuranceIdentityContact != null" >
+        insurance_identity_contact = #{record.insuranceIdentityContact,jdbcType=VARCHAR},
+      </if>
+      <if test="record.insuranceResultProve != null" >
+        insurance_result_prove = #{record.insuranceResultProve,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update insurance
+    set insurance_id = #{record.insuranceId,jdbcType=BIGINT},
+      insurance_odd_num = #{record.insuranceOddNum,jdbcType=VARCHAR},
+      insurance_user_id = #{record.insuranceUserId,jdbcType=BIGINT},
+      insurance_content = #{record.insuranceContent,jdbcType=VARCHAR},
+      insurance_money = #{record.insuranceMoney,jdbcType=DECIMAL},
+      insurance_state = #{record.insuranceState,jdbcType=INTEGER},
+      insurance_admin_id = #{record.insuranceAdminId,jdbcType=BIGINT},
+      insurance_deal_time = #{record.insuranceDealTime,jdbcType=TIMESTAMP},
+      insurance_apply_time = #{record.insuranceApplyTime,jdbcType=TIMESTAMP},
+      insurance_result = #{record.insuranceResult,jdbcType=VARCHAR},
+      insurance_accident_imgs = #{record.insuranceAccidentImgs,jdbcType=VARCHAR},
+      insurance_detail_imgs = #{record.insuranceDetailImgs,jdbcType=VARCHAR},
+      insurance_compensate = #{record.insuranceCompensate,jdbcType=VARCHAR},
+      insurance_identity_contact = #{record.insuranceIdentityContact,jdbcType=VARCHAR},
+      insurance_result_prove = #{record.insuranceResultProve,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="org.entity.dto.Insurance" >
+    update insurance
+    <set >
+      <if test="insuranceOddNum != null" >
+        insurance_odd_num = #{insuranceOddNum,jdbcType=VARCHAR},
+      </if>
+      <if test="insuranceUserId != null" >
+        insurance_user_id = #{insuranceUserId,jdbcType=BIGINT},
+      </if>
+      <if test="insuranceContent != null" >
+        insurance_content = #{insuranceContent,jdbcType=VARCHAR},
+      </if>
+      <if test="insuranceMoney != null" >
+        insurance_money = #{insuranceMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="insuranceState != null" >
+        insurance_state = #{insuranceState,jdbcType=INTEGER},
+      </if>
+      <if test="insuranceAdminId != null" >
+        insurance_admin_id = #{insuranceAdminId,jdbcType=BIGINT},
+      </if>
+      <if test="insuranceDealTime != null" >
+        insurance_deal_time = #{insuranceDealTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="insuranceApplyTime != null" >
+        insurance_apply_time = #{insuranceApplyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="insuranceResult != null" >
+        insurance_result = #{insuranceResult,jdbcType=VARCHAR},
+      </if>
+      <if test="insuranceAccidentImgs != null" >
+        insurance_accident_imgs = #{insuranceAccidentImgs,jdbcType=VARCHAR},
+      </if>
+      <if test="insuranceDetailImgs != null" >
+        insurance_detail_imgs = #{insuranceDetailImgs,jdbcType=VARCHAR},
+      </if>
+      <if test="insuranceCompensate != null" >
+        insurance_compensate = #{insuranceCompensate,jdbcType=VARCHAR},
+      </if>
+      <if test="insuranceIdentityContact != null" >
+        insurance_identity_contact = #{insuranceIdentityContact,jdbcType=VARCHAR},
+      </if>
+      <if test="insuranceResultProve != null" >
+        insurance_result_prove = #{insuranceResultProve,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where insurance_id = #{insuranceId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.entity.dto.Insurance" >
+    update insurance
+    set insurance_odd_num = #{insuranceOddNum,jdbcType=VARCHAR},
+      insurance_user_id = #{insuranceUserId,jdbcType=BIGINT},
+      insurance_content = #{insuranceContent,jdbcType=VARCHAR},
+      insurance_money = #{insuranceMoney,jdbcType=DECIMAL},
+      insurance_state = #{insuranceState,jdbcType=INTEGER},
+      insurance_admin_id = #{insuranceAdminId,jdbcType=BIGINT},
+      insurance_deal_time = #{insuranceDealTime,jdbcType=TIMESTAMP},
+      insurance_apply_time = #{insuranceApplyTime,jdbcType=TIMESTAMP},
+      insurance_result = #{insuranceResult,jdbcType=VARCHAR},
+      insurance_accident_imgs = #{insuranceAccidentImgs,jdbcType=VARCHAR},
+      insurance_detail_imgs = #{insuranceDetailImgs,jdbcType=VARCHAR},
+      insurance_compensate = #{insuranceCompensate,jdbcType=VARCHAR},
+      insurance_identity_contact = #{insuranceIdentityContact,jdbcType=VARCHAR},
+      insurance_result_prove = #{insuranceResultProve,jdbcType=VARCHAR}
+    where insurance_id = #{insuranceId,jdbcType=BIGINT}
+  </update>
+</mapper>

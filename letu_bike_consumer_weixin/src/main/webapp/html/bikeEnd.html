@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="viewport" content="initial-scale=1, width=device-width, maximum-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-touch-fullscreen" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="format-detection" content="address=no">
+    <meta name="screen-orientation" content="portrait">
+    <meta name="x5-orientation" content="portrait">
+    <title>全域骑游</title>
+    <link rel="stylesheet" href="font/iconfont-2.css">
+    <link rel="stylesheet" href="font_h/iconfont.css">
+    <link rel="stylesheet" href="css/animate.min.css">
+    <link rel="stylesheet" href="css/base.css">
+    <script type="text/javascript" src="js/zepto.min.js"></script>
+    <link rel="stylesheet" href="js/dialog.css">
+    <script type="text/javascript" src="js/dialog.js"></script>
+    <script type="text/javascript" src="js/iscroll.js"></script>
+    <link rel="stylesheet" href="js/swiper-3.2.7.min.css">
+    <script type="text/javascript" src="js/swiper-3.2.7.jquery.min.js"></script>
+    <script type="text/javascript" src="js/path.js"></script>
+    <script type="text/javascript" src="js/mobile.js"></script>
+    <script type="text/javascript" src="https://webapi.amap.com/maps?v=1.3&key=5d6fa7d0648f1101f5174c6bc2eb7e32&plugin=AMap.Geocoder"></script>
+    
+</head>
+
+<body class="bikeUse">
+   <div class="g-body">
+       <!-- <form method="post" class="g-form" data-posturl="/bikeRent/payMoney.action" data-dialogmes="支付成功!" data-gotourl=""> -->
+       <div id="rentState" class="usedTit green">
+           <img src="images/bike.png"/>
+       </div>
+            <div class="weui_cells weui_cells_auto marginlr">
+                <div class="bikeUseTit">···租赁结束···</div>
+                <div class="weui_cell weui_check_label">
+                    <div class="weui_cell_hd"><div class="flex-box"><i class="iconfont icon-zixingche"></i><label class="weui-label">车辆编号：</label></div></div>
+                    <div class="weui_cell_bd weui_cell_primary" id="vbikeCode">
+                    </div>
+                </div>
+               <a class="weui_cell" id="toMap">
+               <input type="hidden" id="needmoney" >
+               <input type="hidden" id="rentId" >
+                   <div class="weui_cell_hd"><div class="flex-box"><i class="iconfont-yao icon2-xiao31"></i></i><label class="weui-label">起始地点：</label></div></div>
+                    <div class="weui_cell_bd weui_cell_ft" id="sAddress">
+                    </div>
+                </a>
+                <div class="weui_cell weui_check_label">
+                    <div class="weui_cell_hd"><div class="flex-box"><i class="font-size-20 iconfont-yao icon2-dibuanniuyangshi10miaosha"></i><label class="weui-label">骑行时间：</label></div></div>
+                    <div class="weui_cell_bd weui_cell_primary" id="sTime">
+                    </div>
+                </div>
+                <div class="weui_cell weui_check_label">
+                    <div class="weui_cell_hd"><div class="flex-box"><i class="font-size-20 iconfont-yao icon2-dibuanniuyangshi10miaosha"></i><label class="weui-label">行驶时间：</label></div></div>
+                    <div class="weui_cell_bd weui_cell_primary" id="rideTime">
+                    </div>
+                </div>
+                <div class="weui_cell weui_check_label">
+                    <div class="weui_cell_hd"><div class="flex-box"><i class="iconfont-yao icon2-money-copy"></i><label class="weui-label"></i>费用结算：</label></div></div>
+                    <div class="weui_cell_bd weui_cell_primary" id="realmoney">
+                    </div>
+                </div>
+                <div class="weui_cell weui_check_label">
+                    <div class="weui_cell_hd"><div class="flex-box"><i class="iconfont-yao icon2-money-copy"></i><label class="weui-label"></i>充值余额：</label></div></div>
+                    <div class="weui_cell_bd weui_cell_primary" id="money">
+                    </div>
+                </div>
+            </div>
+            <div class="surebtn">
+                <a class="btn margin-top-30" id="payMoney">确认并支付</a>
+            </div>
+            
+            <div style="color: red;margin-top: 10px;text-align: center;line-height: 45px;">（注意：扣费完成后，剩余金额将自动退回）</div>
+        <!-- </form> -->
+   </div>
+    <script type="text/javascript">
+	var sTime;
+   	var rideTime;
+   	var lnglatXY;
+  	$.isLoading.show(null,true);
+   	$('#rentId').val($.getQueryString('rentId'));
+    $("#vbikeCode").html($.getQueryString('bikeCode'));
+//    	$.alert($('#rentId').val());
+   	//$('form').attr("data-gotourl","/html/user-journey.html");
+	$.ajax({
+		type : "post",
+		url : url+'/bikeRent/rentBike.action',
+		data : "rentInfoId=" + $('#rentId').val(),
+		dataType : 'json',
+		beforeSend: function(request) {
+            request.setRequestHeader("fromFlag", "2");
+        },
+		success : function(data) {
+				if(data.code == -1){
+					$.isLoading.hide();
+					$.alert("该订单出错,不允许替他人操作",true,function(){
+						window.location.href=url+"/html/watchbike.html";
+		             },5000,{className:'ui-alert',width:300});
+				}
+				if(data.message =="fail"){
+					$.alert("该订单已结束，可继续租赁骑行！",true,function(){
+						window.location.href=url+"/html/watchbike.html";
+		             },5000,{className:'ui-alert',width:300});
+				}
+				sTime=data.data.bikeRentInfo.rentStarttime;
+				var eTime=data.data.bikeRentInfo.rentEndtime;
+				$('#sTime').html(new Date(sTime).format('hh:mm')+" - "+new Date(eTime).format('hh:mm'));
+				rideTime=((eTime-sTime)/60000).toFixed(0);
+				if(rideTime==0)
+					$('#rideTime').html("0分钟");
+				else
+					$('#rideTime').html(rideTime+"分钟");
+				
+				$('#needmoney').val(data.data.bikeRentInfo.rentPrice+data.data.bikeRentInfo.rentInsurancePrice);
+				if(data.message =="normal"){
+					$('#money').html("剩余"+(data.data.account.accountDeposit-(data.data.bikeRentInfo.rentPrice+data.data.bikeRentInfo.rentInsurancePrice)).toFixed(2)+"元");
+				}else if(data.message =="vip"){
+					$('#money').html("剩余"+(data.data.account.accountAvailableBalance-(data.data.bikeRentInfo.rentPrice+data.data.bikeRentInfo.rentInsurancePrice)).toFixed(2)+"元");
+				}
+				
+				$('#realmoney').html("共计"+(data.data.bikeRentInfo.rentPrice+data.data.bikeRentInfo.rentInsurancePrice).toFixed(2)+"元（保险"+data.data.bikeRentInfo.rentInsurancePrice.toFixed(2)+"元）");
+				lnglatXY=[data.data.bikeRentInfo.rentStartlng,data.data.bikeRentInfo.rentStartlat];
+				regeocoder();
+				$('#planId').val(data.data.bikeRentInfo.rentPlanId);
+				$('#toMap').attr("href",url+"/html/map.html?Lng="+data.data.bikeRentInfo.rentStartlng+"&Lat="+data.data.bikeRentInfo.rentStartlat);
+			$.isLoading.hide();
+		},
+		error:function(data){
+			reLogin(data);
+		}
+	});
+	
+	$(function(){  
+        pushHistory(); 
+        var bool=false;  
+        setTimeout(function(){  
+              bool=true;  
+        },500); 
+        window.addEventListener("popstate", function(e) {  
+        	
+            if(bool){
+            	$.alert("该行程已结束,请完成支付！",true,function(){
+            		pushHistory();
+                 },5000,{className:'ui-alert',width:300});
+            }
+        	
+        }, false);  
+        function pushHistory() {  
+            var state = {  
+                title: "title",  
+                url: "#"  
+            };  
+            window.history.pushState(state, "title", "#");  
+        }     
+    });  
+
+	
+    
+    function regeocoder() {  //逆地理编码
+        var geocoder = new AMap.Geocoder({
+            radius: 1000,
+            extensions: "base"
+        });        
+        geocoder.getAddress(lnglatXY, function(status, result) {
+            if (status === 'complete' && result.info === 'OK') {
+                geocoder_CallBack(result);
+            }
+            else{
+            	$('#sAddress').html("无法获取地址");
+            }
+        });        
+    }
+    function geocoder_CallBack(data) {
+//         var address = data.regeocode.formattedAddress.split("市",2)[1]; //返回地址描述
+		var index = data.regeocode.formattedAddress.indexOf("市");
+        var address = data.regeocode.formattedAddress.substring(index+1);
+        $('#sAddress').html(address);
+    }
+    
+    
+   </script>
+   <script type="text/javascript">
+    function getStatesFn(){
+    	var payMoney = $("#needmoney").val();
+        var rentId = $("#rentId").val();
+        $.ajax({
+			type:"post",
+			async:false,
+			url:url+"/bikeRent/checkRentState.action",
+			data:"rentInfoId="+rentId,
+			beforeSend: function(request) {
+	            request.setRequestHeader("fromFlag", "2");
+	        },
+			success:function(data){
+				var rideTime = data.data.rideTime;
+				if(data.data.checkState==0){
+					$.alert("已完成!",true,function(){
+						JavaScript:window.location.href=url+"/html/watchbike.html";
+                      },5000,{className:'ui-alert',width:300});
+				}else if(data.data.checkState==2){
+					 $.ajax({
+					type:"post",
+					url:url+"/bikeRent/payMoney.action",
+					data:"payMoneys="+payMoney+"&rentInfoId="+rentId,
+					beforeSend: function(request) {
+	                    request.setRequestHeader("fromFlag", "2");
+	                },
+					success:function(data){
+								if(data.state==1){
+									 WeixinJSBridge.invoke('getBrandWCPayRequest',{
+							  		 "appId" : data.appId,"timeStamp" : data.timeStamp, "nonceStr" : data.nonceStr, "package" : data.package,"signType" : "MD5", "paySign" : data.paySign 
+							   			},function(res){
+											//WeixinJSBridge.log(res.err_msg);
+							 				//alert(res.err_code + res.err_desc + res.err_msg);
+								            if(res.err_msg == "get_brand_wcpay_request:ok"){  
+								              $.alert("微信支付成功!",true,function(){
+								            	  if(rideTime>5){
+								            		  JavaScript:window.location.href=url+"/html/watchbike.html";
+								            	  }else{
+								            		  JavaScript:window.location.href="https://wj.qq.com/s/1516671/e03c?from=singlemessage";
+								            	  }
+								            	  
+						                      },5000,{className:'ui-alert',width:300});
+								            }else if(res.err_msg == "get_brand_wcpay_request:cancel"){  
+								            
+								             //   alert("用户取消支付!");  
+								            }else{  
+								               
+											   
+								            }  
+										})
+								}else {
+									$.alert("支付失败!",true,function(){
+						            	   location.reload();
+					                    },5000,{className:'ui-alert',width:300});
+								}
+					}
+				}); 
+				}else if(data.data.checkState==1){
+					 $.ajax({
+							type:"post",
+							url:url+"/pay/refundApplication.action",
+							data:"payMoneys="+payMoney+"&rentInfoId="+rentId,
+							beforeSend: function(request) {
+			                    request.setRequestHeader("fromFlag", "2");
+			                },
+							success:function(data){
+								if(data.message=="退款成功"){
+	                 				$.alert("支付成功并已退款",true,function(){
+	                 					 if(rideTime>5){
+						            		  JavaScript:window.location.href=url+"/html/watchbike.html";
+						            	  }else{
+						            		  JavaScript:window.location.href="https://wj.qq.com/s/1516671/e03c?from=singlemessage";
+						            	  }
+	            		            },false,{className:'ui-alert',width:300}); 
+	                 			}else if(data.message=="fail"){
+	                 				$.alert("退款失败",true,function(){
+	            		            },false,{className:'ui-alert',width:300}); 
+	                 			}else if(data.message=="noRecharge"){
+	                 				$.alert("退款申请失败",true,function(){
+	            		            },false,{className:'ui-alert',width:300}); 
+	                 			}
+							}
+						});
+					
+				}else if(data.data.checkState==3){
+					$.alert("支付成功，可继续租赁骑行!",true,function(){
+						 if(rideTime>5){
+		            		  JavaScript:window.location.href=url+"/html/watchbike.html";
+		            	  }else{
+		            		  JavaScript:window.location.href="https://wj.qq.com/s/1516671/e03c?from=singlemessage";
+		            	  }
+                      },5000,{className:'ui-alert',width:300});
+				}
+				
+			}
+		});
+    }
+   
+
+    </script>
+</body>
+
+</html>

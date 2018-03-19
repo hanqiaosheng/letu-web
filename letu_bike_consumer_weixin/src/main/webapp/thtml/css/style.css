@@ -1,0 +1,61 @@
+
+*{/* ��ֹ�����˸ */ -webkit-tap-highlight-color:rgba(0,0,0,0); /* ������ҳ�����ִ�С���� */ -webkit-text-size-adjust:none;}
+body,html,div,span,i,h2,h3,h4,a,p,img,ul,li,dl,dt,dd{margin:0; padding:0;}
+li{list-style:none;}
+a{text-decoration:none; color:#000; outline:none;}
+img{border:0 none;vertical-align:top;max-width: 640px;}
+body>p>img,body>p>a>img{width: 100%;height: auto;}
+input{outline:0 none;}
+a,img,button,input,textarea{-webkit-tap-highlight-color:rgba(255,255,255,0);}
+body{font-size:14px;background-size: 100% 100%; font-family:"微软雅黑";background:#151517;max-width: 640px;margin: 0 auto; color: #535353;line-height: 1; overflow-x: hidden;}
+.img-size{
+    width: 100%;
+    height: auto;
+    background-size: 100% 100%;
+    text-align: left;
+}
+.content .img1{
+    width: auto;
+    height: 100%;
+    position: absolute;
+    top:-3%;
+    left: -9%;
+    z-index: 2
+}
+.content .img2{
+
+    position: absolute;
+    top:38%;
+    left: -3%;
+    z-index: 3
+}
+.content .img3{
+    width: 88%;
+    position: absolute;
+    top:72%;
+    left: 0;
+    z-index: 3
+}
+.key .img1{
+    width: auto;
+    height: 100%;
+    position: absolute;
+    top:0%;
+    left: 0%;
+    z-index: 2
+}
+.key .img2{
+    position: absolute;
+    top:27%;
+    left: 0%;
+    z-index: 3
+}
+.key .img3{
+    position: absolute;
+    top:83%;
+    left: 0;
+    z-index: 3
+}
+.key .bar{ position: absolute; top:50%; left: 11%; width: 80%; height: 3px; background: #fff; border-radius: 3px; z-index: 4;}
+.key .bar span{ position: absolute; top: 0%; left:0%; width: 50%; height: 3px; border-radius: 3px; background: #b2e454; z-index: 5;}
+.key .text{ width: 100%; position: absolute; top: 55%; left: 0; text-align: center; z-index: 6; color: #fff;}

@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.dao.HotWordMapper" >
+  <resultMap id="BaseResultMap" type="org.entity.dto.HotWord" >
+    <id column="hot_word_id" property="hotWordId" jdbcType="BIGINT" />
+    <result column="hot_word_name" property="hotWordName" jdbcType="VARCHAR" />
+    <result column="hot_word_state" property="hotWordState" jdbcType="INTEGER" />
+    <result column="hot_word_top_num" property="hotWordTopNum" jdbcType="INTEGER" />
+    <result column="hot_word_brief" property="hotWordBrief" jdbcType="VARCHAR" />
+    <result column="hot_word_create_time" property="hotWordCreateTime" jdbcType="TIMESTAMP" />
+    <result column="hot_word_update_time" property="hotWordUpdateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    hot_word_id, hot_word_name, hot_word_state, hot_word_top_num, hot_word_brief, hot_word_create_time, 
+    hot_word_update_time
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="org.entity.dto.HotWordExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from hot_word
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="limitStart != null and limitStart>=0" >
+      limit #{limitStart} , #{limitEnd}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from hot_word
+    where hot_word_id = #{hotWordId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from hot_word
+    where hot_word_id = #{hotWordId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="org.entity.dto.HotWordExample" >
+    delete from hot_word
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="org.entity.dto.HotWord" >
+    insert into hot_word (hot_word_id, hot_word_name, hot_word_state, 
+      hot_word_top_num, hot_word_brief, hot_word_create_time, 
+      hot_word_update_time)
+    values (#{hotWordId,jdbcType=BIGINT}, #{hotWordName,jdbcType=VARCHAR}, #{hotWordState,jdbcType=INTEGER}, 
+      #{hotWordTopNum,jdbcType=INTEGER}, #{hotWordBrief,jdbcType=VARCHAR}, #{hotWordCreateTime,jdbcType=TIMESTAMP}, 
+      #{hotWordUpdateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="org.entity.dto.HotWord" >
+    insert into hot_word
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="hotWordId != null" >
+        hot_word_id,
+      </if>
+      <if test="hotWordName != null" >
+        hot_word_name,
+      </if>
+      <if test="hotWordState != null" >
+        hot_word_state,
+      </if>
+      <if test="hotWordTopNum != null" >
+        hot_word_top_num,
+      </if>
+      <if test="hotWordBrief != null" >
+        hot_word_brief,
+      </if>
+      <if test="hotWordCreateTime != null" >
+        hot_word_create_time,
+      </if>
+      <if test="hotWordUpdateTime != null" >
+        hot_word_update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="hotWordId != null" >
+        #{hotWordId,jdbcType=BIGINT},
+      </if>
+      <if test="hotWordName != null" >
+        #{hotWordName,jdbcType=VARCHAR},
+      </if>
+      <if test="hotWordState != null" >
+        #{hotWordState,jdbcType=INTEGER},
+      </if>
+      <if test="hotWordTopNum != null" >
+        #{hotWordTopNum,jdbcType=INTEGER},
+      </if>
+      <if test="hotWordBrief != null" >
+        #{hotWordBrief,jdbcType=VARCHAR},
+      </if>
+      <if test="hotWordCreateTime != null" >
+        #{hotWordCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="hotWordUpdateTime != null" >
+        #{hotWordUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="org.entity.dto.HotWordExample" resultType="java.lang.Integer" >
+    select count(*) from hot_word
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update hot_word
+    <set >
+      <if test="record.hotWordId != null" >
+        hot_word_id = #{record.hotWordId,jdbcType=BIGINT},
+      </if>
+      <if test="record.hotWordName != null" >
+        hot_word_name = #{record.hotWordName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.hotWordState != null" >
+        hot_word_state = #{record.hotWordState,jdbcType=INTEGER},
+      </if>
+      <if test="record.hotWordTopNum != null" >
+        hot_word_top_num = #{record.hotWordTopNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.hotWordBrief != null" >
+        hot_word_brief = #{record.hotWordBrief,jdbcType=VARCHAR},
+      </if>
+      <if test="record.hotWordCreateTime != null" >
+        hot_word_create_time = #{record.hotWordCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.hotWordUpdateTime != null" >
+        hot_word_update_time = #{record.hotWordUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update hot_word
+    set hot_word_id = #{record.hotWordId,jdbcType=BIGINT},
+      hot_word_name = #{record.hotWordName,jdbcType=VARCHAR},
+      hot_word_state = #{record.hotWordState,jdbcType=INTEGER},
+      hot_word_top_num = #{record.hotWordTopNum,jdbcType=INTEGER},
+      hot_word_brief = #{record.hotWordBrief,jdbcType=VARCHAR},
+      hot_word_create_time = #{record.hotWordCreateTime,jdbcType=TIMESTAMP},
+      hot_word_update_time = #{record.hotWordUpdateTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="org.entity.dto.HotWord" >
+    update hot_word
+    <set >
+      <if test="hotWordName != null" >
+        hot_word_name = #{hotWordName,jdbcType=VARCHAR},
+      </if>
+      <if test="hotWordState != null" >
+        hot_word_state = #{hotWordState,jdbcType=INTEGER},
+      </if>
+      <if test="hotWordTopNum != null" >
+        hot_word_top_num = #{hotWordTopNum,jdbcType=INTEGER},
+      </if>
+      <if test="hotWordBrief != null" >
+        hot_word_brief = #{hotWordBrief,jdbcType=VARCHAR},
+      </if>
+      <if test="hotWordCreateTime != null" >
+        hot_word_create_time = #{hotWordCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="hotWordUpdateTime != null" >
+        hot_word_update_time = #{hotWordUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where hot_word_id = #{hotWordId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.entity.dto.HotWord" >
+    update hot_word
+    set hot_word_name = #{hotWordName,jdbcType=VARCHAR},
+      hot_word_state = #{hotWordState,jdbcType=INTEGER},
+      hot_word_top_num = #{hotWordTopNum,jdbcType=INTEGER},
+      hot_word_brief = #{hotWordBrief,jdbcType=VARCHAR},
+      hot_word_create_time = #{hotWordCreateTime,jdbcType=TIMESTAMP},
+      hot_word_update_time = #{hotWordUpdateTime,jdbcType=TIMESTAMP}
+    where hot_word_id = #{hotWordId,jdbcType=BIGINT}
+  </update>
+</mapper>

@@ -1,0 +1,419 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.dao.FeedbackMapper" >
+  <resultMap id="BaseResultMap" type="org.entity.dto.Feedback" >
+    <id column="feedback_id" property="feedbackId" jdbcType="BIGINT" />
+    <result column="bike_id" property="bikeId" jdbcType="BIGINT" />
+    <result column="user_id" property="userId" jdbcType="BIGINT" />
+    <result column="admin_id" property="adminId" jdbcType="BIGINT" />
+    <result column="feedback_type_id" property="feedbackTypeId" jdbcType="BIGINT" />
+    <result column="feedback_time" property="feedbackTime" jdbcType="TIMESTAMP" />
+    <result column="feedback_content" property="feedbackContent" jdbcType="VARCHAR" />
+    <result column="feedback_state" property="feedbackState" jdbcType="INTEGER" />
+    <result column="feedback_dealtime" property="feedbackDealtime" jdbcType="TIMESTAMP" />
+    <result column="feedback_picaddress" property="feedbackPicaddress" jdbcType="VARCHAR" />
+    <result column="feedback_refuse_reason" property="feedbackRefuseReason" jdbcType="VARCHAR" />
+    <result column="feedback_remark" property="feedbackRemark" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="BaseUnionResultMap" type="org.entity.dto.Feedback" extends="BaseResultMap">
+    <association property="bike" javaType="org.entity.dto.Bike">
+        <id column="bike_id" property="bikeId" jdbcType="BIGINT" />
+	    <result column="bike_manager_id" property="bikeManagerId" jdbcType="BIGINT" />
+	    <result column="bike_admin_id" property="bikeAdminId" jdbcType="BIGINT" />
+	    <result column="bike_block_id" property="bikeBlockId" jdbcType="BIGINT" />
+	    <result column="bike_code" property="bikeCode" jdbcType="VARCHAR" />
+	    <result column="bike_state" property="bikeState" jdbcType="INTEGER" />
+	    <result column="bike_del" property="bikeDel" jdbcType="INTEGER" />
+	    <result column="bike_address" property="bikeAddress" jdbcType="VARCHAR" />
+	    <result column="bike_atitude" property="bikeAtitude" jdbcType="DOUBLE" />
+	    <result column="bike_longitude" property="bikeLongitude" jdbcType="DOUBLE" />
+	    <result column="bike_rent_num" property="bikeRentNum" jdbcType="INTEGER" />
+	    <result column="bike_createtime" property="bikeCreatetime" jdbcType="TIMESTAMP" />
+	    <result column="bike_batch_number" property="bikeBatchNumber" jdbcType="VARCHAR" />
+	    <result column="bike_lock_id" property="bikeLockId" jdbcType="BIGINT" />
+	    <result column="bike_chip_code" property="bikeChipCode" jdbcType="VARCHAR" />
+	    <result column="bike_dynamotor_code" property="bikeDynamotorCode" jdbcType="VARCHAR" />
+	    <result column="bike_put_time" property="bikePutTime" jdbcType="TIMESTAMP" />
+	    <result column="bike_models_id" property="bikeModelsId" jdbcType="BIGINT" />
+	    <result column="bike_last_rent_time" property="bikeLastRentTime" jdbcType="TIMESTAMP" />
+	   <association property="models" javaType="org.entity.dto.Models">
+	       <id column="models_id" property="modelsId" jdbcType="BIGINT" />
+		   <result column="models_code" property="modelsCode" jdbcType="VARCHAR" />
+		   <result column="models_name" property="modelsName" jdbcType="VARCHAR" />
+		   <result column="models_deposit" property="modelsDeposit" jdbcType="DECIMAL" />
+		   <result column="models_content" property="modelsContent" jdbcType="VARCHAR" />
+		   <result column="models_state" property="modelsState" jdbcType="INTEGER" />
+		   <result column="models_channel_id" property="modelsChannelId" jdbcType="BIGINT" />
+       </association>
+    </association>
+    <association property="user" javaType="org.entity.dto.User">
+        <id column="user_id" property="userId" jdbcType="BIGINT" />
+	    <result column="user_account_id" property="userAccountId" jdbcType="BIGINT" />
+	    <result column="user_nickname" property="userNickname" jdbcType="VARCHAR" />
+	    <result column="user_tel" property="userTel" jdbcType="VARCHAR" />
+	    <result column="user_idcard" property="userIdcard" jdbcType="VARCHAR" />
+	    <result column="user_realname" property="userRealname" jdbcType="VARCHAR" />
+	    <result column="user_profile_image" property="userProfileImage" jdbcType="VARCHAR" />
+	    <result column="user_gender" property="userGender" jdbcType="INTEGER" />
+	    <result column="user_openId" property="userOpenid" jdbcType="VARCHAR" />
+	    <result column="user_unionId" property="userUnionid" jdbcType="VARCHAR" />
+	    <result column="user_state" property="userState" jdbcType="INTEGER" />
+	    <result column="user_createtime" property="userCreatetime" jdbcType="TIMESTAMP" />
+	    <result column="user_logintime" property="userLogintime" jdbcType="TIMESTAMP" />
+	    <result column="user_usetime" property="userUsetime" jdbcType="INTEGER" />
+	    <result column="user_use_distance" property="userUseDistance" jdbcType="INTEGER" />
+	    <result column="user_channel_id" property="userChannelId" jdbcType="BIGINT" />
+	    <result column="user_isblacklist" property="userIsblacklist" jdbcType="SMALLINT" />
+	    <result column="user_defriend_time" property="userDefriendTime" jdbcType="TIMESTAMP" />
+	    <result column="user_token" property="userToken" jdbcType="VARCHAR" />
+	    <result column="user_small_openId" property="userSmallOpenid" jdbcType="VARCHAR" />
+	    <result column="user_session_key" property="userSessionKey" jdbcType="VARCHAR" />
+	    <result column="user_vipexpirationdate" property="userVipexpirationdate" jdbcType="TIMESTAMP" />
+	    <result column="user_lastusebiketime" property="userLastusebiketime" jdbcType="TIMESTAMP" />
+	    <result column="user_fistusebiketime" property="userFistusebiketime" jdbcType="TIMESTAMP" />
+	    <result column="user_fistusebikeid" property="userFistusebikeid" jdbcType="BIGINT" />
+	    <result column="user_birthday" property="userBirthday" jdbcType="TIMESTAMP" />
+	    <result column="user_total_calorie" property="userTotalCalorie" jdbcType="DOUBLE" />
+	    <result column="user_total_distance" property="userTotalDistance" jdbcType="DOUBLE" />
+	    <result column="user_total_ride_time" property="userTotalRideTime" jdbcType="DOUBLE" />
+	    <result column="user_level" property="userLevel" jdbcType="INTEGER" />
+	    <result column="user_grade" property="userGrade" jdbcType="INTEGER" />
+	    <result column="user_total_grade" property="userTotalGrade" jdbcType="INTEGER" />
+	    <result column="user_use_grade" property="userUseGrade" jdbcType="INTEGER" />
+    </association>
+    
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    feedback_id, bike_id, user_id, admin_id, feedback_type_id, feedback_time, feedback_content, 
+    feedback_state, feedback_dealtime, feedback_picaddress, feedback_refuse_reason, feedback_remark
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="org.entity.dto.FeedbackExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from feedback
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="limitStart != null and limitStart>=0" >
+      limit #{limitStart} , #{limitEnd}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from feedback
+    where feedback_id = #{feedbackId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from feedback
+    where feedback_id = #{feedbackId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="org.entity.dto.FeedbackExample" >
+    delete from feedback
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="org.entity.dto.Feedback" >
+    insert into feedback (feedback_id, bike_id, user_id, 
+      admin_id, feedback_type_id, feedback_time, 
+      feedback_content, feedback_state, feedback_dealtime, 
+      feedback_picaddress, feedback_refuse_reason, 
+      feedback_remark)
+    values (#{feedbackId,jdbcType=BIGINT}, #{bikeId,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, 
+      #{adminId,jdbcType=BIGINT}, #{feedbackTypeId,jdbcType=BIGINT}, #{feedbackTime,jdbcType=TIMESTAMP}, 
+      #{feedbackContent,jdbcType=VARCHAR}, #{feedbackState,jdbcType=INTEGER}, #{feedbackDealtime,jdbcType=TIMESTAMP}, 
+      #{feedbackPicaddress,jdbcType=VARCHAR}, #{feedbackRefuseReason,jdbcType=VARCHAR}, 
+      #{feedbackRemark,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="org.entity.dto.Feedback" >
+    insert into feedback
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="feedbackId != null" >
+        feedback_id,
+      </if>
+      <if test="bikeId != null" >
+        bike_id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="adminId != null" >
+        admin_id,
+      </if>
+      <if test="feedbackTypeId != null" >
+        feedback_type_id,
+      </if>
+      <if test="feedbackTime != null" >
+        feedback_time,
+      </if>
+      <if test="feedbackContent != null" >
+        feedback_content,
+      </if>
+      <if test="feedbackState != null" >
+        feedback_state,
+      </if>
+      <if test="feedbackDealtime != null" >
+        feedback_dealtime,
+      </if>
+      <if test="feedbackPicaddress != null" >
+        feedback_picaddress,
+      </if>
+      <if test="feedbackRefuseReason != null" >
+        feedback_refuse_reason,
+      </if>
+      <if test="feedbackRemark != null" >
+        feedback_remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="feedbackId != null" >
+        #{feedbackId,jdbcType=BIGINT},
+      </if>
+      <if test="bikeId != null" >
+        #{bikeId,jdbcType=BIGINT},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="adminId != null" >
+        #{adminId,jdbcType=BIGINT},
+      </if>
+      <if test="feedbackTypeId != null" >
+        #{feedbackTypeId,jdbcType=BIGINT},
+      </if>
+      <if test="feedbackTime != null" >
+        #{feedbackTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="feedbackContent != null" >
+        #{feedbackContent,jdbcType=VARCHAR},
+      </if>
+      <if test="feedbackState != null" >
+        #{feedbackState,jdbcType=INTEGER},
+      </if>
+      <if test="feedbackDealtime != null" >
+        #{feedbackDealtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="feedbackPicaddress != null" >
+        #{feedbackPicaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="feedbackRefuseReason != null" >
+        #{feedbackRefuseReason,jdbcType=VARCHAR},
+      </if>
+      <if test="feedbackRemark != null" >
+        #{feedbackRemark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="org.entity.dto.FeedbackExample" resultType="java.lang.Integer" >
+    select count(*) from feedback
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update feedback
+    <set >
+      <if test="record.feedbackId != null" >
+        feedback_id = #{record.feedbackId,jdbcType=BIGINT},
+      </if>
+      <if test="record.bikeId != null" >
+        bike_id = #{record.bikeId,jdbcType=BIGINT},
+      </if>
+      <if test="record.userId != null" >
+        user_id = #{record.userId,jdbcType=BIGINT},
+      </if>
+      <if test="record.adminId != null" >
+        admin_id = #{record.adminId,jdbcType=BIGINT},
+      </if>
+      <if test="record.feedbackTypeId != null" >
+        feedback_type_id = #{record.feedbackTypeId,jdbcType=BIGINT},
+      </if>
+      <if test="record.feedbackTime != null" >
+        feedback_time = #{record.feedbackTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.feedbackContent != null" >
+        feedback_content = #{record.feedbackContent,jdbcType=VARCHAR},
+      </if>
+      <if test="record.feedbackState != null" >
+        feedback_state = #{record.feedbackState,jdbcType=INTEGER},
+      </if>
+      <if test="record.feedbackDealtime != null" >
+        feedback_dealtime = #{record.feedbackDealtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.feedbackPicaddress != null" >
+        feedback_picaddress = #{record.feedbackPicaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.feedbackRefuseReason != null" >
+        feedback_refuse_reason = #{record.feedbackRefuseReason,jdbcType=VARCHAR},
+      </if>
+      <if test="record.feedbackRemark != null" >
+        feedback_remark = #{record.feedbackRemark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update feedback
+    set feedback_id = #{record.feedbackId,jdbcType=BIGINT},
+      bike_id = #{record.bikeId,jdbcType=BIGINT},
+      user_id = #{record.userId,jdbcType=BIGINT},
+      admin_id = #{record.adminId,jdbcType=BIGINT},
+      feedback_type_id = #{record.feedbackTypeId,jdbcType=BIGINT},
+      feedback_time = #{record.feedbackTime,jdbcType=TIMESTAMP},
+      feedback_content = #{record.feedbackContent,jdbcType=VARCHAR},
+      feedback_state = #{record.feedbackState,jdbcType=INTEGER},
+      feedback_dealtime = #{record.feedbackDealtime,jdbcType=TIMESTAMP},
+      feedback_picaddress = #{record.feedbackPicaddress,jdbcType=VARCHAR},
+      feedback_refuse_reason = #{record.feedbackRefuseReason,jdbcType=VARCHAR},
+      feedback_remark = #{record.feedbackRemark,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="org.entity.dto.Feedback" >
+    update feedback
+    <set >
+      <if test="bikeId != null" >
+        bike_id = #{bikeId,jdbcType=BIGINT},
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="adminId != null" >
+        admin_id = #{adminId,jdbcType=BIGINT},
+      </if>
+      <if test="feedbackTypeId != null" >
+        feedback_type_id = #{feedbackTypeId,jdbcType=BIGINT},
+      </if>
+      <if test="feedbackTime != null" >
+        feedback_time = #{feedbackTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="feedbackContent != null" >
+        feedback_content = #{feedbackContent,jdbcType=VARCHAR},
+      </if>
+      <if test="feedbackState != null" >
+        feedback_state = #{feedbackState,jdbcType=INTEGER},
+      </if>
+      <if test="feedbackDealtime != null" >
+        feedback_dealtime = #{feedbackDealtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="feedbackPicaddress != null" >
+        feedback_picaddress = #{feedbackPicaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="feedbackRefuseReason != null" >
+        feedback_refuse_reason = #{feedbackRefuseReason,jdbcType=VARCHAR},
+      </if>
+      <if test="feedbackRemark != null" >
+        feedback_remark = #{feedbackRemark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where feedback_id = #{feedbackId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.entity.dto.Feedback" >
+    update feedback
+    set bike_id = #{bikeId,jdbcType=BIGINT},
+      user_id = #{userId,jdbcType=BIGINT},
+      admin_id = #{adminId,jdbcType=BIGINT},
+      feedback_type_id = #{feedbackTypeId,jdbcType=BIGINT},
+      feedback_time = #{feedbackTime,jdbcType=TIMESTAMP},
+      feedback_content = #{feedbackContent,jdbcType=VARCHAR},
+      feedback_state = #{feedbackState,jdbcType=INTEGER},
+      feedback_dealtime = #{feedbackDealtime,jdbcType=TIMESTAMP},
+      feedback_picaddress = #{feedbackPicaddress,jdbcType=VARCHAR},
+      feedback_refuse_reason = #{feedbackRefuseReason,jdbcType=VARCHAR},
+      feedback_remark = #{feedbackRemark,jdbcType=VARCHAR}
+    where feedback_id = #{feedbackId,jdbcType=BIGINT}
+  </update>
+  
+  
+  <select id="selectUnionByExample" resultMap="BaseUnionResultMap" parameterType="org.entity.dto.FeedbackExample" >
+    select * from feedback f left join Bike b on f.bike_id = b.bike_id
+                             left join Models m on b.bike_models_id = m.models_id
+                             left join user u on u.user_id = f.user_id
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="limitStart != null and limitStart>=0" >
+      limit #{limitStart} , #{limitEnd}
+    </if>
+  </select>
+  
+  <select id="countUnionByExample" parameterType="org.entity.dto.FeedbackExample" resultType="java.lang.Integer" >
+    select count(*) from feedback f left join Bike b on f.bike_id = b.bike_id
+                                    left join Models m on b.bike_models_id = m.models_id
+                                    left join user u on u.user_id = f.user_id
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+</mapper>

@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+    http://code.alibabatech.com/schema/dubbo
+    http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+
+	
+	
+	<!-- admin接口 -->
+	<dubbo:service interface="org.service.cms.read.AdminServiceRead" ref="adminServiceRead" />
+	
+	<dubbo:service interface="org.service.cms.read.UserServiceRead" ref="userServiceRead" />
+	
+	<dubbo:service interface="org.service.cms.read.UserAccountServiceRead" ref="userAccountServiceRead" />
+	
+	<dubbo:service interface="org.service.cms.read.UserFeedbackServiceRead" ref="userFeedbackServiceRead" />
+	
+
+	<dubbo:service interface="org.service.cms.read.PermissionServiceRead" ref="permissionServiceRead" />	
+	
+	<dubbo:service interface="org.service.cms.read.RoleServiceRead" ref="roleServiceRead" />
+	
+	
+	
+	
+	<!-- 数据字典接口 -->
+	<dubbo:service interface="org.service.cms.read.DataServiceRead" ref="dataServiceRead" />
+	<dubbo:service interface="org.service.cms.read.DataDetServiceRead" ref="dataDetServiceRead" />
+    <dubbo:service interface="org.service.cms.read.ChannelServiceRead" ref="channelServiceRead" />    <!-- bike接口 -->
+    <dubbo:service interface="org.service.cms.read.BikeServiceRead" ref="bikeServiceRead" />
+    <dubbo:service interface="org.service.cms.read.BikeRentInfoServiceRead" ref="bikeRentInfoServiceRead" />
+    <dubbo:service interface="org.service.cms.read.BikeFixInfoServiceRead" ref="bikeFixInfoServiceRead" />
+    <dubbo:service interface="org.service.cms.read.BikeRepairServiceRead" ref="bikeRepairServiceRead" />
+	<!-- <dubbo:service interface="org.service.cms.read.RentPlanServiceRead" ref="rentPlanServiceRead" /> -->
+	<dubbo:service interface="org.service.cms.read.BlockServiceRead" ref="blockServiceRead" />
+	<dubbo:service interface="org.service.cms.read.SysMsgServiceRead" ref="sysMsgServiceRead" />
+	<dubbo:service interface="org.service.cms.read.RefundServiceRead" ref="refundServiceRead" />
+	<dubbo:service interface="org.service.cms.read.AccountServiceRead" ref="accountServiceRead" />
+	<dubbo:service interface="org.service.cms.read.MoneyLogServiceRead" ref="moneyLogServiceRead" />
+	<dubbo:service interface="org.service.cms.read.RechargeRecordServiceRead" ref="rechargeRecordServiceRead" />
+	<dubbo:service interface="org.service.cms.read.ModelsServiceRead" ref="modelsServiceRead" />
+	<dubbo:service interface="org.service.cms.read.UserInsuranceServiceRead" ref="userInsuranceServiceRead" />	
+	<dubbo:service interface="org.service.cms.read.BikeLockInfoServiceRead" ref="bikeLockInfoServiceRead" />	<!-- 具体的实现bean -->
+	<dubbo:service interface="org.service.cms.read.FixedReturnServiceRead" ref="fixedReturnServiceRead" />
+	<dubbo:service interface="org.service.cms.read.ActivityServiceRead" ref="activityServiceRead" />
+	<dubbo:service interface="org.service.cms.read.CodeServiceRead" ref="codeServiceRead" />
+	<dubbo:service interface="org.service.cms.read.OperateLogServiceRead" ref="operateLogServiceRead" />
+	<dubbo:service interface="org.service.cms.read.InsurancePriceServiceRead" ref="insurancePriceServiceRead" />
+	<dubbo:service interface="org.service.cms.read.RentPriceServiceRead" ref="rentPriceServiceRead" />
+	<dubbo:service interface="org.service.cms.read.InvoiceServiceRead" ref="invoiceServiceRead" />
+	<dubbo:service interface="org.service.cms.read.RedeemPlanServiceRead" ref="redeemPlanServiceRead" />
+	<dubbo:service interface="org.service.cms.read.CouponPlanServiceRead" ref="couponPlanServiceRead" />
+	<dubbo:service interface="org.service.cms.read.CashCouponServiceRead" ref="cashCouponServiceRead" />
+	<dubbo:service interface="org.service.cms.read.UserCouponServiceRead" ref="userCouponServiceRead" />
+	<dubbo:service interface="org.service.cms.read.SysParamentServiceRead" ref="sysParamentServiceRead" />
+	<dubbo:service interface="org.service.cms.read.UserToTaskServiceRead" ref="userToTaskServiceRead" />
+	<dubbo:service interface="org.service.cms.read.CityServiceRead" ref="cityServiceRead" />
+	<dubbo:service interface="org.service.cms.read.BannerServiceRead" ref="bannerServiceRead" />
+	<dubbo:service interface="org.service.cms.read.ProvinceServiceRead" ref="provinceServiceRead" />
+	<dubbo:service interface="org.service.cms.read.UserRedeemPlanServiceRead" ref="userRedeemPlanServiceRead" />
+	<dubbo:service interface="org.service.cms.read.ScenicSpotServiceRead" ref="scenicSpotServiceRead" />
+	<dubbo:service interface="org.service.cms.read.DiscountPackageServiceRead" ref="discountPackageServiceRead" />
+	<dubbo:service interface="org.service.cms.read.HotWordServiceRead" ref="hotWordServiceRead" />
+	<dubbo:service interface="org.service.cms.read.GuideAgencyServiceRead" ref="guideAgencyServiceRead"/>
+	<dubbo:service interface="org.service.cms.read.GuideGroupServiceRead" ref="guideGroupServiceRead"/>
+	<dubbo:service interface="org.service.cms.read.LookAgencyServiceRead" ref="lookAgencyServiceRead"/>
+	<dubbo:service interface="org.service.cms.read.CouponListServiceRead" ref="couponListServiceRead"/>
+	<dubbo:service interface="org.service.cms.read.CouponSchemeServiceRead" ref="couponSchemeServiceRead"/>
+	<dubbo:service interface="org.service.cms.read.CouponUseServiceRead" ref="couponUseServiceRead"/>
+	<dubbo:service interface="org.service.cms.read.GuideGroupUserRead" ref="guideGroupUserRead"/>
+	<dubbo:service interface="org.service.cms.read.CouponToUserServiceRead" ref="couponToUserServiceRead"/>
+
+	<bean id="userServiceRead" class="org.service.cms.impl.read.UserServiceReadImpl" />
+	<bean id="userAccountServiceRead" class="org.service.cms.impl.read.UserAccountServiceReadImpl" />
+	<bean id="userFeedbackServiceRead" class="org.service.cms.impl.read.UserFeedbackServiceReadImpl" />
+	<bean id="adminServiceRead" class="org.service.cms.impl.read.AdminServiceReadImpl" />
+	<bean id="permissionServiceRead" class="org.service.cms.impl.read.PermissionServiceReadImpl" />
+	<bean id="roleServiceRead" class="org.service.cms.impl.read.RoleServiceReadImpl" />
+	<bean id="bikeServiceRead" class="org.service.cms.impl.read.BikeServiceReadImpl" />
+	<bean id="bikeRentInfoServiceRead" class="org.service.cms.impl.read.BikeRentInfoServiceReadImpl" />
+	<bean id="bikeFixInfoServiceRead" class="org.service.cms.impl.read.BikeFixInfoServiceReadImpl" />
+	<bean id="bikeRepairServiceRead" class="org.service.cms.impl.read.BikeRepairServiceReadImpl" />
+	<bean id="bikeLockInfoServiceRead" class="org.service.cms.impl.read.BikeLockInfoServiceReadImpl" />
+	<bean id="invoiceServiceRead" class="org.service.cms.impl.read.InvoiceServiceReadImpl" />
+	
+	
+	<bean id="dataServiceRead" class="org.service.cms.impl.read.DataServiceReadImpl" />
+	<bean id="dataDetServiceRead" class="org.service.cms.impl.read.DataDetServiceReadImpl" />
+	<bean id="channelServiceRead" class="org.service.cms.impl.read.ChannelServiceReadImpl" />
+	<!-- <bean id="rentPlanServiceRead" class="org.service.cms.impl.read.RentPlanServiceReadImpl" /> -->
+	<bean id="blockServiceRead" class="org.service.cms.impl.read.BlockServiceReadImpl" />
+	<bean id="sysMsgServiceRead" class="org.service.cms.impl.read.SysMsgServiceReadImpl" />
+	<bean id="refundServiceRead" class="org.service.cms.impl.read.RefundServiceReadImpl" />
+	<bean id="accountServiceRead" class="org.service.cms.impl.read.AccountServiceReadImpl" />
+	<bean id="moneyLogServiceRead" class="org.service.cms.impl.read.MoneyLogServiceReadImpl" />
+	<bean id="rechargeRecordServiceRead" class="org.service.cms.impl.read.RechargeRecordServiceReadImpl" />
+	<bean id="modelsServiceRead" class="org.service.cms.impl.read.ModelsServiceReadImpl" />
+	<bean id="userInsuranceServiceRead" class="org.service.cms.impl.read.UserInsuranceServiceReadImpl" />
+	<bean id="fixedReturnServiceRead" class="org.service.cms.impl.read.FixedReturnServiceReadImpl" />
+	<bean id="activityServiceRead" class="org.service.cms.impl.read.ActivityServiceReadImpl" />
+	<bean id="codeServiceRead" class="org.service.cms.impl.read.CodeServiceReadImpl" />
+	<bean id="operateLogServiceRead" class="org.service.cms.impl.read.OperateLogServiceReadImpl" />
+	<bean id="insurancePriceServiceRead" class="org.service.cms.impl.read.InsurancePriceServiceReadImpl" />
+	<bean id="rentPriceServiceRead" class="org.service.cms.impl.read.RentPriceServiceReadImpl" />
+	<bean id="redeemPlanServiceRead" class="org.service.cms.impl.read.RedeemPlanServiceReadImpl" />
+	<bean id="couponPlanServiceRead" class="org.service.cms.impl.read.CouponPlanServiceReadImpl" />
+	<bean id="cashCouponServiceRead" class="org.service.cms.impl.read.CashCouponServiceReadImpl" />
+	<bean id="userCouponServiceRead" class="org.service.cms.impl.read.UserCouponServiceReadImpl" />
+	<bean id="sysParamentServiceRead" class="org.service.cms.impl.read.SysParamentServiceReadImpl" />
+	<bean id="userToTaskServiceRead" class="org.service.cms.impl.read.UserToTaskServiceReadImpl" />
+	<bean id="cityServiceRead" class="org.service.cms.impl.read.CityServiceReadImpl" />
+	<bean id="bannerServiceRead" class="org.service.cms.impl.read.BannerServiceReadImpl" />
+	<bean id="provinceServiceRead" class="org.service.cms.impl.read.ProvinceServiceReadImpl" />
+	<bean id="userRedeemPlanServiceRead" class="org.service.cms.impl.read.UserRedeemPlanServiceReadImpl" />
+	<bean id="scenicSpotServiceRead" class="org.service.cms.impl.read.ScenicSpotServiceReadImpl" />
+	<bean id="discountPackageServiceRead" class="org.service.cms.impl.read.DiscountPackageServiceReadImpl" />
+	<bean id="hotWordServiceRead" class="org.service.cms.impl.read.HotWordServiceReadImpl" />
+	<bean id="guideAgencyServiceRead" class="org.service.cms.impl.read.GuideAgencyServiceReadImpl"/>
+	<bean id="guideGroupServiceRead" class="org.service.cms.impl.read.GuideGroupServiceReadImpl"/>
+	<bean id="lookAgencyServiceRead" class="org.service.cms.impl.read.LookAgencyServiceReadImpl"/>
+	<bean id="couponListServiceRead" class="org.service.cms.impl.read.CouponListServiceReadImpl"/>
+	<bean id="couponSchemeServiceRead" class="org.service.cms.impl.read.CouponSchemeServiceReadImpl"/>
+	<bean id="couponUseServiceRead" class="org.service.cms.impl.read.CouponUseServiceReadImpl"/>
+	<bean id="guideGroupUserRead" class="org.service.cms.impl.read.GuideGroupUserReadImpl"/>
+	<bean id="couponToUserServiceRead" class="org.service.cms.impl.read.CouponToUserServiceReadImpl"/>
+</beans>

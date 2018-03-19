@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="viewport" content="initial-scale=1, width=device-width, maximum-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-touch-fullscreen" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="format-detection" content="address=no">
+    <meta name="screen-orientation" content="portrait">
+    <meta name="x5-orientation" content="portrait">
+    <title>按行程开票</title>
+    <link rel="stylesheet" href="font/iconfont.css">
+    <link rel="stylesheet" href="font/iconfont-2.css">
+    <link rel="stylesheet" href="css/animate.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/base.css">
+
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <link rel="stylesheet" href="js/dialog.css">
+    <script type="text/javascript" src="js/dialog.js"></script>
+    <script type="text/javascript" src="js/iscroll.js"></script>
+    <link rel="stylesheet" href="js/swiper-3.2.7.min.css">
+    <script type="text/javascript" src="js/swiper-3.2.7.jquery.min.js"></script>
+    <script type="text/javascript" src="js/path.js"></script>
+    <script type="text/javascript" src="js/mobile.js"></script>
+    <script type="text/javascript" src="js/jquery.cityselect.js"></script>
+</head>
+<body style="background: #f5f5f5;">
+<div class="g-body">
+        <!-- <div class="invoice">
+            <p>请选择发票类型</p>
+            <div class="choose-box">
+                <ul class="clearfix">
+                    <li class="pull-left">
+                        <label>
+                            <input type="radio" value="1" name="invoiceType" id="type1" data-type="dianzi" class="typeselect"/>
+                            <span class="check-box"><span class="flex-box"><svg viewBox="0 0 1024 1024" width="22" height="22"><path d="M512 960C264.96 960 64 759.04 64 512S264.96 64 512 64s448 200.96 448 448S759.04 960 512 960zM512 128.288C300.416 128.288 128.288 300.416 128.288 512c0 211.552 172.128 383.712 383.712 383.712 211.552 0 383.712-172.16 383.712-383.712C895.712 300.416 723.552 128.288 512 128.288z"/><path d="M726.976 393.184c-12.544-12.448-32.832-12.32-45.248 0.256l-233.28 235.84-103.264-106.112c-12.352-12.704-32.608-12.928-45.248-0.64-12.672 12.32-12.96 32.608-0.64 45.248l126.016 129.504c0.064 0.096 0.192 0.096 0.256 0.192 0.064 0.064 0.096 0.192 0.16 0.256 2.016 1.984 4.512 3.2 6.88 4.544 1.248 0.672 2.24 1.792 3.52 2.304 3.872 1.6 8 2.4 12.096 2.4 4.064 0 8.128-0.8 11.968-2.336 1.248-0.512 2.208-1.536 3.392-2.176 2.4-1.344 4.896-2.528 6.944-4.544 0.064-0.064 0.096-0.192 0.192-0.256 0.064-0.096 0.16-0.128 0.256-0.192l256.224-259.008C739.648 425.856 739.52 405.6 726.976 393.184z"/></svg>电子发票</span></span>
+                        </label>
+                    </li>
+                    <li class="pull-right">
+                        <label>
+                            <input type="radio" value="2" name="invoiceType" id="type2" data-type="zhizhi" class="typeselect"/>
+                            <span class="check-box"><span class="flex-box"><svg viewBox="0 0 1024 1024" width="22" height="22"><path d="M512 960C264.96 960 64 759.04 64 512S264.96 64 512 64s448 200.96 448 448S759.04 960 512 960zM512 128.288C300.416 128.288 128.288 300.416 128.288 512c0 211.552 172.128 383.712 383.712 383.712 211.552 0 383.712-172.16 383.712-383.712C895.712 300.416 723.552 128.288 512 128.288z"/><path d="M726.976 393.184c-12.544-12.448-32.832-12.32-45.248 0.256l-233.28 235.84-103.264-106.112c-12.352-12.704-32.608-12.928-45.248-0.64-12.672 12.32-12.96 32.608-0.64 45.248l126.016 129.504c0.064 0.096 0.192 0.096 0.256 0.192 0.064 0.064 0.096 0.192 0.16 0.256 2.016 1.984 4.512 3.2 6.88 4.544 1.248 0.672 2.24 1.792 3.52 2.304 3.872 1.6 8 2.4 12.096 2.4 4.064 0 8.128-0.8 11.968-2.336 1.248-0.512 2.208-1.536 3.392-2.176 2.4-1.344 4.896-2.528 6.944-4.544 0.064-0.064 0.096-0.192 0.192-0.256 0.064-0.096 0.16-0.128 0.256-0.192l256.224-259.008C739.648 425.856 739.52 405.6 726.976 393.184z"/></svg>纸质发票</span></span>
+                        </label>
+                    </li>
+                </ul>
+                <div class="note">乐途智能骑游增值税电子普通发票功能已经上线，如您需要报销，我们<span class="green">建议您选择开具电子发票</span>。根据国家的相关规定，电子发票的法律效力、基本用途、基本使用规定等与税务机关监制的增值税普通发票相同。</div>
+            </div>
+
+        </div> -->
+        <form class="g-form">
+            <!-- <div class="invoice none invoice-dz invoice-zz"> -->
+            <div class="invoice invoice-dz invoice-zz">
+                <p>发票详情</p>
+                <div class="weui-cells weui-cells_form">
+                    <div class="weui-cell">
+                        <div class="weui-cell__hd"><label for="" class="weui-label">公司抬头</label></div>
+                        <div class="weui-cell__bd">
+                            <input class="weui-input" name="invoiceName" id="head" type="text" placeholder="公司抬头" onblur="rule.empty($(this),'公司抬头不能为空');" data-group-state="false">
+                        </div>
+                    </div>
+                    <div class="weui-cell">
+                        <div class="weui-cell__hd"><label for="" class="weui-label">发票内容</label></div>
+                        <div class="weui-cell__bd">
+                            <input class="weui-input" name="invoiceContent" type="text" placeholder="发票内容" value="租赁费" readonly="readonly">
+                        </div>
+                    </div>
+                    <div class="weui-cell">
+                        <div class="weui-cell__hd"><label for="" class="weui-label">发票金额</label></div>
+                        <div class="weui-cell__bd" id="gold">
+                        </div>
+                        元
+                    </div>
+                    <a class="weui-cell" id="lookmore">
+                        <div class="weui-cell__hd">
+                            <label class="weui-label">更多信息</label>
+                        </div>
+                        <div class="weui-cell__bd">
+                            填写购买方、备注、收款人等
+                        </div>
+                        <span class="r-con active"></span>
+                    </a>
+                </div>
+            </div>
+          <!--   <div class="invoice none invoice-dz">
+                <p>收件信息</p>
+                <div class="weui-cells weui-cells_form">
+                    <div class="weui-cell">
+                        <div class="weui-cell__hd">
+                            <label class="weui-label">电子邮件</label>
+                        </div>
+                        <div class="weui-cell__bd">
+                            <input class="weui-input" name="invoiceEmail" id="emaildz" type="text" placeholder="用于向您发送电子行程单" onblur="rule.email($(this));" data-group-state="false">
+                        </div>
+                    </div>
+                </div>
+            </div> -->
+            <!-- <div class="invoice none invoice-zz"> -->
+            <div class="invoice invoice-zz">
+                <p>收件信息</p>
+                <div class="weui-cells weui-cells_form">
+                    <div class="weui-cell">
+                        <div class="weui-cell__hd"><label for="" class="weui-label">收件人</label></div>
+                        <div class="weui-cell__bd">
+                            <input class="weui-input" name="invoiceReceiveName" type="text" id="user" placeholder="填写收件人" onblur="rule.empty($(this),'收件人不能为空');" data-group-state="false">
+                        </div>
+                    </div>
+                    <div class="weui-cell">
+                        <div class="weui-cell__hd"><label for="" class="weui-label">联系电话</label></div>
+                        <div class="weui-cell__bd">
+                            <input class="weui-input" name="invoiceReceiveTel" type="text" id="phone" placeholder="联系电话" onblur="rule.phone($(this));" data-group-state="false">
+                        </div>
+                    </div>
+                    <div class="weui-cell">
+                        <div class="weui-cell__hd"><label for="" class="weui-label">所在地区</label></div>
+                        <div class="weui-cell__bd">
+                            <input class="weui-input" name="invoiceReceiveCity" type="text" id="setaddress" placeholder="请选择城市" readonly  onblur="rule.empty($(this),'所在地区不能为空');" data-group-state="false">
+                        </div>
+                    </div>
+                    <div class="weui-cell">
+                        <div class="weui-cell__hd">
+                            <label class="weui-label">详细信息</label>
+                        </div>
+                        <div class="weui-cell__bd">
+                            <input class="weui-input" name="invoiceReceiveAddress" type="text" id="address" placeholder="填写详细地址" onblur="rule.empty($(this),'详细地址不能为空');" data-group-state="false">
+                        </div>
+                    </div>
+                    <div class="weui-cell">
+                        <div class="weui-cell__hd">
+                            <label class="weui-label">电子邮件</label>
+                        </div>
+                        <div class="weui-cell__bd">
+                            <input class="weui-input" name="invoiceEmail" type="text" placeholder="用于向您发送电子行程单" onblur="rule.email($(this));" data-group-state="false">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- <div class="invoice none invoice-zz invoice-youfei"> -->
+            <div class="invoice invoice-zz invoice-youfei">
+                <p>开票金额不足<span id="yf-level">200</span>元，需支付邮费</p>
+
+                    <label class="weui-cell weui_check_label">
+                        <div class="weui-cell__hd">
+                            <label class="weui_label flex-box"><svg viewBox="0 0 1024 1024" width="22" height="22"><path fill="#4b9e37" d="M 869.869 66.2949 L 156.27 66.2949 c -49.2742 0 -89.2047 39.9396 -89.2047 89.1852 L 67.0654 869.107 c 0 49.2589 39.9304 89.1965 89.2047 89.1965 l 713.599 0 c 49.2722 0 89.2118 -39.9376 89.2118 -89.1965 L 959.08 155.48 C 959.08 106.235 919.141 66.2949 869.869 66.2949 Z M 513.068 772.032 c -40.7777 0 -79.6869 -6.95541 -115.383 -19.4684 c -22.7123 15.1439 -60.8591 40.0174 -75.8249 46.935 c -21.952 10.187 -15.6545 -11.7527 -15.6545 -11.7527 L 319.227 712.562 c -72.0878 -50.3518 -118.385 -128.043 -118.385 -215.355 c 0 -151.788 139.777 -274.837 312.205 -274.837 c 105.66 0 198.989 46.2412 255.472 116.942 L 462.323 481.468 c 0 0 -24.9492 9.47274 -46.8306 -3.91415 c -21.9059 -13.3736 -50.7458 -35.3256 -50.7458 -35.3256 s -33.6125 -28.6822 -15.5942 23.5555 l 46.8326 109.944 c 0 0 5.55451 32.7253 42.9236 11.7701 c 29.24 -16.3596 256.16 -153.594 353.723 -212.639 c 20.8662 36.8667 32.6424 78.3668 32.6424 122.348 C 825.273 648.978 685.473 772.032 513.068 772.032 Z"></path></svg>微信支付</label>
+                            <span class="note2">全国10元，邮费发票一同寄出</span>
+                        </div>
+                        <div class="weui_cell_bd weui_cell_primary">
+                            <div class="weui_cell_hd_s">
+                                <input type="radio" checked="checked" class="weui_check" name="way" id="s12" data-num="10">
+                                <i class="round_check"></i>
+                            </div>
+                        </div>
+                    </label>
+            </div>
+            <div class="pagebox invoice-more" id="morepage">
+                <div class="weui-cells weui-cells_form">
+                    <div class="weui-cell margin-bottom-20">
+                        <div class="weui-cell__hd"><label for="" class="weui-label">备注说明</label></div>
+                        <div class="weui-cell__bd">
+                            <input class="weui-input" type="text" name="invoiceMark" placeholder="填写备注说明">
+                        </div>
+                    </div>
+                    <div class="weui-cell weui-cell-top">
+                        <div class="weui-cell__hd"><label for="" class="weui-label">纳税人识别号</label></div>
+                        <div class="weui-cell__bd">
+                            <input class="weui-input" id="invoiceTaxpayerNumber" onkeydown="checkTaxNum()" onkeyup="checkTaxNum()" type="text" name="invoiceTaxpayerNumber" placeholder="填写纳税人识别号">
+                        </div>
+                    </div>
+                    <div class="weui-cell">
+                        <div class="weui-cell__hd"><label for="" class="weui-label">地址、电话</label></div>
+                        <div class="weui-cell__bd">
+                            <input class="weui-input" type="text" name="invoiceAddrePhone" placeholder="填写注册地址、注册电话">
+                        </div>
+                    </div>
+                    <div class="weui-cell">
+                        <div class="weui-cell__hd">
+                            <label class="weui-label">开户行及账号</label>
+                        </div>
+                        <div class="weui-cell__bd">
+                            <input class="weui-input" type="text" name="invoiceBankAccount" placeholder="填写开户行及银行账号">
+                        </div>
+                    </div>
+                </div>
+
+                <a class="invoice-show invoice-show-demo">查看示例</a>
+                <div class="sure-btn more-surebtn">
+                    <a class="btn" onclick="$('#morepage').css({'-webkit-transform':'translate3d(100%, 0px, 0px)'})">确认</a>
+                </div>
+            </div>
+        </form>
+        
+       <!--  <p class="invoice-show invoice-show-zz invoice-zz none">开票说明</p> -->
+        <!-- <p class="invoice-show invoice-show-dz invoice-dz none">开票说明</p> -->
+        <!-- <div class="surebtn invoice-zz invoice-dz none"> -->
+        <div class="surebtn invoice-zz invoice-dz" style="padding:20px 0">
+            <a class="btn">提交</a>
+        </div>
+
+</div>
+
+<div id="city" class="pagebox">
+    <ul id="selected"></ul>
+    <ul class="prov"></ul>
+    <ul class="city none"></ul>
+    <ul class="dist none"></ul>
+</div>
+    <script>
+    var getStatesFn;
+    var invoiceMoney,rentIdstr;
+    rentIdstr = decodeURIComponent($.getQueryString('rentIdstr'));
+    $(function(){
+    	$.ajax({
+    		url:url+"/invoice/getInvoiceMoney.action",
+            data:"rentIdstr="+rentIdstr,
+            type:'post',
+            success:function(data){
+            	if(data.code==1){
+            		$('#gold').html(data.data.totalMoney.toFixed(2))
+                    invoiceMoney = data.data.totalMoney;
+            	}
+            }
+    	});
+    	
+        $('#setaddress').click(function(){
+            var arr=$('#setaddress').val().split(" ");
+            $("#city").citySelect({prov : arr[0],city : arr[1],dist : arr[2] })
+        })
+        /* $('.typeselect').change(function(){
+            $('.note').hide()
+            if($(this).data('type')=='dianzi'){
+                $('.invoice-zz').hide().find('input.weui-input').attr({'disabled':true}).removeAttr('data-group-state')
+                $('.invoice-dz').show().find('input.weui-input').attr({'disabled':false,'data-group-state':false})
+                getStatesFn=getStatesFnDZ
+            }else{
+                $('.invoice-dz').hide().find('input.weui-input').attr({'disabled':true}).removeAttr('data-group-state');
+                $('.invoice-zz').show().find('input.weui-input').attr({'disabled':false,'data-group-state':false})
+                youfei()
+                getStatesFn=getStatesFnZZ
+
+            }
+        }) */
+        $('#lookmore').click(function(){
+            $('#morepage').css({'-webkit-transform':'translate3d(0px, 0px, 0px)'})
+        })
+    })
+    function you(){
+       var total=Number($('#gold').html());
+        var level=Number($('#yf-level').html());
+        if(total<level){return true}else{return false}
+
+    }
+    function youfei(){
+        if(you()){
+            $('.invoice-youfei').show().find('input').attr({'disabled':false})
+        }else{
+            $('.invoice-youfei').hide().find('input').attr({'disabled':true})
+        }
+
+
+    }
+    function getStatesFnDZ(){
+        $.confirm('<ul class="confirm">'+
+            '<li class="clearfix"><label>发票类型：</label><span>'+$('.typeselect:checked').next().text()+'</span></li>'+
+        '<li class="clearfix"><label>公司抬头：</label><span>'+$('#head').val()+'</span></li>'+
+        '<li class="clearfix"><label>电子邮件：</label><span>'+$('#emaildz').val()+'</span></li>'+
+        '</ul>'+
+        '<div class="warning">*请确认邮箱无误，电子发票将在系统开具<br>后发送至您的邮箱，请注意查收。</div>',[{'yes':'提交','no':'取消'}],function(types,e){
+            if(types=='yes'){
+                this.hide();
+                success('/invoice/getEInvoice.action')
+            }
+            else {
+                this.hide();
+            }
+        },{className:"show sure",width:244,height:164});   
+    }
+     function getStatesFn(){
+        var text;
+        if(you()){
+            text=$('[name="way"]:checked').data('num');
+        }else{
+            text=0;
+        }
+        $.confirm('<ul class="confirm">'+
+                '<li class="clearfix"><label>发票类型：</label><span>'+$('.typeselect:checked').next().text()+'</span></li>'+
+                '<li class="clearfix"><label>公司抬头：</label><span>'+$('#head').val()+'</span></li>'+
+                '<li class="clearfix"><label>收件人：</label><span>'+$('#user').val()+'</span></li>'+
+                '<li class="clearfix"><label>所在地区：</label><span>'+$('#setaddress').val()+'</span></li>'+
+                '<li class="clearfix"><label>收件地址：</label><span>'+$('#address').val()+'</span></li>'+
+                '<li class="clearfix"><label>递送邮费：</label><span class="green">'+text+'元</span></li>'+
+                '</ul>',[{'yes':'提交','no':'取消'}],function(types){
+                if(types=='yes'){
+                    this.hide();
+                    success('/invoice/getPInvoice.action')
+                }   
+                else {
+                    this.hide();
+                }
+            },{className:"show sure",width:244,height:164});
+    }
+    function success(gourl){
+        $.ajax({
+            url:url+gourl,
+            data:$('form').serialize()+'&invoiceMoney='+invoiceMoney+'&rentIdstr='+rentIdstr,
+            type:'post',
+            beforeSend: function(request) {
+                request.setRequestHeader("fromFlag", "2");
+            },
+            success:function(data){
+            	/* if(null!=data.data&&null!=data.data.invoiceType&&""!=data.data.invoiceType&&data.data.invoiceType==1){
+            		if(data.code==0){
+            			$.alert("已申请发票",false,function(){
+            				location.href="user.html";
+			             },5000,{width:300});
+            			
+            		}else if(data.code==2){
+            			$.alert("登录超时",false,function(){
+            				location.href="watchbike.html";
+			             },5000,{width:300});
+            			
+            		}
+            		$.confirm('<div class="text-center">'+
+                            '<svg viewBox="0 0 1024 1024" width="88" height="88"><path fill="#edf8e7" d="M512 960C264.96 960 64 759.04 64 512S264.96 64 512 64s448 200.96 448 448S759.04 960 512 960zM512 128.288C300.416 128.288 128.288 300.416 128.288 512c0 211.552 172.128 383.712 383.712 383.712 211.552 0 383.712-172.16 383.712-383.712C895.712 300.416 723.552 128.288 512 128.288z" p-id="4328"/><path fill="#a5dc86" d="M726.976 393.184c-12.544-12.448-32.832-12.32-45.248 0.256l-233.28 235.84-103.264-106.112c-12.352-12.704-32.608-12.928-45.248-0.64-12.672 12.32-12.96 32.608-0.64 45.248l126.016 129.504c0.064 0.096 0.192 0.096 0.256 0.192 0.064 0.064 0.096 0.192 0.16 0.256 2.016 1.984 4.512 3.2 6.88 4.544 1.248 0.672 2.24 1.792 3.52 2.304 3.872 1.6 8 2.4 12.096 2.4 4.064 0 8.128-0.8 11.968-2.336 1.248-0.512 2.208-1.536 3.392-2.176 2.4-1.344 4.896-2.528 6.944-4.544 0.064-0.064 0.096-0.192 0.192-0.256 0.064-0.096 0.16-0.128 0.256-0.192l256.224-259.008C739.648 425.856 739.52 405.6 726.976 393.184z"/></svg>'+
+                            '<p>提交成功！</p>'+
+                            '</div>',[{'yes':'确定'}],function(types){
+                            if(types=='yes'){
+                                this.hide();
+                                location.href="user.html";
+                            }
+                        },{className:"show",width:224,height:144});  
+            	}else{ */
+            		if(data.code==4){
+            			$.alert("已申请发票",false,function(){
+            				location.href=data.data.gotoaction+"journey_detail.html?platform=h5/#/user";
+			             },1000,{width:300});
+            			
+            		}else if(data.code==2){
+            			$.alert("登录超时",false,function(){
+            				location.href="watchbike.html";
+			             },5000,{width:300});
+            			
+            		}else if(data.code==0){
+            			$.alert("参数错误",false,function(){
+			             },5000,{width:300});
+            			
+            		}else if(data.code==3){
+            			$.alert("提交成功",false,function(){
+            			 location.href=data.data.gotoaction+"journey_detail.html?platform=h5/#/user";
+            			},1000,{width:300});
+            		}else if(data.code==1){
+            			WeixinJSBridge.invoke('getBrandWCPayRequest',{
+   				  		 "appId" : data.data.appId,"timeStamp" : data.data.timeStamp, "nonceStr" : data.data.nonceStr, "package" : data.data.package,"signType" : "MD5", "paySign" : data.data.paySign 
+   				   			},function(res){
+   								//WeixinJSBridge.log(res.err_msg);
+   				 				//alert(res.err_code + res.err_desc + res.err_msg);
+   					            if(res.err_msg == "get_brand_wcpay_request:ok"){  
+   					            	$.confirm('<div class="text-center">'+
+   				                            '<svg viewBox="0 0 1024 1024" width="88" height="88"><path fill="#edf8e7" d="M512 960C264.96 960 64 759.04 64 512S264.96 64 512 64s448 200.96 448 448S759.04 960 512 960zM512 128.288C300.416 128.288 128.288 300.416 128.288 512c0 211.552 172.128 383.712 383.712 383.712 211.552 0 383.712-172.16 383.712-383.712C895.712 300.416 723.552 128.288 512 128.288z" p-id="4328"/><path fill="#a5dc86" d="M726.976 393.184c-12.544-12.448-32.832-12.32-45.248 0.256l-233.28 235.84-103.264-106.112c-12.352-12.704-32.608-12.928-45.248-0.64-12.672 12.32-12.96 32.608-0.64 45.248l126.016 129.504c0.064 0.096 0.192 0.096 0.256 0.192 0.064 0.064 0.096 0.192 0.16 0.256 2.016 1.984 4.512 3.2 6.88 4.544 1.248 0.672 2.24 1.792 3.52 2.304 3.872 1.6 8 2.4 12.096 2.4 4.064 0 8.128-0.8 11.968-2.336 1.248-0.512 2.208-1.536 3.392-2.176 2.4-1.344 4.896-2.528 6.944-4.544 0.064-0.064 0.096-0.192 0.192-0.256 0.064-0.096 0.16-0.128 0.256-0.192l256.224-259.008C739.648 425.856 739.52 405.6 726.976 393.184z"/></svg>'+
+   				                            '<p>提交成功！</p>'+
+   				                            '</div>',[{'yes':'确定'}],function(types){
+   				                            if(types=='yes'){
+   				                                this.hide();
+   				                                location.href=data.data.gotoaction+"journey_detail.html?platform=h5/#/user";
+   				                            }
+   				                        },{className:"show",width:224,height:144});  
+   					            }else if(res.err_msg == "get_brand_wcpay_request:cancel"){  
+   					            
+   					               alert("支付失败!");  
+   					            }else{  
+   					               
+   					            	alert("支付失败!");  
+   					            }  
+   							})
+            		}
+            		
+            	//}
+                
+            },
+            error:function(data){
+				reLogin(data);
+			}
+        })
+        
+    }
+
+
+
+        $('.invoice-show-demo').click(function () {
+            $.confirm('<img src="images/fapiao.jpg"/>',true,function(types){
+                if(types=='yes') {
+                    this.hide();
+                }
+                else {
+                    this.hide();
+                }
+            },{className:"agree close",width:244,height:164});
+        })
+        $('.invoice-show-dz').click(function () {
+            $.confirm(' <p>电子1.根据国家税务总局公告2015年第84号的规定，增值税电子普通发票的法律效力、基本用途、基本使用规定等与税务机关监制的增值税普通发票相同。如纸质报销，可将电子文档进行打印。</p>'+
+            '<p>2.您选择行程的开票内容仅支持“骑行服务费”。</p>'+
+            '<p>3.电子发票及行程单将在您提交后30分钟内发送给您的电子邮箱。</p>',true,function(types){
+                if(types=='yes') {
+                    this.hide();
+                }
+                else {
+                    this.hide();
+                }
+            },{className:"agree",width:244,height:164});
+        })
+        $('.invoice-show-zz').click(function () {
+            $.confirm('<p>1.根据国家税务总局公告2015年第84号的规定，增值税电子普通发票的法律效力、基本用途、基本使用规定等与税务机关监制的增值税普通发票相同。如纸质报销，可将电子文档进行打印。</p>'+
+            '<p>2.您选择行程的开票内容仅支持“骑行服务费”。</p>'+
+            '<p>3.电子发票及行程单将在您提交后30分钟内发送给您的电子邮箱。</p>',true,function(types){
+                if(types=='yes') {
+                    this.hide();
+                }
+                else {
+                    this.hide();
+                }
+            },{className:"agree",width:244,height:164});
+
+        })
+
+		function checkTaxNum(){
+			if($('#invoiceTaxpayerNumber').val().length>20){
+                $('#invoiceTaxpayerNumber').val($('#invoiceTaxpayerNumber').val().substring(0,20));
+				return;
+			}
+		}
+
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+    http://code.alibabatech.com/schema/dubbo
+    http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+
+
+	<!-- 提供方应用信息，用于计算依赖关系 -->
+	<dubbo:application name="consumer" />
+
+	<!-- 使用zookeeper注册中心暴露服务地址 -->
+	<dubbo:registry protocol="zookeeper"
+		address="${zookeeper_path}" />
+
+
+
+	<!-- 声明需要暴露的服务接口 --><!-- 生成远程服务代理，可以像使用本地bean一样使用demoService -->
+
+	<dubbo:reference interface="org.service.weixin.read.SysMsgWxServiceRead"
+		id="sysMsgWxServiceRead" check="false" timeout="60000">
+	</dubbo:reference>	
+
+	
+	
+	<dubbo:reference interface="org.service.weixin.read.UserServiceWeixinRead"
+		id="userServiceWeixinRead" check="false" timeout="60000">
+	</dubbo:reference>
+	
+	
+	<dubbo:reference interface="org.service.weixin.read.CoreServiceRead"
+		id="coreServiceRead" check="false" timeout="60000">
+	</dubbo:reference>
+
+
+	<dubbo:reference interface="org.service.weixin.read.DataServiceRead"
+		id="dataServiceRead" check="false" timeout="60000">
+	</dubbo:reference>
+
+	<dubbo:reference interface="org.service.weixin.read.BikeWxServiceRead"
+		id="bikeWxServiceRead" check="false" timeout="60000">
+	</dubbo:reference>
+	
+	<dubbo:reference interface="org.service.weixin.read.AccountWxServiceRead"
+		id="accountWxServiceRead" check="false" timeout="60000">
+	</dubbo:reference>
+	
+	<dubbo:reference interface="org.service.weixin.read.BikeRentInfoWxServiceRead"
+		id="bikeRentInfoWxServiceRead" check="false" timeout="60000">
+	</dubbo:reference>
+	
+<!-- 	<dubbo:reference interface="org.service.weixin.read.RentPlanWxServiceRead" -->
+<!-- 		id="rentPlanWxServiceRead" check="false" timeout="60000"> -->
+<!-- 	</dubbo:reference> -->
+	
+	<dubbo:reference interface="org.service.weixin.read.BlockWxServiceRead"
+		id="blockWxServiceRead" check="false" timeout="60000">
+	</dubbo:reference>
+		<dubbo:reference interface="org.service.weixin.read.MessageWxServiceRead"
+		id="messageWxServiceRead" check="false" timeout="60000">
+	</dubbo:reference>
+
+	<dubbo:reference interface="org.service.weixin.read.MoneyLogWxServiceRead"
+		id="moneyLogWxServiceRead" check="false" timeout="60000">
+	</dubbo:reference>
+	
+	<dubbo:reference interface="org.service.weixin.read.FeedBackWxServiceRead"
+		id="feedBackWxServiceRead" check="false" timeout="60000">
+	</dubbo:reference>
+	
+	<dubbo:reference interface="org.service.weixin.read.RechargeWxServiceRead"
+		id="rechargeWxServiceRead" check="false" timeout="60000">
+	</dubbo:reference>
+	
+	<dubbo:reference interface="org.service.weixin.read.RefundWxServiceRead"
+		id="refundWxServiceRead" check="false" timeout="60000">
+	</dubbo:reference>
+	
+	<dubbo:reference interface="org.service.weixin.read.DataDetWxServiceRead"
+		id="dataDetWxServiceRead" check="false" timeout="60000">
+	</dubbo:reference>
+	
+	<dubbo:reference interface="org.service.weixin.read.ModelsWxServiceRead"
+		id="modelsWxServiceRead" check="false" timeout="60000">
+	</dubbo:reference>
+	
+	<dubbo:reference interface="org.service.weixin.read.AdminWxServiceRead"
+		id="adminWxServiceRead" check="false" timeout="60000">
+	</dubbo:reference>
+	
+	<dubbo:reference interface="org.service.weixin.read.ChannelWxServiceRead"
+		id="channelWxServiceRead" check="false" timeout="60000">
+	</dubbo:reference>
+	
+	<dubbo:reference interface="org.service.weixin.read.CodeServiceWxRead"
+		id="codeServiceWxRead" check="false" timeout="60000">
+	</dubbo:reference>
+	
+	<dubbo:reference interface="org.service.weixin.read.DefriendWxServiceRead"
+		id="defriendWxServiceRead" check="false" timeout="60000">
+	</dubbo:reference>
+	
+	<dubbo:reference interface="org.service.weixin.read.BikeLockInfoWxServiceRead"
+		id="bikeLockInfoWxServiceRead" check="false" timeout="60000">
+	</dubbo:reference>	
+	
+	<dubbo:reference interface="org.service.lock.LockService"
+		id="lockService" check="false" timeout="60000">
+	</dubbo:reference>
+	
+	<dubbo:reference interface="org.service.weixin.read.InsuranceWxServiceRead"
+		id="insuranceWxServiceRead" check="false" timeout="60000">
+	</dubbo:reference>
+	
+	<dubbo:reference interface="org.service.weixin.read.SysParamentServiceRead"
+		id="sysParamentServiceRead" check="false" timeout="60000">
+	</dubbo:reference>
+	
+	<dubbo:reference interface="org.service.weixin.read.FixedReturnWxServiceRead"
+		id="fixedReturnWxServiceRead" check="false" timeout="60000">
+	</dubbo:reference>
+	
+	<dubbo:reference interface="org.service.weixin.read.InsurancePriceWxServiceRead"
+		id="insurancePriceWxServiceRead" check="false" timeout="60000">
+	</dubbo:reference>
+	
+	<dubbo:reference interface="org.service.weixin.read.RentPriceWxServiceRead"
+		id="rentPriceWxServiceRead" check="false" timeout="60000">
+	</dubbo:reference>
+	
+	<dubbo:reference interface="org.service.weixin.read.InvoiceWxServiceRead"
+		id="invoiceWxServiceRead" check="false" timeout="60000">
+	</dubbo:reference>
+	
+	<dubbo:reference interface="org.service.weixin.read.TrOrderWxServiceRead"
+		id="trOrderWxServiceRead" check="false" timeout="60000">
+	</dubbo:reference>
+	
+	<dubbo:reference interface="org.service.weixin.read.ActivityWxServiceRead"
+		id="activityWxServiceRead" check="false" timeout="60000">
+	</dubbo:reference>
+	
+	<dubbo:reference interface="org.service.weixin.read.UserCouponServiceWxRead"
+		id="userCouponServiceWxRead" check="false" timeout="60000">
+	</dubbo:reference>
+	
+	<dubbo:reference interface="org.service.weixin.read.RedeemPlanServiceWxRead"
+		id="redeemPlanServiceWxRead" check="false" timeout="60000">
+	</dubbo:reference>
+	
+	<dubbo:reference interface="org.service.weixin.read.UserRedeemPlanServiceWxRead"
+		id="userRedeemPlanServiceWxRead" check="false" timeout="60000">
+	</dubbo:reference>
+	
+	<dubbo:reference interface="org.service.weixin.read.OrbitWxServiceRead"
+		id="orbitWxServiceRead" check="false" timeout="60000">
+	</dubbo:reference>
+	
+	<dubbo:reference interface="org.service.weixin.read.GradeWxServiceRead"
+		id="gradeWxServiceRead" check="false" timeout="60000">
+	</dubbo:reference>
+	
+	<dubbo:reference interface="org.service.weixin.read.UserToTaskWxServiceRead"
+		id="userToTaskWxServiceRead" check="false" timeout="60000">
+	</dubbo:reference>
+	
+	<dubbo:reference interface="org.service.weixin.read.ScenicTicketWxServiceRead"
+		id="scenicTicketWxServiceRead" check="false" timeout="60000">
+	</dubbo:reference>
+	
+	<dubbo:reference interface="org.service.weixin.read.BannerWxServiceRead"
+		id="bannerWxServiceRead" check="false" timeout="60000">
+	</dubbo:reference>
+	
+	<dubbo:reference interface="org.service.weixin.read.CityWxServiceRead"
+		id="cityWxServiceRead" check="false" timeout="60000">
+	</dubbo:reference>
+	
+	<dubbo:reference interface="org.service.weixin.read.DiscountPackageWxServiceRead"
+		id="discountPackageWxServiceRead" check="false" timeout="60000">
+	</dubbo:reference>
+	
+	<dubbo:reference interface="org.service.weixin.read.HotWordWxServiceRead"
+		id="hotWordWxServiceRead" check="false" timeout="60000">
+	</dubbo:reference>
+	
+	<dubbo:reference interface="org.service.weixin.read.TicketWxServiceRead"
+		id="ticketWxServiceRead" check="false" timeout="60000">
+	</dubbo:reference>
+
+	<dubbo:reference interface="org.service.weixin.read.CouponSchemeWxServiceRead"
+		id="couponSchemeWxServiceRead" check="false" timeout="60000">
+	</dubbo:reference>
+
+	<dubbo:reference interface="org.service.weixin.read.CouponListWxServiceRead"
+		id="couponListWxServiceRead" check="false" timeout="60000">
+	</dubbo:reference>
+
+	<dubbo:reference interface="org.service.weixin.read.GuideGroupWxServiceRead"
+		id="guideGroupWxServiceRead" check="false" timeout="60000">
+	</dubbo:reference>
+
+	<dubbo:reference interface="org.service.weixin.read.GuideGroupUserWxRead"
+		id="guideGroupUserWxRead" check="false" timeout="60000">
+	</dubbo:reference>
+	
+	
+<!-- 	<dubbo:reference interface="org.service.weixin.write.SysMsgWxServiceWrite" -->
+<!-- 		id="sysMsgWxServiceWrite" check="false" timeout="60000"> -->
+<!-- 	</dubbo:reference>	 -->
+
+
+	<dubbo:reference interface="org.service.weixin.write.BikeWxServiceWrite"
+		id="bikeWxServiceWrite" check="false" timeout="60000">
+	</dubbo:reference>
+		<dubbo:reference interface="org.service.weixin.write.AccountWxServiceWrite"
+		id="accountWxServiceWrite" check="false" timeout="60000">
+	</dubbo:reference>
+	<dubbo:reference interface="org.service.weixin.write.BikeRentInfoWxServiceWrite"
+		id="bikeRentInfoWxServiceWrite" check="false" timeout="60000">
+	</dubbo:reference>
+
+	<dubbo:reference interface="org.service.weixin.write.UserServiceWeixinWrite"
+		id="userServiceWeixinWrite" check="false" timeout="60000">
+	</dubbo:reference>
+	
+
+
+	<dubbo:reference interface="org.service.weixin.write.FeedBackWxServiceWrite"
+		id="feedBackWxServiceWrite" check="false" timeout="60000">
+	</dubbo:reference>
+	
+	<dubbo:reference interface="org.service.weixin.write.ExceptionWxServiceWrite"
+		id="exceptionWxServiceWrite" check="false" timeout="60000">
+	</dubbo:reference>
+	
+	<dubbo:reference interface="org.service.weixin.write.RechargeWxServiceWrite"
+		id="rechargeWxServiceWrite" check="false" timeout="60000">
+	</dubbo:reference>
+	
+	<dubbo:reference interface="org.service.weixin.write.RefundWxServiceWrite"
+		id="refundWxServiceWrite" check="false" timeout="60000">
+	</dubbo:reference>
+	
+	<dubbo:reference interface="org.service.weixin.write.MoneyLogWxServiceWrite"
+		id="moneyLogWxServiceWrite" check="false" timeout="60000">
+	</dubbo:reference>
+	
+	<dubbo:reference interface="org.service.weixin.write.MessageWxServiceWrite"
+		id="messageWxServiceWrite" check="false" timeout="60000">
+	</dubbo:reference>
+	
+	<dubbo:reference interface="org.service.weixin.write.CodeServiceWxWrite"
+		id="codeServiceWxWrite" check="false" timeout="60000">
+	</dubbo:reference>
+	
+	<dubbo:reference interface="org.service.weixin.write.BikeLockInfoWxServiceWrite"
+		id="bikeLockInfoWxServiceWrite" check="false" timeout="60000">
+	</dubbo:reference>	
+	
+	<dubbo:reference interface="org.service.weixin.write.FixedReturnWxServiceWrite"
+		id="fixedReturnWxServiceWrite" check="false" timeout="60000">
+	</dubbo:reference>
+	
+	<dubbo:reference interface="org.service.weixin.write.InvoiceWxServiceWrite"
+		id="invoiceWxServiceWrite" check="false" timeout="60000">
+	</dubbo:reference>	
+	
+	<dubbo:reference interface="org.service.weixin.write.TrOrderWxServiceWrite"
+		id="trOrderWxServiceWrite" check="false" timeout="60000">
+	</dubbo:reference>	
+	
+	<dubbo:reference interface="org.service.weixin.write.UserCouponServiceWxWrite"
+		id="userCouponServiceWxWrite" check="false" timeout="60000">
+	</dubbo:reference>	
+	
+	<dubbo:reference interface="org.service.weixin.write.UserRedeemPlanServiceWxWrite"
+		id="userRedeemPlanServiceWxWrite" check="false" timeout="60000">
+	</dubbo:reference>
+	
+	<dubbo:reference interface="org.service.weixin.write.OrbitServiceWxWrite"
+		id="orbitServiceWxWrite" check="false" timeout="60000">
+	</dubbo:reference>
+	
+	<dubbo:reference interface="org.service.weixin.write.RedeemPlanServiceWxWrite"
+		id="redeemPlanServiceWxWrite" check="false" timeout="60000">
+	</dubbo:reference>
+	
+	<dubbo:reference interface="org.service.weixin.write.GradeWxServiceWrite"
+		id="gradeWxServiceWrite" check="false" timeout="60000">
+	</dubbo:reference>
+	
+	<dubbo:reference interface="org.service.weixin.write.UserToTaskWxServiceWrite"
+		id="userToTaskWxServiceWrite" check="false" timeout="60000">
+	</dubbo:reference>
+</beans>

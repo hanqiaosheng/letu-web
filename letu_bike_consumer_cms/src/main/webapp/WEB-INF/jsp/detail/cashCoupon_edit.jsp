@@ -1,0 +1,162 @@
+<%@ page language="java" contentType="text/html; charset=utf-8"
+	pageEncoding="utf-8"%>
+<!DOCTYPE html>
+<html lang="en">
+<%@include file="../common/top.jsp"%>
+<%@include file="../common/datePicker.jsp"%>
+<%@include file="../common/body.jsp"%>
+
+<div id="page-wrapper">
+	<div class="row">
+		<div class="col-lg-12">
+			<h1 class="page-header">修改代金券</h1>
+		</div>
+		<!-- /.col-lg-12 -->
+	</div>
+	<!-- /.row -->
+	<div class="row">
+		<div class="col-lg-12">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<a class="btn btn-danger" 
+						href="javascript:history.go(-1)">返回</a>
+				</div>
+				<div class="panel-body">
+					<div class="row">
+						<div class="col-lg-6">
+							<form role="form" action="cms/cashcoupon/editCashCoupon.action" onsubmit="return formSub()" method="post">
+							<input type="hidden" value="${cashCoupon.couponId }" name="couponId">
+								<div class="form-group">
+									<label>代金券名：</label>
+									<div class="form-group">
+										<input class="form-control" placeholder="代金券名字" value="${cashCoupon.couponName }" id="couponName" name="couponName"  type="text"
+											required="required">
+										</div>
+										<label>代金券金额：</label>
+										<div class="form-group">
+											<input class="form-control" placeholder="代金券金额" type="text" value="${cashCoupon.couponMoney }"
+												name="couponMoney" required="required">
+										</div>
+										<label>是否有效期：</label>
+										<div class="form-group">
+											<input type="radio" name="couponIsValidity"<c:if test="${cashCoupon.couponIsValidity==0 }">checked="checked"</c:if> onclick="showTime(0)" value="0"> 无 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+											<input type="radio" <c:if test="${cashCoupon.couponIsValidity==1 }">checked="checked"</c:if> onclick="showTime(1)" name="couponIsValidity" value="1"> 有效期&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+											<input type="radio" <c:if test="${cashCoupon.couponIsValidity==2 }">checked="checked"</c:if> onclick="showTime(2)" name="couponIsValidity" value="2"> 有效时长
+										</div>
+										<div  id="timeShow">
+										
+										</div>
+										
+										
+										<label>使用条件：</label>
+										<div class="form-group">
+											<input type="radio" onclick="showCodition(1)" <c:if test="${cashCoupon.couponIsCondition==1 }">checked="checked"</c:if> name="couponIsCondition" value="1"> 是 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+											<input type="radio" onclick="showCodition(0)" <c:if test="${cashCoupon.couponIsCondition==0 }">checked="checked"</c:if> name="couponIsCondition" value="0"> 否
+										</div>
+										<div id="showCodition">
+										
+										
+										
+										
+										</div>
+										
+									
+								<div style="text-align: center;">
+									<input type="submit" value="提交" class="btn btn-primary">
+								</div>
+							</form>
+						</div>
+						<!-- /.col-lg-6 (nested) -->
+					</div>
+					<!-- /.row (nested) -->
+				</div>
+				<!-- /.panel-body -->
+			</div>
+			<!-- /.panel -->
+		</div>
+		<!-- /.col-lg-12 -->
+	</div>
+	<!-- /.row -->
+</div>
+<script type="text/javascript">
+  $(function(){
+	  showTime('${cashCoupon.couponIsValidity }');
+	  showCodition('${cashCoupon.couponIsCondition }');
+  })
+  
+ 
+	function showTime(obj){
+			var html1 = '<div>'+
+			'<label>有效期起始时间：</label>'+
+			'<div class="form-group">'+
+			'<input class="form-control" value="'+'${cashCoupon.couponStartTimeStr }'+'" id="cStarttime1" placeholder="有效期起始时间" name="couponStartTime">'+
+			'</div>'+
+			'<label>有效期结束时间：</label>'+
+			'<div class="form-group">'+
+			'<input class="form-control" value="'+'${cashCoupon.couponEndTimeStr }'+'" id="cEndtime1" placeholder="有效期结束时间"  name="couponEndTime">'+
+			'</div>'+
+			'</div>'
+		
+		
+		
+					
+		var html2 = 	'<div>'+
+						'<label>有效时长：</label>'+
+						'<div class="form-group clearfix">'+
+						'<input class="form-control" style="width:30%; float:left;" placeholder="有效时长" type="text" value="'+'${cashCoupon.couponValidityTime }'+'" name="couponValidityTime" >'+
+						'<div style=" float:left; line-height:20px; padding: 6px 16px;">天</div>'+
+						'</div>'+
+						'</div>	'	
+		if(0==obj){
+			$("#timeShow").empty();
+		}else if(1==obj){
+			$("#timeShow").empty();
+			$("#timeShow").html(html1);
+		}else if(2==obj){
+			$("#timeShow").empty();
+			$("#timeShow").html(html2);
+		}
+						
+		$('#cStarttime1').datepicker({
+			changeMonth: true, 
+			changeYear: true, 
+			showMonthAfterYear: true,
+			dateFormat: "yy-mm-dd",
+			onSelect:function(dateText,inst){
+	           $("#cEndtime1").datepicker("option","minDate",dateText);
+			}
+			
+		});
+		$('#cEndtime1').datepicker({
+			changeMonth: true, 
+			changeYear: true, 
+			showMonthAfterYear: true,
+			dateFormat: "yy-mm-dd",
+			onSelect:function(dateText,inst){
+	            $("#cStarttime1").datepicker("option","maxDate",dateText);
+	        }
+		});
+	}
+	
+
+
+	function showCodition(obj){
+		if(0==obj){
+			$("#showCodition").empty();
+		}else{
+			var html = '<label>最低余额：</label>'+
+						'<div class="form-group">'+
+						'<input class="form-control" id="couponStartMoney" value="'+'${cashCoupon.couponStartMoney }'+'"  placeholder="最低余额,单位（元）"  name="couponStartMoney" required="required">'+
+						'</div>'
+			$("#showCodition").html(html);	
+		}
+	}
+	
+										
+
+
+
+
+</script>
+<%@include file="../common/buttom.jsp"%>
+</html>

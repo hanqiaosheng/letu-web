@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.dao.SysMsgMapper" >
+  <resultMap id="BaseResultMap" type="org.entity.dto.SysMsg" >
+    <id column="sys_msg_id" property="sysMsgId" jdbcType="BIGINT" />
+    <result column="admin_id" property="adminId" jdbcType="BIGINT" />
+    <result column="sys_msg_content" property="sysMsgContent" jdbcType="VARCHAR" />
+    <result column="sys_msg_createtime" property="sysMsgCreatetime" jdbcType="TIMESTAMP" />
+    <result column="sys_msg_isonline" property="sysMsgIsonline" jdbcType="SMALLINT" />
+    <result column="sys_msg_onlinetime" property="sysMsgOnlinetime" jdbcType="TIMESTAMP" />
+    <result column="sys_msg_offlinetime" property="sysMsgOfflinetime" jdbcType="TIMESTAMP" />
+    <result column="sys_msg_title" property="sysMsgTitle" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    sys_msg_id, admin_id, sys_msg_content, sys_msg_createtime, sys_msg_isonline, sys_msg_onlinetime, 
+    sys_msg_offlinetime, sys_msg_title
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="org.entity.dto.SysMsgExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from sys_msg
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="limitStart != null and limitStart>=0" >
+      limit #{limitStart} , #{limitEnd}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from sys_msg
+    where sys_msg_id = #{sysMsgId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from sys_msg
+    where sys_msg_id = #{sysMsgId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="org.entity.dto.SysMsgExample" >
+    delete from sys_msg
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="org.entity.dto.SysMsg" >
+    insert into sys_msg (sys_msg_id, admin_id, sys_msg_content, 
+      sys_msg_createtime, sys_msg_isonline, sys_msg_onlinetime, 
+      sys_msg_offlinetime, sys_msg_title)
+    values (#{sysMsgId,jdbcType=BIGINT}, #{adminId,jdbcType=BIGINT}, #{sysMsgContent,jdbcType=VARCHAR}, 
+      #{sysMsgCreatetime,jdbcType=TIMESTAMP}, #{sysMsgIsonline,jdbcType=SMALLINT}, #{sysMsgOnlinetime,jdbcType=TIMESTAMP}, 
+      #{sysMsgOfflinetime,jdbcType=TIMESTAMP}, #{sysMsgTitle,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" useGeneratedKeys="true" keyProperty="sysMsgId" parameterType="org.entity.dto.SysMsg" >
+    insert into sys_msg
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="sysMsgId != null" >
+        sys_msg_id,
+      </if>
+      <if test="adminId != null" >
+        admin_id,
+      </if>
+      <if test="sysMsgContent != null" >
+        sys_msg_content,
+      </if>
+      <if test="sysMsgCreatetime != null" >
+        sys_msg_createtime,
+      </if>
+      <if test="sysMsgIsonline != null" >
+        sys_msg_isonline,
+      </if>
+      <if test="sysMsgOnlinetime != null" >
+        sys_msg_onlinetime,
+      </if>
+      <if test="sysMsgOfflinetime != null" >
+        sys_msg_offlinetime,
+      </if>
+      <if test="sysMsgTitle != null" >
+        sys_msg_title,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="sysMsgId != null" >
+        #{sysMsgId,jdbcType=BIGINT},
+      </if>
+      <if test="adminId != null" >
+        #{adminId,jdbcType=BIGINT},
+      </if>
+      <if test="sysMsgContent != null" >
+        #{sysMsgContent,jdbcType=VARCHAR},
+      </if>
+      <if test="sysMsgCreatetime != null" >
+        #{sysMsgCreatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sysMsgIsonline != null" >
+        #{sysMsgIsonline,jdbcType=SMALLINT},
+      </if>
+      <if test="sysMsgOnlinetime != null" >
+        #{sysMsgOnlinetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sysMsgOfflinetime != null" >
+        #{sysMsgOfflinetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sysMsgTitle != null" >
+        #{sysMsgTitle,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="org.entity.dto.SysMsgExample" resultType="java.lang.Integer" >
+    select count(*) from sys_msg
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update sys_msg
+    <set >
+      <if test="record.sysMsgId != null" >
+        sys_msg_id = #{record.sysMsgId,jdbcType=BIGINT},
+      </if>
+      <if test="record.adminId != null" >
+        admin_id = #{record.adminId,jdbcType=BIGINT},
+      </if>
+      <if test="record.sysMsgContent != null" >
+        sys_msg_content = #{record.sysMsgContent,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sysMsgCreatetime != null" >
+        sys_msg_createtime = #{record.sysMsgCreatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.sysMsgIsonline != null" >
+        sys_msg_isonline = #{record.sysMsgIsonline,jdbcType=SMALLINT},
+      </if>
+      <if test="record.sysMsgOnlinetime != null" >
+        sys_msg_onlinetime = #{record.sysMsgOnlinetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.sysMsgOfflinetime != null" >
+        sys_msg_offlinetime = #{record.sysMsgOfflinetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.sysMsgTitle != null" >
+        sys_msg_title = #{record.sysMsgTitle,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update sys_msg
+    set sys_msg_id = #{record.sysMsgId,jdbcType=BIGINT},
+      admin_id = #{record.adminId,jdbcType=BIGINT},
+      sys_msg_content = #{record.sysMsgContent,jdbcType=VARCHAR},
+      sys_msg_createtime = #{record.sysMsgCreatetime,jdbcType=TIMESTAMP},
+      sys_msg_isonline = #{record.sysMsgIsonline,jdbcType=SMALLINT},
+      sys_msg_onlinetime = #{record.sysMsgOnlinetime,jdbcType=TIMESTAMP},
+      sys_msg_offlinetime = #{record.sysMsgOfflinetime,jdbcType=TIMESTAMP},
+      sys_msg_title = #{record.sysMsgTitle,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="org.entity.dto.SysMsg" >
+    update sys_msg
+    <set >
+      <if test="adminId != null" >
+        admin_id = #{adminId,jdbcType=BIGINT},
+      </if>
+      <if test="sysMsgContent != null" >
+        sys_msg_content = #{sysMsgContent,jdbcType=VARCHAR},
+      </if>
+      <if test="sysMsgCreatetime != null" >
+        sys_msg_createtime = #{sysMsgCreatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sysMsgIsonline != null" >
+        sys_msg_isonline = #{sysMsgIsonline,jdbcType=SMALLINT},
+      </if>
+      <if test="sysMsgOnlinetime != null" >
+        sys_msg_onlinetime = #{sysMsgOnlinetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sysMsgOfflinetime != null" >
+        sys_msg_offlinetime = #{sysMsgOfflinetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sysMsgTitle != null" >
+        sys_msg_title = #{sysMsgTitle,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where sys_msg_id = #{sysMsgId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.entity.dto.SysMsg" >
+    update sys_msg
+    set admin_id = #{adminId,jdbcType=BIGINT},
+      sys_msg_content = #{sysMsgContent,jdbcType=VARCHAR},
+      sys_msg_createtime = #{sysMsgCreatetime,jdbcType=TIMESTAMP},
+      sys_msg_isonline = #{sysMsgIsonline,jdbcType=SMALLINT},
+      sys_msg_onlinetime = #{sysMsgOnlinetime,jdbcType=TIMESTAMP},
+      sys_msg_offlinetime = #{sysMsgOfflinetime,jdbcType=TIMESTAMP},
+      sys_msg_title = #{sysMsgTitle,jdbcType=VARCHAR}
+    where sys_msg_id = #{sysMsgId,jdbcType=BIGINT}
+  </update>
+</mapper>

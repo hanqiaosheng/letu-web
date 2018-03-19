@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.dao.OrbitMapper" >
+  <resultMap id="BaseResultMap" type="org.entity.dto.Orbit" >
+    <id column="orbit_id" property="orbitId" jdbcType="BIGINT" />
+    <result column="orbit_rent_info_id" property="orbitRentInfoId" jdbcType="BIGINT" />
+    <result column="orbit_distance" property="orbitDistance" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="org.entity.dto.Orbit" extends="BaseResultMap" >
+    <result column="orbit_latlng_json" property="orbitLatlngJson" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    orbit_id, orbit_rent_info_id, orbit_distance
+  </sql>
+  <sql id="Blob_Column_List" >
+    orbit_latlng_json
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="org.entity.dto.OrbitExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from orbit
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="org.entity.dto.OrbitExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from orbit
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="limitStart != null and limitStart>=0" >
+      limit #{limitStart} , #{limitEnd}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from orbit
+    where orbit_id = #{orbitId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from orbit
+    where orbit_id = #{orbitId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="org.entity.dto.OrbitExample" >
+    delete from orbit
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="org.entity.dto.Orbit" >
+    insert into orbit (orbit_id, orbit_rent_info_id, orbit_distance, 
+      orbit_latlng_json)
+    values (#{orbitId,jdbcType=BIGINT}, #{orbitRentInfoId,jdbcType=BIGINT}, #{orbitDistance,jdbcType=VARCHAR}, 
+      #{orbitLatlngJson,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="org.entity.dto.Orbit" >
+    insert into orbit
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="orbitId != null" >
+        orbit_id,
+      </if>
+      <if test="orbitRentInfoId != null" >
+        orbit_rent_info_id,
+      </if>
+      <if test="orbitDistance != null" >
+        orbit_distance,
+      </if>
+      <if test="orbitLatlngJson != null" >
+        orbit_latlng_json,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="orbitId != null" >
+        #{orbitId,jdbcType=BIGINT},
+      </if>
+      <if test="orbitRentInfoId != null" >
+        #{orbitRentInfoId,jdbcType=BIGINT},
+      </if>
+      <if test="orbitDistance != null" >
+        #{orbitDistance,jdbcType=VARCHAR},
+      </if>
+      <if test="orbitLatlngJson != null" >
+        #{orbitLatlngJson,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="org.entity.dto.OrbitExample" resultType="java.lang.Integer" >
+    select count(*) from orbit
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update orbit
+    <set >
+      <if test="record.orbitId != null" >
+        orbit_id = #{record.orbitId,jdbcType=BIGINT},
+      </if>
+      <if test="record.orbitRentInfoId != null" >
+        orbit_rent_info_id = #{record.orbitRentInfoId,jdbcType=BIGINT},
+      </if>
+      <if test="record.orbitDistance != null" >
+        orbit_distance = #{record.orbitDistance,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orbitLatlngJson != null" >
+        orbit_latlng_json = #{record.orbitLatlngJson,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update orbit
+    set orbit_id = #{record.orbitId,jdbcType=BIGINT},
+      orbit_rent_info_id = #{record.orbitRentInfoId,jdbcType=BIGINT},
+      orbit_distance = #{record.orbitDistance,jdbcType=VARCHAR},
+      orbit_latlng_json = #{record.orbitLatlngJson,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update orbit
+    set orbit_id = #{record.orbitId,jdbcType=BIGINT},
+      orbit_rent_info_id = #{record.orbitRentInfoId,jdbcType=BIGINT},
+      orbit_distance = #{record.orbitDistance,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="org.entity.dto.Orbit" >
+    update orbit
+    <set >
+      <if test="orbitRentInfoId != null" >
+        orbit_rent_info_id = #{orbitRentInfoId,jdbcType=BIGINT},
+      </if>
+      <if test="orbitDistance != null" >
+        orbit_distance = #{orbitDistance,jdbcType=VARCHAR},
+      </if>
+      <if test="orbitLatlngJson != null" >
+        orbit_latlng_json = #{orbitLatlngJson,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where orbit_id = #{orbitId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="org.entity.dto.Orbit" >
+    update orbit
+    set orbit_rent_info_id = #{orbitRentInfoId,jdbcType=BIGINT},
+      orbit_distance = #{orbitDistance,jdbcType=VARCHAR},
+      orbit_latlng_json = #{orbitLatlngJson,jdbcType=LONGVARCHAR}
+    where orbit_id = #{orbitId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.entity.dto.Orbit" >
+    update orbit
+    set orbit_rent_info_id = #{orbitRentInfoId,jdbcType=BIGINT},
+      orbit_distance = #{orbitDistance,jdbcType=VARCHAR}
+    where orbit_id = #{orbitId,jdbcType=BIGINT}
+  </update>
+</mapper>

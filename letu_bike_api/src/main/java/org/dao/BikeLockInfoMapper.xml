@@ -1,0 +1,583 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.dao.BikeLockInfoMapper" >
+  <resultMap id="BaseResultMap" type="org.entity.dto.BikeLockInfo" >
+    <id column="bike_lock_Id" property="bikeLockId" jdbcType="BIGINT" />
+    <result column="bike_lock_bike_id" property="bikeLockBikeId" jdbcType="BIGINT" />
+    <result column="bike_lock_code" property="bikeLockCode" jdbcType="VARCHAR" />
+    <result column="bike_lock_equipment_state" property="bikeLockEquipmentState" jdbcType="INTEGER" />
+    <result column="bike_lock_voltage" property="bikeLockVoltage" jdbcType="DOUBLE" />
+    <result column="bike_lock_status" property="bikeLockStatus" jdbcType="INTEGER" />
+    <result column="bike_lock_lat" property="bikeLockLat" jdbcType="DOUBLE" />
+    <result column="bike_lock_lng" property="bikeLockLng" jdbcType="DOUBLE" />
+    <result column="bike_lock_height" property="bikeLockHeight" jdbcType="DOUBLE" />
+    <result column="bike_lock_del" property="bikeLockDel" jdbcType="INTEGER" />
+    <result column="bike_lock_blockid" property="bikeLockBlockid" jdbcType="BIGINT" />
+    <result column="bike_lock_power" property="bikeLockPower" jdbcType="INTEGER" />
+    <result column="bike_lock_domain_pwd" property="bikeLockDomainPwd" jdbcType="VARCHAR" />
+    <result column="bike_lock_domain" property="bikeLockDomain" jdbcType="VARCHAR" />
+    <result column="bike_lock_port" property="bikeLockPort" jdbcType="VARCHAR" />
+    <result column="bike_lock_domain_pwd_state" property="bikeLockDomainPwdState" jdbcType="INTEGER" />
+    <result column="bike_lock_domin_state" property="bikeLockDominState" jdbcType="INTEGER" />
+    <result column="bike_lock_state" property="bikeLockState" jdbcType="INTEGER" />
+    <result column="bike_lock_type" property="bikeLockType" jdbcType="INTEGER" />
+    <result column="bike_lock_version" property="bikeLockVersion" jdbcType="VARCHAR" />
+    <result column="bike_lock_upstate" property="bikeLockUpstate" jdbcType="INTEGER" />
+    <result column="bike_lock_upfile" property="bikeLockUpfile" jdbcType="VARCHAR" />
+    <result column="bike_lock_upversion" property="bikeLockUpversion" jdbcType="VARCHAR" />
+    <result column="bike_lock_is_fence" property="bikeLockIsFence" jdbcType="INTEGER" />
+    <result column="bike_lock_sim_code" property="bikeLockSimCode" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="BaseUnionResultMap" type="org.entity.dto.BikeLockInfo" extends="BaseResultMap">
+	 <association property="bike" javaType="org.entity.dto.Bike">
+	    <id column="bike_id" property="bikeId" jdbcType="BIGINT" />
+	    <result column="bike_manager_id" property="bikeManagerId" jdbcType="BIGINT" />
+	    <result column="bike_admin_id" property="bikeAdminId" jdbcType="BIGINT" />
+	    <result column="bike_block_id" property="bikeBlockId" jdbcType="BIGINT" />
+	    <result column="bike_code" property="bikeCode" jdbcType="VARCHAR" />
+	    <result column="bike_state" property="bikeState" jdbcType="INTEGER" />
+	    <result column="bike_del" property="bikeDel" jdbcType="INTEGER" />
+	    <result column="bike_address" property="bikeAddress" jdbcType="VARCHAR" />
+	    <result column="bike_atitude" property="bikeAtitude" jdbcType="DOUBLE" />
+	    <result column="bike_longitude" property="bikeLongitude" jdbcType="DOUBLE" />
+	    <result column="bike_rent_num" property="bikeRentNum" jdbcType="INTEGER" />
+	    <result column="bike_createtime" property="bikeCreatetime" jdbcType="TIMESTAMP" />
+	    <result column="bike_batch_number" property="bikeBatchNumber" jdbcType="VARCHAR" />
+	    <result column="bike_lock_id" property="bikeLockId" jdbcType="BIGINT" />
+	    <result column="bike_chip_code" property="bikeChipCode" jdbcType="VARCHAR" />
+	    <result column="bike_dynamotor_code" property="bikeDynamotorCode" jdbcType="VARCHAR" />
+	    <result column="bike_put_time" property="bikePutTime" jdbcType="TIMESTAMP" />
+	    <result column="bike_models_id" property="bikeModelsId" jdbcType="BIGINT" />
+	    <result column="bike_last_rent_time" property="bikeLastRentTime" jdbcType="TIMESTAMP" />
+	    <result column="bike_manager_name" property="bikeManagerName" jdbcType="VARCHAR" />
+	    <result column="bike_manager_tel" property="bikeManagerTel" jdbcType="VARCHAR" />
+	    <result column="bike_alert" jdbcType="INTEGER" property="bikeAlert" />
+	    <result column="bike_fixed_return_id" property="bikeFixedReturnId" jdbcType="BIGINT" />
+	 </association>
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    bike_lock_Id, bike_lock_bike_id, bike_lock_code, bike_lock_equipment_state, bike_lock_voltage, 
+    bike_lock_status, bike_lock_lat, bike_lock_lng, bike_lock_height, bike_lock_del, 
+    bike_lock_blockid, bike_lock_power, bike_lock_domain_pwd, bike_lock_domain, bike_lock_port, 
+    bike_lock_domain_pwd_state, bike_lock_domin_state, bike_lock_state, bike_lock_type,
+    bike_lock_version, bike_lock_upstate, bike_lock_upfile, bike_lock_upversion, bike_lock_is_fence, 
+    bike_lock_sim_code
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="org.entity.dto.BikeLockInfoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from bike_lock_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="limitStart != null and limitStart>=0" >
+      limit #{limitStart} , #{limitEnd}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from bike_lock_info
+    where bike_lock_Id = #{bikeLockId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from bike_lock_info
+    where bike_lock_Id = #{bikeLockId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="org.entity.dto.BikeLockInfoExample" >
+    delete from bike_lock_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="org.entity.dto.BikeLockInfo" >
+    insert into bike_lock_info (bike_lock_Id, bike_lock_bike_id, bike_lock_code, 
+      bike_lock_equipment_state, bike_lock_voltage, 
+      bike_lock_status, bike_lock_lat, bike_lock_lng, 
+      bike_lock_height, bike_lock_del, bike_lock_blockid, 
+      bike_lock_power, bike_lock_domain_pwd, bike_lock_domain, 
+      bike_lock_port, bike_lock_domain_pwd_state, bike_lock_domin_state, 
+      bike_lock_state, bike_lock_type, bike_lock_version, 
+      bike_lock_upstate, bike_lock_upfile, bike_lock_upversion, 
+      bike_lock_is_fence, bike_lock_sim_code)
+    values (#{bikeLockId,jdbcType=BIGINT}, #{bikeLockBikeId,jdbcType=BIGINT}, #{bikeLockCode,jdbcType=VARCHAR}, 
+      #{bikeLockEquipmentState,jdbcType=INTEGER}, #{bikeLockVoltage,jdbcType=DOUBLE}, 
+      #{bikeLockStatus,jdbcType=INTEGER}, #{bikeLockLat,jdbcType=DOUBLE}, #{bikeLockLng,jdbcType=DOUBLE}, 
+      #{bikeLockHeight,jdbcType=DOUBLE}, #{bikeLockDel,jdbcType=INTEGER}, #{bikeLockBlockid,jdbcType=BIGINT}, 
+      #{bikeLockPower,jdbcType=INTEGER}, #{bikeLockDomainPwd,jdbcType=VARCHAR}, #{bikeLockDomain,jdbcType=VARCHAR}, 
+      #{bikeLockPort,jdbcType=VARCHAR}, #{bikeLockDomainPwdState,jdbcType=INTEGER}, #{bikeLockDominState,jdbcType=INTEGER}, 
+      #{bikeLockState,jdbcType=INTEGER}, #{bikeLockType,jdbcType=INTEGER}, #{bikeLockVersion,jdbcType=VARCHAR}, 
+      #{bikeLockUpstate,jdbcType=INTEGER}, #{bikeLockUpfile,jdbcType=VARCHAR}, #{bikeLockUpversion,jdbcType=VARCHAR}, 
+      #{bikeLockIsFence,jdbcType=INTEGER}, #{bikeLockSimCode,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="org.entity.dto.BikeLockInfo" >
+    insert into bike_lock_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="bikeLockId != null" >
+        bike_lock_Id,
+      </if>
+      <if test="bikeLockBikeId != null" >
+        bike_lock_bike_id,
+      </if>
+      <if test="bikeLockCode != null" >
+        bike_lock_code,
+      </if>
+      <if test="bikeLockEquipmentState != null" >
+        bike_lock_equipment_state,
+      </if>
+      <if test="bikeLockVoltage != null" >
+        bike_lock_voltage,
+      </if>
+      <if test="bikeLockStatus != null" >
+        bike_lock_status,
+      </if>
+      <if test="bikeLockLat != null" >
+        bike_lock_lat,
+      </if>
+      <if test="bikeLockLng != null" >
+        bike_lock_lng,
+      </if>
+      <if test="bikeLockHeight != null" >
+        bike_lock_height,
+      </if>
+      <if test="bikeLockDel != null" >
+        bike_lock_del,
+      </if>
+      <if test="bikeLockBlockid != null" >
+        bike_lock_blockid,
+      </if>
+      <if test="bikeLockPower != null" >
+        bike_lock_power,
+      </if>
+      <if test="bikeLockDomainPwd != null" >
+        bike_lock_domain_pwd,
+      </if>
+      <if test="bikeLockDomain != null" >
+        bike_lock_domain,
+      </if>
+      <if test="bikeLockPort != null" >
+        bike_lock_port,
+      </if>
+      <if test="bikeLockDomainPwdState != null" >
+        bike_lock_domain_pwd_state,
+      </if>
+      <if test="bikeLockDominState != null" >
+        bike_lock_domin_state,
+      </if>
+       <if test="bikeLockState != null" >
+        bike_lock_state,
+      </if>
+      <if test="bikeLockType != null" >
+        bike_lock_type,
+      </if>
+      <if test="bikeLockVersion != null" >
+        bike_lock_version,
+      </if>
+      <if test="bikeLockUpstate != null" >
+        bike_lock_upstate,
+      </if>
+      <if test="bikeLockUpfile != null" >
+        bike_lock_upfile,
+      </if>
+      <if test="bikeLockUpversion != null" >
+        bike_lock_upversion,
+      </if>
+      <if test="bikeLockIsFence != null" >
+        bike_lock_is_fence,
+      </if>
+      <if test="bikeLockSimCode != null" >
+        bike_lock_sim_code,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="bikeLockId != null" >
+        #{bikeLockId,jdbcType=BIGINT},
+      </if>
+      <if test="bikeLockBikeId != null" >
+        #{bikeLockBikeId,jdbcType=BIGINT},
+      </if>
+      <if test="bikeLockCode != null" >
+        #{bikeLockCode,jdbcType=VARCHAR},
+      </if>
+      <if test="bikeLockEquipmentState != null" >
+        #{bikeLockEquipmentState,jdbcType=INTEGER},
+      </if>
+      <if test="bikeLockVoltage != null" >
+        #{bikeLockVoltage,jdbcType=DOUBLE},
+      </if>
+      <if test="bikeLockStatus != null" >
+        #{bikeLockStatus,jdbcType=INTEGER},
+      </if>
+      <if test="bikeLockLat != null" >
+        #{bikeLockLat,jdbcType=DOUBLE},
+      </if>
+      <if test="bikeLockLng != null" >
+        #{bikeLockLng,jdbcType=DOUBLE},
+      </if>
+      <if test="bikeLockHeight != null" >
+        #{bikeLockHeight,jdbcType=DOUBLE},
+      </if>
+      <if test="bikeLockDel != null" >
+        #{bikeLockDel,jdbcType=INTEGER},
+      </if>
+      <if test="bikeLockBlockid != null" >
+        #{bikeLockBlockid,jdbcType=BIGINT},
+      </if>
+      <if test="bikeLockPower != null" >
+        #{bikeLockPower,jdbcType=INTEGER},
+      </if>
+      <if test="bikeLockDomainPwd != null" >
+        #{bikeLockDomainPwd,jdbcType=VARCHAR},
+      </if>
+      <if test="bikeLockDomain != null" >
+        #{bikeLockDomain,jdbcType=VARCHAR},
+      </if>
+      <if test="bikeLockPort != null" >
+        #{bikeLockPort,jdbcType=VARCHAR},
+      </if>
+      <if test="bikeLockDomainPwdState != null" >
+        #{bikeLockDomainPwdState,jdbcType=INTEGER},
+      </if>
+      <if test="bikeLockDominState != null" >
+        #{bikeLockDominState,jdbcType=INTEGER},
+      </if>
+      <if test="bikeLockState != null" >
+        #{bikeLockState,jdbcType=INTEGER},
+      </if>
+      <if test="bikeLockType != null" >
+        #{bikeLockType,jdbcType=INTEGER},
+      </if>
+      <if test="bikeLockVersion != null" >
+        #{bikeLockVersion,jdbcType=VARCHAR},
+      </if>
+      <if test="bikeLockUpstate != null" >
+        #{bikeLockUpstate,jdbcType=INTEGER},
+      </if>
+      <if test="bikeLockUpfile != null" >
+        #{bikeLockUpfile,jdbcType=VARCHAR},
+      </if>
+      <if test="bikeLockUpversion != null" >
+        #{bikeLockUpversion,jdbcType=VARCHAR},
+      </if>
+      <if test="bikeLockIsFence != null" >
+        #{bikeLockIsFence,jdbcType=INTEGER},
+      </if>
+      <if test="bikeLockSimCode != null" >
+        #{bikeLockSimCode,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="org.entity.dto.BikeLockInfoExample" resultType="java.lang.Integer" >
+    select count(*) from bike_lock_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update bike_lock_info
+    <set >
+      <if test="record.bikeLockId != null" >
+        bike_lock_Id = #{record.bikeLockId,jdbcType=BIGINT},
+      </if>
+      <if test="record.bikeLockBikeId != null" >
+        bike_lock_bike_id = #{record.bikeLockBikeId,jdbcType=BIGINT},
+      </if>
+      <if test="record.bikeLockCode != null" >
+        bike_lock_code = #{record.bikeLockCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bikeLockEquipmentState != null" >
+        bike_lock_equipment_state = #{record.bikeLockEquipmentState,jdbcType=INTEGER},
+      </if>
+      <if test="record.bikeLockVoltage != null" >
+        bike_lock_voltage = #{record.bikeLockVoltage,jdbcType=DOUBLE},
+      </if>
+      <if test="record.bikeLockStatus != null" >
+        bike_lock_status = #{record.bikeLockStatus,jdbcType=INTEGER},
+      </if>
+      <if test="record.bikeLockLat != null" >
+        bike_lock_lat = #{record.bikeLockLat,jdbcType=DOUBLE},
+      </if>
+      <if test="record.bikeLockLng != null" >
+        bike_lock_lng = #{record.bikeLockLng,jdbcType=DOUBLE},
+      </if>
+      <if test="record.bikeLockHeight != null" >
+        bike_lock_height = #{record.bikeLockHeight,jdbcType=DOUBLE},
+      </if>
+      <if test="record.bikeLockDel != null" >
+        bike_lock_del = #{record.bikeLockDel,jdbcType=INTEGER},
+      </if>
+      <if test="record.bikeLockBlockid != null" >
+        bike_lock_blockid = #{record.bikeLockBlockid,jdbcType=BIGINT},
+      </if>
+      <if test="record.bikeLockPower != null" >
+        bike_lock_power = #{record.bikeLockPower,jdbcType=INTEGER},
+      </if>
+      <if test="record.bikeLockDomainPwd != null" >
+        bike_lock_domain_pwd = #{record.bikeLockDomainPwd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bikeLockDomain != null" >
+        bike_lock_domain = #{record.bikeLockDomain,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bikeLockPort != null" >
+        bike_lock_port = #{record.bikeLockPort,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bikeLockDomainPwdState != null" >
+        bike_lock_domain_pwd_state = #{record.bikeLockDomainPwdState,jdbcType=INTEGER},
+      </if>
+      <if test="record.bikeLockDominState != null" >
+        bike_lock_domin_state = #{record.bikeLockDominState,jdbcType=INTEGER},
+      </if>
+       <if test="record.bikeLockState != null" >
+        bike_lock_state = #{record.bikeLockState,jdbcType=INTEGER},
+      </if>
+      <if test="record.bikeLockType != null" >
+        bike_lock_type = #{record.bikeLockType,jdbcType=INTEGER},
+      </if>
+      <if test="record.bikeLockVersion != null" >
+        bike_lock_version = #{record.bikeLockVersion,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bikeLockUpstate != null" >
+        bike_lock_upstate = #{record.bikeLockUpstate,jdbcType=INTEGER},
+      </if>
+      <if test="record.bikeLockUpfile != null" >
+        bike_lock_upfile = #{record.bikeLockUpfile,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bikeLockUpversion != null" >
+        bike_lock_upversion = #{record.bikeLockUpversion,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bikeLockIsFence != null" >
+        bike_lock_is_fence = #{record.bikeLockIsFence,jdbcType=INTEGER},
+      </if>
+      <if test="record.bikeLockSimCode != null" >
+        bike_lock_sim_code = #{record.bikeLockSimCode,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update bike_lock_info
+    set bike_lock_Id = #{record.bikeLockId,jdbcType=BIGINT},
+      bike_lock_bike_id = #{record.bikeLockBikeId,jdbcType=BIGINT},
+      bike_lock_code = #{record.bikeLockCode,jdbcType=VARCHAR},
+      bike_lock_equipment_state = #{record.bikeLockEquipmentState,jdbcType=INTEGER},
+      bike_lock_voltage = #{record.bikeLockVoltage,jdbcType=DOUBLE},
+      bike_lock_status = #{record.bikeLockStatus,jdbcType=INTEGER},
+      bike_lock_lat = #{record.bikeLockLat,jdbcType=DOUBLE},
+      bike_lock_lng = #{record.bikeLockLng,jdbcType=DOUBLE},
+      bike_lock_height = #{record.bikeLockHeight,jdbcType=DOUBLE},
+      bike_lock_del = #{record.bikeLockDel,jdbcType=INTEGER},
+      bike_lock_blockid = #{record.bikeLockBlockid,jdbcType=BIGINT},
+      bike_lock_power = #{record.bikeLockPower,jdbcType=INTEGER},
+      bike_lock_domain_pwd = #{record.bikeLockDomainPwd,jdbcType=VARCHAR},
+      bike_lock_domain = #{record.bikeLockDomain,jdbcType=VARCHAR},
+      bike_lock_port = #{record.bikeLockPort,jdbcType=VARCHAR},
+      bike_lock_domain_pwd_state = #{record.bikeLockDomainPwdState,jdbcType=INTEGER},
+      bike_lock_domin_state = #{record.bikeLockDominState,jdbcType=INTEGER},
+      bike_lock_state = #{record.bikeLockState,jdbcType=INTEGER},
+      bike_lock_type = #{record.bikeLockType,jdbcType=INTEGER},
+      bike_lock_version = #{record.bikeLockVersion,jdbcType=VARCHAR},
+      bike_lock_upstate = #{record.bikeLockUpstate,jdbcType=INTEGER},
+      bike_lock_upfile = #{record.bikeLockUpfile,jdbcType=VARCHAR},
+      bike_lock_upversion = #{record.bikeLockUpversion,jdbcType=VARCHAR},
+      bike_lock_is_fence = #{record.bikeLockIsFence,jdbcType=INTEGER},
+      bike_lock_sim_code = #{record.bikeLockSimCode,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="org.entity.dto.BikeLockInfo" >
+    update bike_lock_info
+    <set >
+      <if test="bikeLockBikeId != null" >
+        bike_lock_bike_id = #{bikeLockBikeId,jdbcType=BIGINT},
+      </if>
+      <if test="bikeLockCode != null" >
+        bike_lock_code = #{bikeLockCode,jdbcType=VARCHAR},
+      </if>
+      <if test="bikeLockEquipmentState != null" >
+        bike_lock_equipment_state = #{bikeLockEquipmentState,jdbcType=INTEGER},
+      </if>
+      <if test="bikeLockVoltage != null" >
+        bike_lock_voltage = #{bikeLockVoltage,jdbcType=DOUBLE},
+      </if>
+      <if test="bikeLockStatus != null" >
+        bike_lock_status = #{bikeLockStatus,jdbcType=INTEGER},
+      </if>
+      <if test="bikeLockLat != null" >
+        bike_lock_lat = #{bikeLockLat,jdbcType=DOUBLE},
+      </if>
+      <if test="bikeLockLng != null" >
+        bike_lock_lng = #{bikeLockLng,jdbcType=DOUBLE},
+      </if>
+      <if test="bikeLockHeight != null" >
+        bike_lock_height = #{bikeLockHeight,jdbcType=DOUBLE},
+      </if>
+      <if test="bikeLockDel != null" >
+        bike_lock_del = #{bikeLockDel,jdbcType=INTEGER},
+      </if>
+      <if test="bikeLockBlockid != null" >
+        bike_lock_blockid = #{bikeLockBlockid,jdbcType=BIGINT},
+      </if>
+      <if test="bikeLockPower != null" >
+        bike_lock_power = #{bikeLockPower,jdbcType=INTEGER},
+      </if>
+      <if test="bikeLockDomainPwd != null" >
+        bike_lock_domain_pwd = #{bikeLockDomainPwd,jdbcType=VARCHAR},
+      </if>
+      <if test="bikeLockDomain != null" >
+        bike_lock_domain = #{bikeLockDomain,jdbcType=VARCHAR},
+      </if>
+      <if test="bikeLockPort != null" >
+        bike_lock_port = #{bikeLockPort,jdbcType=VARCHAR},
+      </if>
+      <if test="bikeLockDomainPwdState != null" >
+        bike_lock_domain_pwd_state = #{bikeLockDomainPwdState,jdbcType=INTEGER},
+      </if>
+      <if test="bikeLockDominState != null" >
+        bike_lock_domin_state = #{bikeLockDominState,jdbcType=INTEGER},
+      </if>
+       <if test="bikeLockState != null" >
+        bike_lock_state = #{bikeLockState,jdbcType=INTEGER},
+      </if>
+       <if test="bikeLockType != null" >
+        bike_lock_type = #{bikeLockType,jdbcType=INTEGER},
+      </if>
+      <if test="bikeLockVersion != null" >
+        bike_lock_version = #{bikeLockVersion,jdbcType=VARCHAR},
+      </if>
+      <if test="bikeLockUpstate != null" >
+        bike_lock_upstate = #{bikeLockUpstate,jdbcType=INTEGER},
+      </if>
+      <if test="bikeLockUpfile != null" >
+        bike_lock_upfile = #{bikeLockUpfile,jdbcType=VARCHAR},
+      </if>
+      <if test="bikeLockUpversion != null" >
+        bike_lock_upversion = #{bikeLockUpversion,jdbcType=VARCHAR},
+      </if>
+      <if test="bikeLockIsFence != null" >
+        bike_lock_is_fence = #{bikeLockIsFence,jdbcType=INTEGER},
+      </if>
+      <if test="bikeLockSimCode != null" >
+        bike_lock_sim_code = #{bikeLockSimCode,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where bike_lock_Id = #{bikeLockId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.entity.dto.BikeLockInfo" >
+    update bike_lock_info
+    set bike_lock_bike_id = #{bikeLockBikeId,jdbcType=BIGINT},
+      bike_lock_code = #{bikeLockCode,jdbcType=VARCHAR},
+      bike_lock_equipment_state = #{bikeLockEquipmentState,jdbcType=INTEGER},
+      bike_lock_voltage = #{bikeLockVoltage,jdbcType=DOUBLE},
+      bike_lock_status = #{bikeLockStatus,jdbcType=INTEGER},
+      bike_lock_lat = #{bikeLockLat,jdbcType=DOUBLE},
+      bike_lock_lng = #{bikeLockLng,jdbcType=DOUBLE},
+      bike_lock_height = #{bikeLockHeight,jdbcType=DOUBLE},
+      bike_lock_del = #{bikeLockDel,jdbcType=INTEGER},
+      bike_lock_blockid = #{bikeLockBlockid,jdbcType=BIGINT},
+      bike_lock_power = #{bikeLockPower,jdbcType=INTEGER},
+      bike_lock_domain_pwd = #{bikeLockDomainPwd,jdbcType=VARCHAR},
+      bike_lock_domain = #{bikeLockDomain,jdbcType=VARCHAR},
+      bike_lock_port = #{bikeLockPort,jdbcType=VARCHAR},
+      bike_lock_domain_pwd_state = #{bikeLockDomainPwdState,jdbcType=INTEGER},
+      bike_lock_domin_state = #{bikeLockDominState,jdbcType=INTEGER},
+      bike_lock_state = #{bikeLockState,jdbcType=INTEGER},
+      bike_lock_type = #{bikeLockType,jdbcType=INTEGER},
+      bike_lock_version = #{bikeLockVersion,jdbcType=VARCHAR},
+      bike_lock_upstate = #{bikeLockUpstate,jdbcType=INTEGER},
+      bike_lock_upfile = #{bikeLockUpfile,jdbcType=VARCHAR},
+      bike_lock_upversion = #{bikeLockUpversion,jdbcType=VARCHAR},
+      bike_lock_is_fence = #{bikeLockIsFence,jdbcType=INTEGER},
+      bike_lock_sim_code = #{bikeLockSimCode,jdbcType=VARCHAR}
+    where bike_lock_Id = #{bikeLockId,jdbcType=BIGINT}
+  </update>
+  
+  
+  <select id="selectUnionByExample" resultMap="BaseUnionResultMap" parameterType="org.entity.dto.BikeLockInfoExample" >
+    select * from bike_lock_info bli left join bike b on bli.bike_lock_bike_id = b.bike_id
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="limitStart != null and limitStart>=0" >
+      limit #{limitStart} , #{limitEnd}
+    </if>
+  </select>
+  
+  
+  <select id="countUnionByExample" parameterType="org.entity.dto.BikeLockInfoExample" resultType="java.lang.Integer" >
+    select count(*) from bike_lock_info bli left join bike b on bli.bike_lock_bike_id = b.bike_id
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  
+</mapper>

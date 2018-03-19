@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="viewport" content="initial-scale=1, width=device-width, maximum-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-touch-fullscreen" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="format-detection" content="address=no">
+    <meta name="screen-orientation" content="portrait">
+    <meta name="x5-orientation" content="portrait">
+    <title>发票详情</title>
+    <link rel="stylesheet" href="font/iconfont.css">
+    <link rel="stylesheet" href="font/iconfont-2.css">
+    <link rel="stylesheet" href="css/animate.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/base.css">
+    <script type="text/javascript" src="js/zepto.min.js"></script>
+    <link rel="stylesheet" href="js/dialog.css">
+    <script type="text/javascript" src="js/dialog.js"></script>
+    <script type="text/javascript" src="js/iscroll.js"></script>
+    <link rel="stylesheet" href="js/swiper-3.2.7.min.css">
+    <script type="text/javascript" src="js/swiper-3.2.7.jquery.min.js"></script>
+    <script type="text/javascript" src="js/path.js"></script>
+    <script type="text/javascript" src="js/mobile.js"></script>
+    <script type="text/javascript" src="js/usercenter.js"></script>
+    <script type="text/javascript" src="js/fastclick.js"></script>
+</head>
+<body style="background: #f5f5f5;">
+<div class="g-body">
+    <div class="invoice-info">
+        <div id="state">
+	       
+        </div>
+        <div class="con-box">
+            <div class="tit">收件信息</div>
+            <ul class="in">
+                <li class="clearfix"><label>电子邮件：</label><span id="email"></span></li>
+            </ul>
+        </div>
+        <div class="con-box">
+            <div class="tit">发票信息</div>
+            <ul class="in">
+                <li class="clearfix"><label>公司抬头：</label><span id="company"></span></li>
+                <li class="clearfix"><label>发票内容：</label><span id="content"></span></li>
+                <li class="clearfix"><label>发票金额：</label><span><span class="green" id="money"></span>元</span></li>
+                <li class="clearfix"><label>申请时间：</label><span id="time"></span></li>
+            </ul>
+        </div>
+        <div class="con-box clearfix">
+            <div class="con pull-left">
+                <p class=""><span>1</span>张发票，含<span id="rentNum"></span>个行程</p>
+                <div class="time" id="rentTime"></div>
+            </div>
+        </div>
+        <div class="butt surebtn">
+            <div class="tip">联系我们：0571-56231981</div>
+            <a class="btn">重发电子发票行程单</a>
+        </div>
+    </div>
+
+</div>
+<script type="text/javascript">
+   var invoiceId = $.getQueryString('invoiceId')
+   $.ajax({
+	   url:url+"/invoice/getinvoiceById.action",
+       data:"invoiceId="+invoiceId,
+       type:'post',
+       success:function(data){
+       	if(data.code==1){
+       	 if(data.data.invoice.invoiceState==3){
+      	   $("#state").html('<div class="state s1">待开票</div>');
+         }else if(data.data.invoice.invoiceState==4){
+      	   $("#state").html('<div class="state s2">已开票</div>');
+         }
+       	$("#email").html(data.data.invoice.invoiceEmail);
+       	$("#company").html(data.data.invoice.invoiceName);
+       	$("#content").html(data.data.invoice.invoiceContent);
+       	$("#time").html(new Date(data.data.invoice.invoiceApplicationTime).format('yyyy.MM.dd hh:mm:ss'));
+       	$("#money").html(data.data.invoice.invoiceMoney);
+        $("#rentNum").html(data.data.rentNum);
+        if(null!=data.data.lastTime&&""!=data.data.lastTime){
+        	$("#rentTime").html(new Date(data.data.firstTime).format('yyyy.MM.dd hh:mm:ss')+" - "+new Date(data.data.lastTime).format('yyyy.MM.dd hh:mm:ss'));
+        }else{
+        	$("#rentTime").html(new Date(data.data.firstTime).format('yyyy.MM.dd hh:mm:ss'));
+        }
+       
+       	}
+       },
+       error:function(data){
+			reLogin(data);
+		}
+   });
+  
+</script>
+<script type="text/javascript">
+function getStatesFn(){
+	
+		   var invoiceId = $.getQueryString('invoiceId')
+		   $.ajax({
+			   url:url+"/invoice/sendInvoiceAgain.action",
+		       data:"invoiceId="+invoiceId,
+		       type:'post',
+		       beforeSend: function(request) {
+	               request.setRequestHeader("fromFlag", "2");
+	           },
+		       success:function(data){
+		          if(data.code==1){
+		        	  $.alert("重发成功，请耐心等待",false,function(){
+			           },5000,{width:300});
+		          }else if(data.code==0){
+		        	  $.alert("重发失败",false,function(){
+			           },5000,{width:300});
+		          }
+		       },
+		       error:function(data){
+					reLogin(data);
+				}
+		   });
+	   
+}
+  
+</script>
+
+</body>
+
+</html>

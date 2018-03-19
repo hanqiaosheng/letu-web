@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta http-equiv="Access-Control-Allow-Origin" content="*">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="viewport" content="initial-scale=1, width=device-width, maximum-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-touch-fullscreen" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="format-detection" content="address=no">
+    <meta name="screen-orientation" content="portrait">
+    <meta name="x5-orientation" content="portrait">
+    <title>乐途</title>
+    <link rel="stylesheet" href="font/iconfont.css">
+    <link rel="stylesheet" href="css/animate.min.css">
+    <link rel="stylesheet" href="css/base.css">
+    <script type="text/javascript" src="js/zepto.min.js"></script>
+    <script type="text/javascript" src="js/fastclick.js"></script>
+    <link rel="stylesheet" href="js/dialog.css">
+    <script type="text/javascript" src="js/dialog.js"></script>
+    <script type="text/javascript" src="js/iscroll.js"></script>
+    <link rel="stylesheet" href="js/swiper-3.2.7.min.css">
+    <script type="text/javascript" src="js/swiper-3.2.7.jquery.min.js"></script>
+    <link rel="stylesheet" href="http://cache.amap.com/lbs/static/main.css?v=1.0"/>
+	<link rel="stylesheet" href="../map/AMap.WalkingRender1120.css"/>
+	<link rel="stylesheet" href="../map/map.css"/>
+	<script type="text/javascript" src="http://webapi.amap.com/maps?v=1.3&key=5d6fa7d0648f1101f5174c6bc2eb7e32&plugin=AMap.Walking,AMap.Autocomplete,AMap.PlaceSearch"></script>
+	<script type="text/javascript" src="../map/WalkingRender1230.js"></script>
+    <script type="text/javascript" src="js/path.js"></script>
+	<script type="text/javascript" src="js/mobile.js"></script>
+	<!-- 页面js -->
+	
+	
+</head>
+
+<body>
+   <div class="g-body mapbox">
+   <div id="mapContainer"></div>
+</body>
+<script type="text/javascript">
+	var Lng,Lat,fixedId;
+    var map, geolocation,dragListener,clickListener;
+    var infoWindow = new AMap.InfoWindow({offset:new AMap.Pixel(-15,-53)});
+
+    //加载地图，调用浏览器定位服务
+    map = new AMap.Map('mapContainer', {
+      resizeEnable: true,
+      mapStyle:'light',
+      zoom: 15
+    });
+    
+    AMap.service('AMap.Geocoder',function(){//回调函数  加载插件   根据经纬获取地址
+        //实例化Geocoder
+        geocoder = new AMap.Geocoder({
+        });
+        //TODO: 使用geocoder 对象完成相关功能
+      })
+
+    
+    
+    fixedId=$.getQueryString('fixedReturnId');
+    $.ajax({
+		type : "post",
+		url : '/api/fixedReturn/fixedPosition.action',
+		async:false,
+		data :"fixedReturnId="+fixedId,
+		dataType : 'json',
+		success : function(data) {
+			Lat=data.data.fixedReturn.fixedReturnLat;
+			Lng=data.data.fixedReturn.fixedReturnLng;
+		},
+		error:function(data){
+			reLogin(data);
+		}
+	});
+    var markerPosition = [Lng,Lat];
+    var icon = new AMap.Icon({
+        image: '/images/bikeState.png',
+        map:map,
+        size:new AMap.Size(26.5,40),
+        imageSize: new AMap.Size(26.5,40)
+      });
+    var marker = new AMap.Marker({
+      position: markerPosition,
+      icon: icon,
+      offset: {x: -22.5,y: -50.5},
+      zIndex:800
+    });
+    map.setCenter(markerPosition);
+    
+    marker.setMap(map);
+    
+    
+ function regeocoder() {  //逆地理编码
+    	
+        var geocoder = new AMap.Geocoder({
+            radius: 1000,
+            extensions: "base"
+        });        
+        geocoder.getAddress(markerPosition, function(status, result) {
+            if (status === 'complete' && result.info === 'OK') {
+                geocoder_CallBack(result);
+            }else{
+            	 infoWindow.setContent("无法获取地址");
+                 infoWindow.open(map, markerPosition);
+            }
+        });        
+    }
+    function geocoder_CallBack(data) {
+        var address = data.regeocode.formattedAddress.split("市",2)[1]; //返回地址描述
+        infoWindow.setContent("站点位置:"+address);
+        infoWindow.open(map, markerPosition);
+    }
+    regeocoder();
+
+</script>
+</html>

@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.dao.MessageMapper" >
+  <resultMap id="BaseResultMap" type="org.entity.dto.Message" >
+    <id column="message_id" property="messageId" jdbcType="BIGINT" />
+    <result column="message_user_id" property="messageUserId" jdbcType="BIGINT" />
+    <result column="message_admin_id" property="messageAdminId" jdbcType="BIGINT" />
+    <result column="templet_code" property="templetCode" jdbcType="VARCHAR" />
+    <result column="message_content" property="messageContent" jdbcType="VARCHAR" />
+    <result column="message_isdel" property="messageIsdel" jdbcType="INTEGER" />
+    <result column="message_send_time" property="messageSendTime" jdbcType="TIMESTAMP" />
+    <result column="message_title" property="messageTitle" jdbcType="VARCHAR" />
+    <result column="message_insurance" property="messageInsurance" jdbcType="BIGINT" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    message_id, message_user_id, message_admin_id, templet_code, message_content, message_isdel, 
+    message_send_time, message_title, message_insurance
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="org.entity.dto.MessageExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from message
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="limitStart != null and limitStart>=0" >
+      limit #{limitStart} , #{limitEnd}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from message
+    where message_id = #{messageId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from message
+    where message_id = #{messageId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="org.entity.dto.MessageExample" >
+    delete from message
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="org.entity.dto.Message" >
+    insert into message (message_id, message_user_id, message_admin_id, 
+      templet_code, message_content, message_isdel, 
+      message_send_time, message_title, message_insurance
+      )
+    values (#{messageId,jdbcType=BIGINT}, #{messageUserId,jdbcType=BIGINT}, #{messageAdminId,jdbcType=BIGINT}, 
+      #{templetCode,jdbcType=VARCHAR}, #{messageContent,jdbcType=VARCHAR}, #{messageIsdel,jdbcType=INTEGER}, 
+      #{messageSendTime,jdbcType=TIMESTAMP}, #{messageTitle,jdbcType=VARCHAR}, #{messageInsurance,jdbcType=BIGINT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="org.entity.dto.Message" >
+    insert into message
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="messageId != null" >
+        message_id,
+      </if>
+      <if test="messageUserId != null" >
+        message_user_id,
+      </if>
+      <if test="messageAdminId != null" >
+        message_admin_id,
+      </if>
+      <if test="templetCode != null" >
+        templet_code,
+      </if>
+      <if test="messageContent != null" >
+        message_content,
+      </if>
+      <if test="messageIsdel != null" >
+        message_isdel,
+      </if>
+      <if test="messageSendTime != null" >
+        message_send_time,
+      </if>
+      <if test="messageTitle != null" >
+        message_title,
+      </if>
+      <if test="messageInsurance != null" >
+        message_insurance,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="messageId != null" >
+        #{messageId,jdbcType=BIGINT},
+      </if>
+      <if test="messageUserId != null" >
+        #{messageUserId,jdbcType=BIGINT},
+      </if>
+      <if test="messageAdminId != null" >
+        #{messageAdminId,jdbcType=BIGINT},
+      </if>
+      <if test="templetCode != null" >
+        #{templetCode,jdbcType=VARCHAR},
+      </if>
+      <if test="messageContent != null" >
+        #{messageContent,jdbcType=VARCHAR},
+      </if>
+      <if test="messageIsdel != null" >
+        #{messageIsdel,jdbcType=INTEGER},
+      </if>
+      <if test="messageSendTime != null" >
+        #{messageSendTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="messageTitle != null" >
+        #{messageTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="messageInsurance != null" >
+        #{messageInsurance,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="org.entity.dto.MessageExample" resultType="java.lang.Integer" >
+    select count(*) from message
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update message
+    <set >
+      <if test="record.messageId != null" >
+        message_id = #{record.messageId,jdbcType=BIGINT},
+      </if>
+      <if test="record.messageUserId != null" >
+        message_user_id = #{record.messageUserId,jdbcType=BIGINT},
+      </if>
+      <if test="record.messageAdminId != null" >
+        message_admin_id = #{record.messageAdminId,jdbcType=BIGINT},
+      </if>
+      <if test="record.templetCode != null" >
+        templet_code = #{record.templetCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.messageContent != null" >
+        message_content = #{record.messageContent,jdbcType=VARCHAR},
+      </if>
+      <if test="record.messageIsdel != null" >
+        message_isdel = #{record.messageIsdel,jdbcType=INTEGER},
+      </if>
+      <if test="record.messageSendTime != null" >
+        message_send_time = #{record.messageSendTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.messageTitle != null" >
+        message_title = #{record.messageTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="record.messageInsurance != null" >
+        message_insurance = #{record.messageInsurance,jdbcType=BIGINT},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update message
+    set message_id = #{record.messageId,jdbcType=BIGINT},
+      message_user_id = #{record.messageUserId,jdbcType=BIGINT},
+      message_admin_id = #{record.messageAdminId,jdbcType=BIGINT},
+      templet_code = #{record.templetCode,jdbcType=VARCHAR},
+      message_content = #{record.messageContent,jdbcType=VARCHAR},
+      message_isdel = #{record.messageIsdel,jdbcType=INTEGER},
+      message_send_time = #{record.messageSendTime,jdbcType=TIMESTAMP},
+      message_title = #{record.messageTitle,jdbcType=VARCHAR},
+      message_insurance = #{record.messageInsurance,jdbcType=BIGINT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="org.entity.dto.Message" >
+    update message
+    <set >
+      <if test="messageUserId != null" >
+        message_user_id = #{messageUserId,jdbcType=BIGINT},
+      </if>
+      <if test="messageAdminId != null" >
+        message_admin_id = #{messageAdminId,jdbcType=BIGINT},
+      </if>
+      <if test="templetCode != null" >
+        templet_code = #{templetCode,jdbcType=VARCHAR},
+      </if>
+      <if test="messageContent != null" >
+        message_content = #{messageContent,jdbcType=VARCHAR},
+      </if>
+      <if test="messageIsdel != null" >
+        message_isdel = #{messageIsdel,jdbcType=INTEGER},
+      </if>
+      <if test="messageSendTime != null" >
+        message_send_time = #{messageSendTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="messageTitle != null" >
+        message_title = #{messageTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="messageInsurance != null" >
+        message_insurance = #{messageInsurance,jdbcType=BIGINT},
+      </if>
+    </set>
+    where message_id = #{messageId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.entity.dto.Message" >
+    update message
+    set message_user_id = #{messageUserId,jdbcType=BIGINT},
+      message_admin_id = #{messageAdminId,jdbcType=BIGINT},
+      templet_code = #{templetCode,jdbcType=VARCHAR},
+      message_content = #{messageContent,jdbcType=VARCHAR},
+      message_isdel = #{messageIsdel,jdbcType=INTEGER},
+      message_send_time = #{messageSendTime,jdbcType=TIMESTAMP},
+      message_title = #{messageTitle,jdbcType=VARCHAR},
+      message_insurance = #{messageInsurance,jdbcType=BIGINT}
+    where message_id = #{messageId,jdbcType=BIGINT}
+  </update>
+</mapper>

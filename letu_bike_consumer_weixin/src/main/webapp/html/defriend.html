@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="viewport" content="initial-scale=1, width=device-width, maximum-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-touch-fullscreen" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="format-detection" content="address=no">
+    <meta name="screen-orientation" content="portrait">
+    <meta name="x5-orientation" content="portrait">
+    <title>拉黑详情页面</title>
+    <link rel="stylesheet" href="font/iconfont.css">
+    <link rel="stylesheet" href="css/animate.min.css">
+    <link rel="stylesheet" href="css/base.css">
+    <script type="text/javascript" src="js/zepto.min.js"></script>
+    <link rel="stylesheet" href="js/dialog.css">
+    <script type="text/javascript" src="js/dialog.js"></script>
+    <script type="text/javascript" src="js/iscroll.js"></script>
+    <script type="text/javascript" src="js/path.js"></script>
+    <script type="text/javascript" src="js/mobile.js"></script>
+    <link rel="stylesheet" href="js/swiper-3.2.7.min.css">
+    <script type="text/javascript" src="js/swiper-3.2.7.jquery.min.js"></script>
+    
+</head>
+
+<body>
+   <div class="g-body">
+            <div class="weui_cells weui_cells_radius marginlr">
+            	<div class="weui_cell">
+                 	 您的账号已被拉黑，请联系客服电话0571-56231981
+                </div>
+                <div class="weui_cell">
+                 	 <div class="weui_cell_hd"><label class="weui-label">拉黑理由:</label></div>
+                 	 <div class="weui_cell_hd" id="defriendreason"></div>
+                </div>
+
+
+            </div>
+   </div>
+   
+
+</body>
+<script type="text/javascript">
+$(document).ready(function(){ 
+		 $.ajax({
+			 	type:"post",
+				url:url+"/user/getDerfriendReason.action",
+				beforeSend: function(request) {
+	                request.setRequestHeader("fromFlag", "2");
+	            },
+				success:function(data){
+					$("#defriendreason").html(data.defriend.defriendReason);
+					},
+					error:function(data){
+						alert("error");
+					}
+				});
+		
+	});
+</script>
+</html>

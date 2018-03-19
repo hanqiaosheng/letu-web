@@ -1,0 +1,390 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.dao.TradeorderMapper" >
+  <resultMap id="BaseResultMap" type="org.entity.dto.Tradeorder" >
+    <id column="tr_order_id" property="trOrderId" jdbcType="BIGINT" />
+    <result column="tr_order_transaction_number" property="trOrderTransactionNumber" jdbcType="VARCHAR" />
+    <result column="tr_order_userId" property="trOrderUserid" jdbcType="BIGINT" />
+    <result column="tr_order_createtime" property="trOrderCreatetime" jdbcType="TIMESTAMP" />
+    <result column="tr_order_money" property="trOrderMoney" jdbcType="DECIMAL" />
+    <result column="tr_order_paytime" property="trOrderPaytime" jdbcType="TIMESTAMP" />
+    <result column="tr_order_state" property="trOrderState" jdbcType="SMALLINT" />
+    <result column="tr_order_description" property="trOrderDescription" jdbcType="VARCHAR" />
+    <result column="tr_order_type" property="trOrderType" jdbcType="INTEGER" />
+    <result column="tr_order_buyer_logon_id" property="trOrderBuyerLogonId" jdbcType="VARCHAR" />
+    <result column="tr_order_option" property="trOrderOption" jdbcType="INTEGER" />
+    <result column="tr_order_rent_id" property="trOrderRentId" jdbcType="BIGINT" />
+    <result column="tr_order_channel_Id" property="trOrderChannelId" jdbcType="BIGINT" />
+    <result column="tr_order_invoiceId" property="trOrderInvoiceid" jdbcType="BIGINT" />
+    <result column="tr_order_rentIdStr" property="trOrderRentidstr" jdbcType="VARCHAR" />
+    <result column="tr_order_user_coupon_id" property="trOrderUserCouponId" jdbcType="BIGINT" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    tr_order_id, tr_order_transaction_number, tr_order_userId, tr_order_createtime, tr_order_money, 
+    tr_order_paytime, tr_order_state, tr_order_description, tr_order_type, tr_order_buyer_logon_id, 
+    tr_order_option, tr_order_rent_id, tr_order_channel_Id, tr_order_invoiceId, tr_order_rentIdStr, 
+    tr_order_user_coupon_id
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="org.entity.dto.TradeorderExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tradeorder
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="limitStart != null and limitStart>=0" >
+      limit #{limitStart} , #{limitEnd}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from tradeorder
+    where tr_order_id = #{trOrderId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from tradeorder
+    where tr_order_id = #{trOrderId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="org.entity.dto.TradeorderExample" >
+    delete from tradeorder
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="org.entity.dto.Tradeorder" >
+    insert into tradeorder (tr_order_id, tr_order_transaction_number, 
+      tr_order_userId, tr_order_createtime, tr_order_money, 
+      tr_order_paytime, tr_order_state, tr_order_description, 
+      tr_order_type, tr_order_buyer_logon_id, tr_order_option, 
+      tr_order_rent_id, tr_order_channel_Id, tr_order_invoiceId, 
+      tr_order_rentIdStr, tr_order_user_coupon_id)
+    values (#{trOrderId,jdbcType=BIGINT}, #{trOrderTransactionNumber,jdbcType=VARCHAR}, 
+      #{trOrderUserid,jdbcType=BIGINT}, #{trOrderCreatetime,jdbcType=TIMESTAMP}, #{trOrderMoney,jdbcType=DECIMAL}, 
+      #{trOrderPaytime,jdbcType=TIMESTAMP}, #{trOrderState,jdbcType=SMALLINT}, #{trOrderDescription,jdbcType=VARCHAR}, 
+      #{trOrderType,jdbcType=INTEGER}, #{trOrderBuyerLogonId,jdbcType=VARCHAR}, #{trOrderOption,jdbcType=INTEGER}, 
+      #{trOrderRentId,jdbcType=BIGINT}, #{trOrderChannelId,jdbcType=BIGINT}, #{trOrderInvoiceid,jdbcType=BIGINT}, 
+      #{trOrderRentidstr,jdbcType=VARCHAR}, #{trOrderUserCouponId,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="org.entity.dto.Tradeorder" >
+    insert into tradeorder
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="trOrderId != null" >
+        tr_order_id,
+      </if>
+      <if test="trOrderTransactionNumber != null" >
+        tr_order_transaction_number,
+      </if>
+      <if test="trOrderUserid != null" >
+        tr_order_userId,
+      </if>
+      <if test="trOrderCreatetime != null" >
+        tr_order_createtime,
+      </if>
+      <if test="trOrderMoney != null" >
+        tr_order_money,
+      </if>
+      <if test="trOrderPaytime != null" >
+        tr_order_paytime,
+      </if>
+      <if test="trOrderState != null" >
+        tr_order_state,
+      </if>
+      <if test="trOrderDescription != null" >
+        tr_order_description,
+      </if>
+      <if test="trOrderType != null" >
+        tr_order_type,
+      </if>
+      <if test="trOrderBuyerLogonId != null" >
+        tr_order_buyer_logon_id,
+      </if>
+      <if test="trOrderOption != null" >
+        tr_order_option,
+      </if>
+      <if test="trOrderRentId != null" >
+        tr_order_rent_id,
+      </if>
+      <if test="trOrderChannelId != null" >
+        tr_order_channel_Id,
+      </if>
+      <if test="trOrderInvoiceid != null" >
+        tr_order_invoiceId,
+      </if>
+      <if test="trOrderRentidstr != null" >
+        tr_order_rentIdStr,
+      </if>
+      <if test="trOrderUserCouponId != null" >
+        tr_order_user_coupon_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="trOrderId != null" >
+        #{trOrderId,jdbcType=BIGINT},
+      </if>
+      <if test="trOrderTransactionNumber != null" >
+        #{trOrderTransactionNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="trOrderUserid != null" >
+        #{trOrderUserid,jdbcType=BIGINT},
+      </if>
+      <if test="trOrderCreatetime != null" >
+        #{trOrderCreatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="trOrderMoney != null" >
+        #{trOrderMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="trOrderPaytime != null" >
+        #{trOrderPaytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="trOrderState != null" >
+        #{trOrderState,jdbcType=SMALLINT},
+      </if>
+      <if test="trOrderDescription != null" >
+        #{trOrderDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="trOrderType != null" >
+        #{trOrderType,jdbcType=INTEGER},
+      </if>
+      <if test="trOrderBuyerLogonId != null" >
+        #{trOrderBuyerLogonId,jdbcType=VARCHAR},
+      </if>
+      <if test="trOrderOption != null" >
+        #{trOrderOption,jdbcType=INTEGER},
+      </if>
+      <if test="trOrderRentId != null" >
+        #{trOrderRentId,jdbcType=BIGINT},
+      </if>
+      <if test="trOrderChannelId != null" >
+        #{trOrderChannelId,jdbcType=BIGINT},
+      </if>
+      <if test="trOrderInvoiceid != null" >
+        #{trOrderInvoiceid,jdbcType=BIGINT},
+      </if>
+      <if test="trOrderRentidstr != null" >
+        #{trOrderRentidstr,jdbcType=VARCHAR},
+      </if>
+      <if test="trOrderUserCouponId != null" >
+        #{trOrderUserCouponId,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="org.entity.dto.TradeorderExample" resultType="java.lang.Integer" >
+    select count(*) from tradeorder
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update tradeorder
+    <set >
+      <if test="record.trOrderId != null" >
+        tr_order_id = #{record.trOrderId,jdbcType=BIGINT},
+      </if>
+      <if test="record.trOrderTransactionNumber != null" >
+        tr_order_transaction_number = #{record.trOrderTransactionNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.trOrderUserid != null" >
+        tr_order_userId = #{record.trOrderUserid,jdbcType=BIGINT},
+      </if>
+      <if test="record.trOrderCreatetime != null" >
+        tr_order_createtime = #{record.trOrderCreatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.trOrderMoney != null" >
+        tr_order_money = #{record.trOrderMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="record.trOrderPaytime != null" >
+        tr_order_paytime = #{record.trOrderPaytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.trOrderState != null" >
+        tr_order_state = #{record.trOrderState,jdbcType=SMALLINT},
+      </if>
+      <if test="record.trOrderDescription != null" >
+        tr_order_description = #{record.trOrderDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="record.trOrderType != null" >
+        tr_order_type = #{record.trOrderType,jdbcType=INTEGER},
+      </if>
+      <if test="record.trOrderBuyerLogonId != null" >
+        tr_order_buyer_logon_id = #{record.trOrderBuyerLogonId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.trOrderOption != null" >
+        tr_order_option = #{record.trOrderOption,jdbcType=INTEGER},
+      </if>
+      <if test="record.trOrderRentId != null" >
+        tr_order_rent_id = #{record.trOrderRentId,jdbcType=BIGINT},
+      </if>
+      <if test="record.trOrderChannelId != null" >
+        tr_order_channel_Id = #{record.trOrderChannelId,jdbcType=BIGINT},
+      </if>
+      <if test="record.trOrderInvoiceid != null" >
+        tr_order_invoiceId = #{record.trOrderInvoiceid,jdbcType=BIGINT},
+      </if>
+      <if test="record.trOrderRentidstr != null" >
+        tr_order_rentIdStr = #{record.trOrderRentidstr,jdbcType=VARCHAR},
+      </if>
+      <if test="record.trOrderUserCouponId != null" >
+        tr_order_user_coupon_id = #{record.trOrderUserCouponId,jdbcType=BIGINT},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update tradeorder
+    set tr_order_id = #{record.trOrderId,jdbcType=BIGINT},
+      tr_order_transaction_number = #{record.trOrderTransactionNumber,jdbcType=VARCHAR},
+      tr_order_userId = #{record.trOrderUserid,jdbcType=BIGINT},
+      tr_order_createtime = #{record.trOrderCreatetime,jdbcType=TIMESTAMP},
+      tr_order_money = #{record.trOrderMoney,jdbcType=DECIMAL},
+      tr_order_paytime = #{record.trOrderPaytime,jdbcType=TIMESTAMP},
+      tr_order_state = #{record.trOrderState,jdbcType=SMALLINT},
+      tr_order_description = #{record.trOrderDescription,jdbcType=VARCHAR},
+      tr_order_type = #{record.trOrderType,jdbcType=INTEGER},
+      tr_order_buyer_logon_id = #{record.trOrderBuyerLogonId,jdbcType=VARCHAR},
+      tr_order_option = #{record.trOrderOption,jdbcType=INTEGER},
+      tr_order_rent_id = #{record.trOrderRentId,jdbcType=BIGINT},
+      tr_order_channel_Id = #{record.trOrderChannelId,jdbcType=BIGINT},
+      tr_order_invoiceId = #{record.trOrderInvoiceid,jdbcType=BIGINT},
+      tr_order_rentIdStr = #{record.trOrderRentidstr,jdbcType=VARCHAR},
+      tr_order_user_coupon_id = #{record.trOrderUserCouponId,jdbcType=BIGINT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="org.entity.dto.Tradeorder" >
+    update tradeorder
+    <set >
+      <if test="trOrderTransactionNumber != null" >
+        tr_order_transaction_number = #{trOrderTransactionNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="trOrderUserid != null" >
+        tr_order_userId = #{trOrderUserid,jdbcType=BIGINT},
+      </if>
+      <if test="trOrderCreatetime != null" >
+        tr_order_createtime = #{trOrderCreatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="trOrderMoney != null" >
+        tr_order_money = #{trOrderMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="trOrderPaytime != null" >
+        tr_order_paytime = #{trOrderPaytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="trOrderState != null" >
+        tr_order_state = #{trOrderState,jdbcType=SMALLINT},
+      </if>
+      <if test="trOrderDescription != null" >
+        tr_order_description = #{trOrderDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="trOrderType != null" >
+        tr_order_type = #{trOrderType,jdbcType=INTEGER},
+      </if>
+      <if test="trOrderBuyerLogonId != null" >
+        tr_order_buyer_logon_id = #{trOrderBuyerLogonId,jdbcType=VARCHAR},
+      </if>
+      <if test="trOrderOption != null" >
+        tr_order_option = #{trOrderOption,jdbcType=INTEGER},
+      </if>
+      <if test="trOrderRentId != null" >
+        tr_order_rent_id = #{trOrderRentId,jdbcType=BIGINT},
+      </if>
+      <if test="trOrderChannelId != null" >
+        tr_order_channel_Id = #{trOrderChannelId,jdbcType=BIGINT},
+      </if>
+      <if test="trOrderInvoiceid != null" >
+        tr_order_invoiceId = #{trOrderInvoiceid,jdbcType=BIGINT},
+      </if>
+      <if test="trOrderRentidstr != null" >
+        tr_order_rentIdStr = #{trOrderRentidstr,jdbcType=VARCHAR},
+      </if>
+      <if test="trOrderUserCouponId != null" >
+        tr_order_user_coupon_id = #{trOrderUserCouponId,jdbcType=BIGINT},
+      </if>
+    </set>
+    where tr_order_id = #{trOrderId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.entity.dto.Tradeorder" >
+    update tradeorder
+    set tr_order_transaction_number = #{trOrderTransactionNumber,jdbcType=VARCHAR},
+      tr_order_userId = #{trOrderUserid,jdbcType=BIGINT},
+      tr_order_createtime = #{trOrderCreatetime,jdbcType=TIMESTAMP},
+      tr_order_money = #{trOrderMoney,jdbcType=DECIMAL},
+      tr_order_paytime = #{trOrderPaytime,jdbcType=TIMESTAMP},
+      tr_order_state = #{trOrderState,jdbcType=SMALLINT},
+      tr_order_description = #{trOrderDescription,jdbcType=VARCHAR},
+      tr_order_type = #{trOrderType,jdbcType=INTEGER},
+      tr_order_buyer_logon_id = #{trOrderBuyerLogonId,jdbcType=VARCHAR},
+      tr_order_option = #{trOrderOption,jdbcType=INTEGER},
+      tr_order_rent_id = #{trOrderRentId,jdbcType=BIGINT},
+      tr_order_channel_Id = #{trOrderChannelId,jdbcType=BIGINT},
+      tr_order_invoiceId = #{trOrderInvoiceid,jdbcType=BIGINT},
+      tr_order_rentIdStr = #{trOrderRentidstr,jdbcType=VARCHAR},
+      tr_order_user_coupon_id = #{trOrderUserCouponId,jdbcType=BIGINT}
+    where tr_order_id = #{trOrderId,jdbcType=BIGINT}
+  </update>
+</mapper>

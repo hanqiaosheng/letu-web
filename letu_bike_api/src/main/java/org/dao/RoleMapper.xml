@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.dao.RoleMapper" >
+  <resultMap id="BaseResultMap" type="org.entity.dto.Role" >
+    <id column="role_id" property="roleId" jdbcType="BIGINT" />
+    <result column="role_name" property="roleName" jdbcType="VARCHAR" />
+    <result column="role_value" property="roleValue" jdbcType="VARCHAR" />
+    <result column="role_state" property="roleState" jdbcType="INTEGER" />
+    <result column="role_createtime" property="roleCreatetime" jdbcType="DATE" />
+    <result column="role_hasnum" property="roleHasnum" jdbcType="INTEGER" />
+    <result column="role_updatetime" property="roleUpdatetime" jdbcType="DATE" />
+    <result column="role_createman" property="roleCreateman" jdbcType="BIGINT" />
+    <result column="role_description" property="roleDescription" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    role_id, role_name, role_value, role_state, role_createtime, role_hasnum, role_updatetime, 
+    role_createman, role_description
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="org.entity.dto.RoleExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from role
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="limitStart != null and limitStart>=0" >
+      limit #{limitStart} , #{limitEnd}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from role
+    where role_id = #{roleId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from role
+    where role_id = #{roleId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="org.entity.dto.RoleExample" >
+    delete from role
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="org.entity.dto.Role" >
+    insert into role (role_id, role_name, role_value, 
+      role_state, role_createtime, role_hasnum, 
+      role_updatetime, role_createman, role_description
+      )
+    values (#{roleId,jdbcType=BIGINT}, #{roleName,jdbcType=VARCHAR}, #{roleValue,jdbcType=VARCHAR}, 
+      #{roleState,jdbcType=INTEGER}, #{roleCreatetime,jdbcType=DATE}, #{roleHasnum,jdbcType=INTEGER}, 
+      #{roleUpdatetime,jdbcType=DATE}, #{roleCreateman,jdbcType=BIGINT}, #{roleDescription,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" useGeneratedKeys="true" keyProperty="roleId" parameterType="org.entity.dto.Role" >
+    insert into role
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="roleId != null" >
+        role_id,
+      </if>
+      <if test="roleName != null" >
+        role_name,
+      </if>
+      <if test="roleValue != null" >
+        role_value,
+      </if>
+      <if test="roleState != null" >
+        role_state,
+      </if>
+      <if test="roleCreatetime != null" >
+        role_createtime,
+      </if>
+      <if test="roleHasnum != null" >
+        role_hasnum,
+      </if>
+      <if test="roleUpdatetime != null" >
+        role_updatetime,
+      </if>
+      <if test="roleCreateman != null" >
+        role_createman,
+      </if>
+      <if test="roleDescription != null" >
+        role_description,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="roleId != null" >
+        #{roleId,jdbcType=BIGINT},
+      </if>
+      <if test="roleName != null" >
+        #{roleName,jdbcType=VARCHAR},
+      </if>
+      <if test="roleValue != null" >
+        #{roleValue,jdbcType=VARCHAR},
+      </if>
+      <if test="roleState != null" >
+        #{roleState,jdbcType=INTEGER},
+      </if>
+      <if test="roleCreatetime != null" >
+        #{roleCreatetime,jdbcType=DATE},
+      </if>
+      <if test="roleHasnum != null" >
+        #{roleHasnum,jdbcType=INTEGER},
+      </if>
+      <if test="roleUpdatetime != null" >
+        #{roleUpdatetime,jdbcType=DATE},
+      </if>
+      <if test="roleCreateman != null" >
+        #{roleCreateman,jdbcType=BIGINT},
+      </if>
+      <if test="roleDescription != null" >
+        #{roleDescription,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="org.entity.dto.RoleExample" resultType="java.lang.Integer" >
+    select count(*) from role
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update role
+    <set >
+      <if test="record.roleId != null" >
+        role_id = #{record.roleId,jdbcType=BIGINT},
+      </if>
+      <if test="record.roleName != null" >
+        role_name = #{record.roleName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.roleValue != null" >
+        role_value = #{record.roleValue,jdbcType=VARCHAR},
+      </if>
+      <if test="record.roleState != null" >
+        role_state = #{record.roleState,jdbcType=INTEGER},
+      </if>
+      <if test="record.roleCreatetime != null" >
+        role_createtime = #{record.roleCreatetime,jdbcType=DATE},
+      </if>
+      <if test="record.roleHasnum != null" >
+        role_hasnum = #{record.roleHasnum,jdbcType=INTEGER},
+      </if>
+      <if test="record.roleUpdatetime != null" >
+        role_updatetime = #{record.roleUpdatetime,jdbcType=DATE},
+      </if>
+      <if test="record.roleCreateman != null" >
+        role_createman = #{record.roleCreateman,jdbcType=BIGINT},
+      </if>
+      <if test="record.roleDescription != null" >
+        role_description = #{record.roleDescription,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update role
+    set role_id = #{record.roleId,jdbcType=BIGINT},
+      role_name = #{record.roleName,jdbcType=VARCHAR},
+      role_value = #{record.roleValue,jdbcType=VARCHAR},
+      role_state = #{record.roleState,jdbcType=INTEGER},
+      role_createtime = #{record.roleCreatetime,jdbcType=DATE},
+      role_hasnum = #{record.roleHasnum,jdbcType=INTEGER},
+      role_updatetime = #{record.roleUpdatetime,jdbcType=DATE},
+      role_createman = #{record.roleCreateman,jdbcType=BIGINT},
+      role_description = #{record.roleDescription,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="org.entity.dto.Role" >
+    update role
+    <set >
+      <if test="roleName != null" >
+        role_name = #{roleName,jdbcType=VARCHAR},
+      </if>
+      <if test="roleValue != null" >
+        role_value = #{roleValue,jdbcType=VARCHAR},
+      </if>
+      <if test="roleState != null" >
+        role_state = #{roleState,jdbcType=INTEGER},
+      </if>
+      <if test="roleCreatetime != null" >
+        role_createtime = #{roleCreatetime,jdbcType=DATE},
+      </if>
+      <if test="roleHasnum != null" >
+        role_hasnum = #{roleHasnum,jdbcType=INTEGER},
+      </if>
+      <if test="roleUpdatetime != null" >
+        role_updatetime = #{roleUpdatetime,jdbcType=DATE},
+      </if>
+      <if test="roleCreateman != null" >
+        role_createman = #{roleCreateman,jdbcType=BIGINT},
+      </if>
+      <if test="roleDescription != null" >
+        role_description = #{roleDescription,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where role_id = #{roleId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.entity.dto.Role" >
+    update role
+    set role_name = #{roleName,jdbcType=VARCHAR},
+      role_value = #{roleValue,jdbcType=VARCHAR},
+      role_state = #{roleState,jdbcType=INTEGER},
+      role_createtime = #{roleCreatetime,jdbcType=DATE},
+      role_hasnum = #{roleHasnum,jdbcType=INTEGER},
+      role_updatetime = #{roleUpdatetime,jdbcType=DATE},
+      role_createman = #{roleCreateman,jdbcType=BIGINT},
+      role_description = #{roleDescription,jdbcType=VARCHAR}
+    where role_id = #{roleId,jdbcType=BIGINT}
+  </update>
+</mapper>

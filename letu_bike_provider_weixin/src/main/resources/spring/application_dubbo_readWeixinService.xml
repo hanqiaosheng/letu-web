@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+    http://code.alibabatech.com/schema/dubbo
+    http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+
+
+	
+	<dubbo:service interface="org.service.weixin.read.SysMsgWxServiceRead" ref="sysMsgWxServiceRead" />
+	<dubbo:service interface="org.service.weixin.read.UserServiceWeixinRead" ref="userServiceWeixinRead" />
+	<dubbo:service interface="org.service.weixin.read.BikeWxServiceRead" ref="bikeWxServiceRead" />
+	<dubbo:service interface="org.service.weixin.read.BikeRentInfoWxServiceRead" ref="bikeRentInfoWxServiceRead" />
+	<!-- <dubbo:service interface="org.service.weixin.read.RentPlanWxServiceRead" ref="rentPlanWxServiceRead" /> -->
+	<dubbo:service interface="org.service.weixin.read.BlockWxServiceRead" ref="blockWxServiceRead" />
+	<dubbo:service interface="org.service.weixin.read.MessageWxServiceRead" ref="messageWxServiceRead" />
+	<dubbo:service interface="org.service.weixin.read.MoneyLogWxServiceRead" ref="moneyLogWxServiceRead" />
+	<dubbo:service interface="org.service.weixin.read.FeedBackWxServiceRead" ref="feedBackWxServiceRead" />
+	<dubbo:service interface="org.service.weixin.read.RechargeWxServiceRead" ref="rechargeWxServiceRead" />
+	<dubbo:service interface="org.service.weixin.read.RefundWxServiceRead" ref="refundWxServiceRead" />
+	<dubbo:service interface="org.service.weixin.read.AccountWxServiceRead" ref="accountWxServiceRead" />
+	<dubbo:service interface="org.service.weixin.read.DataDetWxServiceRead" ref="dataDetWxServiceRead" />
+	<dubbo:service interface="org.service.weixin.read.ModelsWxServiceRead" ref="modelsWxServiceRead" />
+	<dubbo:service interface="org.service.weixin.read.ChannelWxServiceRead" ref="channelWxServiceRead" />
+	<dubbo:service interface="org.service.weixin.read.CodeServiceWxRead" ref="codeServiceWxRead" />
+	<dubbo:service interface="org.service.weixin.read.BikeFixInfoWxServiceRead" ref="bikeFixInfoWxServiceRead" />
+	<dubbo:service interface="org.service.weixin.read.DefriendWxServiceRead" ref="defriendWxServiceRead" />
+	<dubbo:service interface="org.service.weixin.read.InsuranceWxServiceRead" ref="insuranceWxServiceRead" />
+	<dubbo:service interface="org.service.weixin.read.AdminWxServiceRead" ref="adminWxServiceRead" />
+	<dubbo:service interface="org.service.weixin.read.BikeLockInfoWxServiceRead" ref="bikeLockInfoWxServiceRead" />
+    <dubbo:service interface="org.service.weixin.read.SysParamentServiceRead" ref="sysParamentServiceRead" />
+    <dubbo:service interface="org.service.weixin.read.FixedReturnWxServiceRead" ref="fixedReturnWxServiceRead" />
+    <dubbo:service interface="org.service.weixin.read.InsurancePriceWxServiceRead" ref="insurancePriceWxServiceRead" />
+    <dubbo:service interface="org.service.weixin.read.RentPriceWxServiceRead" ref="rentPriceWxServiceRead" />
+    <dubbo:service interface="org.service.weixin.read.InvoiceWxServiceRead" ref="invoiceWxServiceRead" />
+    <dubbo:service interface="org.service.weixin.read.TrOrderWxServiceRead" ref="trOrderWxServiceRead" />
+    <dubbo:service interface="org.service.weixin.read.ActivityWxServiceRead" ref="activityWxServiceRead" />
+    <dubbo:service interface="org.service.weixin.read.UserCouponServiceWxRead" ref="userCouponServiceWxRead" />
+    <dubbo:service interface="org.service.weixin.read.RedeemPlanServiceWxRead" ref="redeemPlanServiceWxRead" />
+    <dubbo:service interface="org.service.weixin.read.UserRedeemPlanServiceWxRead" ref="userRedeemPlanServiceWxRead" />
+    <dubbo:service interface="org.service.weixin.read.OrbitWxServiceRead" ref="orbitWxServiceRead" />
+    <dubbo:service interface="org.service.weixin.read.GradeWxServiceRead" ref="gradeWxServiceRead" />
+    <dubbo:service interface="org.service.weixin.read.UserToTaskWxServiceRead" ref="userToTaskWxServiceRead" />
+    <dubbo:service interface="org.service.weixin.read.ScenicTicketWxServiceRead" ref="scenicTicketWxServiceRead" />
+    <dubbo:service interface="org.service.weixin.read.BannerWxServiceRead" ref="bannerWxServiceRead" />
+    <dubbo:service interface="org.service.weixin.read.CityWxServiceRead" ref="cityWxServiceRead" />
+    <dubbo:service interface="org.service.weixin.read.DiscountPackageWxServiceRead" ref="discountPackageWxServiceRead" />
+    <dubbo:service interface="org.service.weixin.read.HotWordWxServiceRead" ref="hotWordWxServiceRead" />
+    <dubbo:service interface="org.service.weixin.read.TicketWxServiceRead" ref="ticketWxServiceRead" />
+    <dubbo:service interface="org.service.weixin.read.CouponSchemeWxServiceRead" ref="couponSchemeWxServiceRead" />
+    <dubbo:service interface="org.service.weixin.read.CouponListWxServiceRead" ref="couponListWxServiceRead" />
+    <dubbo:service interface="org.service.weixin.read.GuideGroupWxServiceRead" ref="guideGroupWxServiceRead" />
+    <dubbo:service interface="org.service.weixin.read.GuideGroupUserWxRead" ref="guideGroupUserWxRead" />
+
+	<!-- 	具体的实现bean -->
+	
+	<bean id="sysMsgWxServiceRead" class="org.service.weixin.impl.read.SysMsgWxServiceReadImpl" />
+	<bean id="userServiceWeixinRead" class="org.service.weixin.impl.read.UserServiceWeixinImplRead" />
+	<bean id="bikeWxServiceRead" class="org.service.weixin.impl.read.BikeWxServiceReadImpl" />
+	<bean id="bikeRentInfoWxServiceRead" class="org.service.weixin.impl.read.BikeRentInfoWxServiceReadImpl" />
+	<!-- <bean id="rentPlanWxServiceRead" class="org.service.weixin.impl.read.RentPlanWxServiceReadImpl" /> -->
+	<bean id="blockWxServiceRead" class="org.service.weixin.impl.read.BlockWxServiceReadImpl" />
+	<bean id="messageWxServiceRead" class="org.service.weixin.impl.read.MessageWxServiceReadImpl" />
+	<bean id="moneyLogWxServiceRead" class="org.service.weixin.impl.read.MoneyLogWxServiceReadImpl" />
+	<bean id="feedBackWxServiceRead" class="org.service.weixin.impl.read.FeedBackWxServiceReadImpl" />
+	<bean id="rechargeWxServiceRead" class="org.service.weixin.impl.read.RechargeWxServiceReadImpl" />
+	<bean id="refundWxServiceRead" class="org.service.weixin.impl.read.RefundWxServiceReadImpl" />
+	<bean id="accountWxServiceRead" class="org.service.weixin.impl.read.AccountWxServiceReadImpl" />
+	<bean id="dataDetWxServiceRead" class="org.service.weixin.impl.read.DataDetWxServiceReadImpl" />
+	<bean id="modelsWxServiceRead" class="org.service.weixin.impl.read.ModelsWxServiceReadImpl" />
+	<bean id="channelWxServiceRead" class="org.service.weixin.impl.read.ChannelWxServiceReadImpl" />
+	<bean id="codeServiceWxRead" class="org.service.weixin.impl.read.CodeServiceWxReadImpl" />
+	<bean id="bikeFixInfoWxServiceRead" class="org.service.weixin.impl.read.BikeFixInfoWxServiceReadImpl" />
+	<bean id="defriendWxServiceRead" class="org.service.weixin.impl.read.DefriendWxServiceReadImpl" />
+	<bean id="insuranceWxServiceRead" class="org.service.weixin.impl.read.InsuranceWxServiceReadImpl" />
+	<bean id="adminWxServiceRead" class="org.service.weixin.impl.read.AdminWxServiceReadImpl" />
+	<bean id="bikeLockInfoWxServiceRead" class="org.service.weixin.impl.read.BikeLockInfoWxServiceReadImpl" />
+	<bean id="sysParamentServiceRead" class="org.service.weixin.impl.read.SysParamentServiceReadImpl" />
+	<bean id="fixedReturnWxServiceRead" class="org.service.weixin.impl.read.FixedReturnWxServiceReadImpl" />
+	<bean id="insurancePriceWxServiceRead" class="org.service.weixin.impl.read.InsurancePriceWxServiceReadImpl" />
+	<bean id="rentPriceWxServiceRead" class="org.service.weixin.impl.read.RentPriceWxServiceReadImpl" />
+	<bean id="invoiceWxServiceRead" class="org.service.weixin.impl.read.InvoiceWxServiceReadImpl" />
+	<bean id="trOrderWxServiceRead" class="org.service.weixin.impl.read.TrOrderWxServiceReadImpl" />
+	<bean id="activityWxServiceRead" class="org.service.weixin.impl.read.ActivityWxServiceReadImpl" />
+	<bean id="userCouponServiceWxRead" class="org.service.weixin.impl.read.UserCouponServiceWxReadImpl" />
+	<bean id="redeemPlanServiceWxRead" class="org.service.weixin.impl.read.RedeemPlanServiceWxReadImpl" />
+	<bean id="userRedeemPlanServiceWxRead" class="org.service.weixin.impl.read.UserRedeemPlanServiceWxReadImpl" />
+	<bean id="orbitWxServiceRead" class="org.service.weixin.impl.read.OrbitWxServiceReadImpl" />
+	<bean id="gradeWxServiceRead" class="org.service.weixin.impl.read.GradeWxServiceReadImpl" />
+	<bean id="userToTaskWxServiceRead" class="org.service.weixin.impl.read.UserToTaskWxServiceReadImpl" />
+	<bean id="scenicTicketWxServiceRead" class="org.service.weixin.impl.read.ScenicTicketWxServiceReadImpl" />
+	<bean id="bannerWxServiceRead" class="org.service.weixin.impl.read.BannerWxServiceReadImpl" />
+	<bean id="cityWxServiceRead" class="org.service.weixin.impl.read.CityWxServiceReadImpl" />
+	<bean id="discountPackageWxServiceRead" class="org.service.weixin.impl.read.DiscountPackageWxServiceReadImpl" />
+	<bean id="hotWordWxServiceRead" class="org.service.weixin.impl.read.HotWordWxServiceReadImpl" />
+	<bean id="ticketWxServiceRead" class="org.service.weixin.impl.read.TicketWxServiceReadImpl" />
+	<bean id="couponSchemeWxServiceRead" class="org.service.weixin.impl.read.CouponSchemeWxServiceReadImpl" />
+	<bean id="couponListWxServiceRead" class="org.service.weixin.impl.read.CouponListWxServiceReadImpl" />
+	<bean id="guideGroupWxServiceRead" class="org.service.weixin.impl.read.GuideGroupWxServiceReadImpl" />
+	<bean id="guideGroupUserWxRead" class="org.service.weixin.impl.read.GuideGroupUserWxReadImpl" />
+
+	<!-- admin接口 -->
+<!-- 	<dubbo:service interface="org.service.weixin.read.AdminServiceRead" ref="adminServiceRead" /> -->
+<!-- 	
+	<dubbo:service interface="org.service.weixin.read.UserServiceRead" ref="userServiceRead" />
+	
+
+	<dubbo:service interface="org.service.weixin.read.PermissionServiceRead" ref="permissionServiceRead" />	
+	
+	<dubbo:service interface="org.service.weixin.read.RoleServiceRead" ref="roleServiceRead" />
+	数据字典接口
+	<dubbo:service interface="org.service.weixin.read.DataServiceRead" ref="dataServiceRead" />
+	<dubbo:service interface="org.service.weixin.read.DataDetServiceRead" ref="dataDetServiceRead" />
+    <dubbo:service interface="org.service.weixin.read.ChannelServiceRead" ref="channelServiceRead" />    bike接口
+    <dubbo:service interface="org.service.weixin.read.BikeServiceRead" ref="bikeServiceRead" />
+    <dubbo:service interface="org.service.weixin.read.BikeRentInfoServiceRead" ref="bikeRentInfoServiceRead" />
+
+
+	具体的实现bean
+	<bean id="userServiceRead" class="org.service.weixin.impl.read.UserServiceReadImpl" />
+	<bean id="adminServiceRead" class="org.service.weixin.impl.read.AdminServiceReadImpl" />
+	<bean id="permissionServiceRead" class="org.service.weixin.impl.read.PermissionServiceReadImpl" />
+	<bean id="roleServiceRead" class="org.service.weixin.impl.read.RoleServiceReadImpl" />
+	<bean id="bikeServiceRead" class="org.service.weixin.impl.read.BikeServiceReadImpl" />
+	<bean id="bikeRentInfoServiceRead" class="org.service.weixin.impl.read.BikeRentInfoServiceReadImpl" />
+	
+	<bean id="dataServiceRead" class="org.service.weixin.impl.read.DataServiceReadImpl" />
+	<bean id="dataDetServiceRead" class="org.service.weixin.impl.read.DataDetServiceReadImpl" />
+	<bean id="channelServiceRead" class="org.service.weixin.impl.read.ChannelServiceReadImpl" />-->
+</beans> 

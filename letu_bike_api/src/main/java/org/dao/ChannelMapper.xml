@@ -1,0 +1,361 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.dao.ChannelMapper" >
+  <resultMap id="BaseResultMap" type="org.entity.dto.Channel" >
+    <id column="channel_id" property="channelId" jdbcType="BIGINT" />
+    <result column="channel_name" property="channelName" jdbcType="VARCHAR" />
+    <result column="channel_charger_name" property="channelChargerName" jdbcType="VARCHAR" />
+    <result column="channel_charger_tel" property="channelChargerTel" jdbcType="VARCHAR" />
+    <result column="channel_charger_adminId" property="channelChargerAdminid" jdbcType="BIGINT" />
+    <result column="channel_state" property="channelState" jdbcType="INTEGER" />
+    <result column="channel_level" property="channelLevel" jdbcType="INTEGER" />
+    <result column="channel_parent_id" property="channelParentId" jdbcType="BIGINT" />
+    <result column="channel_num" property="channelNum" jdbcType="VARCHAR" />
+    <result column="channel_city_id" property="channelCityId" jdbcType="BIGINT" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="org.entity.dto.Channel" extends="BaseResultMap" >
+    <result column="channel_introduction" property="channelIntroduction" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    channel_id, channel_name, channel_charger_name, channel_charger_tel, channel_charger_adminId, 
+    channel_state, channel_level, channel_parent_id, channel_num, channel_city_id
+  </sql>
+  <sql id="Blob_Column_List" >
+    channel_introduction
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="org.entity.dto.ChannelExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from channel
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="org.entity.dto.ChannelExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from channel
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="limitStart != null and limitStart>=0" >
+      limit #{limitStart} , #{limitEnd}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from channel
+    where channel_id = #{channelId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from channel
+    where channel_id = #{channelId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="org.entity.dto.ChannelExample" >
+    delete from channel
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="org.entity.dto.Channel" >
+    insert into channel (channel_id, channel_name, channel_charger_name, 
+      channel_charger_tel, channel_charger_adminId, 
+      channel_state, channel_level, channel_parent_id, 
+      channel_num, channel_city_id, channel_introduction)
+    values (#{channelId,jdbcType=BIGINT}, #{channelName,jdbcType=VARCHAR}, #{channelChargerName,jdbcType=VARCHAR}, 
+      #{channelChargerTel,jdbcType=VARCHAR}, #{channelChargerAdminid,jdbcType=BIGINT}, 
+      #{channelState,jdbcType=INTEGER}, #{channelLevel,jdbcType=INTEGER}, #{channelParentId,jdbcType=BIGINT}, 
+      #{channelNum,jdbcType=VARCHAR}, #{channelCityId,jdbcType=BIGINT}, #{channelIntroduction,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" useGeneratedKeys="true" keyProperty="channelId" parameterType="org.entity.dto.Channel" >
+    insert into channel
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="channelId != null" >
+        channel_id,
+      </if>
+      <if test="channelName != null" >
+        channel_name,
+      </if>
+      <if test="channelChargerName != null" >
+        channel_charger_name,
+      </if>
+      <if test="channelChargerTel != null" >
+        channel_charger_tel,
+      </if>
+      <if test="channelChargerAdminid != null" >
+        channel_charger_adminId,
+      </if>
+      <if test="channelState != null" >
+        channel_state,
+      </if>
+      <if test="channelLevel != null" >
+        channel_level,
+      </if>
+      <if test="channelParentId != null" >
+        channel_parent_id,
+      </if>
+      <if test="channelNum != null" >
+        channel_num,
+      </if>
+      <if test="channelCityId != null" >
+        channel_city_id,
+      </if>
+      <if test="channelIntroduction != null" >
+        channel_introduction,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="channelId != null" >
+        #{channelId,jdbcType=BIGINT},
+      </if>
+      <if test="channelName != null" >
+        #{channelName,jdbcType=VARCHAR},
+      </if>
+      <if test="channelChargerName != null" >
+        #{channelChargerName,jdbcType=VARCHAR},
+      </if>
+      <if test="channelChargerTel != null" >
+        #{channelChargerTel,jdbcType=VARCHAR},
+      </if>
+      <if test="channelChargerAdminid != null" >
+        #{channelChargerAdminid,jdbcType=BIGINT},
+      </if>
+      <if test="channelState != null" >
+        #{channelState,jdbcType=INTEGER},
+      </if>
+      <if test="channelLevel != null" >
+        #{channelLevel,jdbcType=INTEGER},
+      </if>
+      <if test="channelParentId != null" >
+        #{channelParentId,jdbcType=BIGINT},
+      </if>
+      <if test="channelNum != null" >
+        #{channelNum,jdbcType=VARCHAR},
+      </if>
+      <if test="channelCityId != null" >
+        #{channelCityId,jdbcType=BIGINT},
+      </if>
+      <if test="channelIntroduction != null" >
+        #{channelIntroduction,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="org.entity.dto.ChannelExample" resultType="java.lang.Integer" >
+    select count(*) from channel
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update channel
+    <set >
+      <if test="record.channelId != null" >
+        channel_id = #{record.channelId,jdbcType=BIGINT},
+      </if>
+      <if test="record.channelName != null" >
+        channel_name = #{record.channelName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.channelChargerName != null" >
+        channel_charger_name = #{record.channelChargerName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.channelChargerTel != null" >
+        channel_charger_tel = #{record.channelChargerTel,jdbcType=VARCHAR},
+      </if>
+      <if test="record.channelChargerAdminid != null" >
+        channel_charger_adminId = #{record.channelChargerAdminid,jdbcType=BIGINT},
+      </if>
+      <if test="record.channelState != null" >
+        channel_state = #{record.channelState,jdbcType=INTEGER},
+      </if>
+      <if test="record.channelLevel != null" >
+        channel_level = #{record.channelLevel,jdbcType=INTEGER},
+      </if>
+      <if test="record.channelParentId != null" >
+        channel_parent_id = #{record.channelParentId,jdbcType=BIGINT},
+      </if>
+      <if test="record.channelNum != null" >
+        channel_num = #{record.channelNum,jdbcType=VARCHAR},
+      </if>
+      <if test="record.channelCityId != null" >
+        channel_city_id = #{record.channelCityId,jdbcType=BIGINT},
+      </if>
+      <if test="record.channelIntroduction != null" >
+        channel_introduction = #{record.channelIntroduction,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update channel
+    set channel_id = #{record.channelId,jdbcType=BIGINT},
+      channel_name = #{record.channelName,jdbcType=VARCHAR},
+      channel_charger_name = #{record.channelChargerName,jdbcType=VARCHAR},
+      channel_charger_tel = #{record.channelChargerTel,jdbcType=VARCHAR},
+      channel_charger_adminId = #{record.channelChargerAdminid,jdbcType=BIGINT},
+      channel_state = #{record.channelState,jdbcType=INTEGER},
+      channel_level = #{record.channelLevel,jdbcType=INTEGER},
+      channel_parent_id = #{record.channelParentId,jdbcType=BIGINT},
+      channel_num = #{record.channelNum,jdbcType=VARCHAR},
+      channel_city_id = #{record.channelCityId,jdbcType=BIGINT},
+      channel_introduction = #{record.channelIntroduction,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update channel
+    set channel_id = #{record.channelId,jdbcType=BIGINT},
+      channel_name = #{record.channelName,jdbcType=VARCHAR},
+      channel_charger_name = #{record.channelChargerName,jdbcType=VARCHAR},
+      channel_charger_tel = #{record.channelChargerTel,jdbcType=VARCHAR},
+      channel_charger_adminId = #{record.channelChargerAdminid,jdbcType=BIGINT},
+      channel_state = #{record.channelState,jdbcType=INTEGER},
+      channel_level = #{record.channelLevel,jdbcType=INTEGER},
+      channel_parent_id = #{record.channelParentId,jdbcType=BIGINT},
+      channel_num = #{record.channelNum,jdbcType=VARCHAR},
+      channel_city_id = #{record.channelCityId,jdbcType=BIGINT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="org.entity.dto.Channel" >
+    update channel
+    <set >
+      <if test="channelName != null" >
+        channel_name = #{channelName,jdbcType=VARCHAR},
+      </if>
+      <if test="channelChargerName != null" >
+        channel_charger_name = #{channelChargerName,jdbcType=VARCHAR},
+      </if>
+      <if test="channelChargerTel != null" >
+        channel_charger_tel = #{channelChargerTel,jdbcType=VARCHAR},
+      </if>
+      <if test="channelChargerAdminid != null" >
+        channel_charger_adminId = #{channelChargerAdminid,jdbcType=BIGINT},
+      </if>
+      <if test="channelState != null" >
+        channel_state = #{channelState,jdbcType=INTEGER},
+      </if>
+      <if test="channelLevel != null" >
+        channel_level = #{channelLevel,jdbcType=INTEGER},
+      </if>
+      <if test="channelParentId != null" >
+        channel_parent_id = #{channelParentId,jdbcType=BIGINT},
+      </if>
+      <if test="channelNum != null" >
+        channel_num = #{channelNum,jdbcType=VARCHAR},
+      </if>
+      <if test="channelCityId != null" >
+        channel_city_id = #{channelCityId,jdbcType=BIGINT},
+      </if>
+      <if test="channelIntroduction != null" >
+        channel_introduction = #{channelIntroduction,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where channel_id = #{channelId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="org.entity.dto.Channel" >
+    update channel
+    set channel_name = #{channelName,jdbcType=VARCHAR},
+      channel_charger_name = #{channelChargerName,jdbcType=VARCHAR},
+      channel_charger_tel = #{channelChargerTel,jdbcType=VARCHAR},
+      channel_charger_adminId = #{channelChargerAdminid,jdbcType=BIGINT},
+      channel_state = #{channelState,jdbcType=INTEGER},
+      channel_level = #{channelLevel,jdbcType=INTEGER},
+      channel_parent_id = #{channelParentId,jdbcType=BIGINT},
+      channel_num = #{channelNum,jdbcType=VARCHAR},
+      channel_city_id = #{channelCityId,jdbcType=BIGINT},
+      channel_introduction = #{channelIntroduction,jdbcType=LONGVARCHAR}
+    where channel_id = #{channelId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.entity.dto.Channel" >
+    update channel
+    set channel_name = #{channelName,jdbcType=VARCHAR},
+      channel_charger_name = #{channelChargerName,jdbcType=VARCHAR},
+      channel_charger_tel = #{channelChargerTel,jdbcType=VARCHAR},
+      channel_charger_adminId = #{channelChargerAdminid,jdbcType=BIGINT},
+      channel_state = #{channelState,jdbcType=INTEGER},
+      channel_level = #{channelLevel,jdbcType=INTEGER},
+      channel_parent_id = #{channelParentId,jdbcType=BIGINT},
+      channel_num = #{channelNum,jdbcType=VARCHAR},
+      channel_city_id = #{channelCityId,jdbcType=BIGINT}
+    where channel_id = #{channelId,jdbcType=BIGINT}
+  </update>
+</mapper>

@@ -1,0 +1,76 @@
+.main-top{background-color: #337ab7 !important;    position: fixed;
+    right: 0;
+    left: 0;
+    z-index: 1030;top:0;}
+.navbar-brand {
+    height: 70px;
+    line-height: 40px
+}
+.main-top .navbar-brand,.main-top .navbar-brand:hover{
+    color: #fff;
+}
+.sidebar ul li:first-child{    border-top: 1px solid #e7e7e7;}
+.navbar-top-links .dropdown>a {
+    height: 70px;
+    line-height: 20px;
+    color: #fff;
+    font-size: 20px;
+}
+.navbar-top-links .dropdown>a:hover,.navbar-top-links .dropdown.open>a {
+    color:#337ab7;
+}
+.navbar-top-links .dropdown-menu li:last-child {
+    margin-right: 0
+}
+
+.navbar-top-links .dropdown-menu li a {
+    padding: 3px 20px;
+    min-height: 0
+}
+
+.navbar-top-links .dropdown-menu li a div {
+    white-space: normal
+}
+.navbar-top-links li a {
+    padding:25px 15px;
+    min-height: 50px
+}
+.sidebar {
+	overflow-y: auto;
+	 height: calc(100vh - 100px);
+    margin-top: 100px;
+    width: 250px!important;
+}
+#page-wrapper {
+    margin-left: 250px;
+    margin-top: 70px;
+}
+.toplogo{height: 40px;margin-left: 30px;position:absolute;top:15px;}
+::-webkit-scrollbar { position: absolute;width: 10px;margin-left: -10px;-webkit-appearance: none;background-color: #f3f3f3;}
+::-webkit-scrollbar-thumb {height: 50px;background-color: #aaaaaa;background-clip: content-box;border-color: transparent;border-style: solid; border-width: 1px 2px;}
+
+@media (max-width: 768px) {
+  .navbar-top-links .dropdown{display:none;}
+  .sidebar{position:fixed;top:-30px; left:0;width:100% !important;height:auto;}
+  .navbar-toggle{margin-top:17px;}
+.sidebar>.collapse.in{height: calc(100vh - 80px);}
+  #page-wrapper{margin-left:0;}
+  
+}
+.lnglatStr{    width: 220px;display: block;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;}
+ #side-menu .badge{    background-color: #fa4f3e; position:absolute;right:32px;}
+  .panel-heading .changebtn{padding:10px 15px; background:#ccc;margin-right:10px; margin-bottom:10px; border:none}
+ .panel-heading .changebtn[on]{background:red;color:#fff}
+ .channelselet,.btnsbox{margin-bottom: 10px}
+ .selectdate{margin-bottom:20px;}
+ .selectdate .tit{float:left;}
+.selectdate ul,.selectdate li{float:left;}
+.selectdate .tit{margin-right:5px;height: 40px;line-height: 40px;}
+.selectdate li{list-style:none;    width: 100px; height: 40px; line-height: 40px;text-align:center;background:#ccc; cursor: pointer;margin-right:1px}
+.selectdate li.on{background:red;color:#fff}
+.selectdate .timerate{float:left;margin-left:20px; }
+.selectdate .timerate input{height:40px; line-height:40px; width:100px; margin-right:10px; margin-left:10px; padding: 10px}
+.selectdate .timerate button{height:40px; line-height:40px; width:50px; background:#ccc; border:none;}
+.boxidbox{margin-top:40px;}
+.boderRadio{background-color:#7dbeff; width:200px; height:100px;margin-left:150px;border-radius:15px;float:left;text-align:right;color:white;}
+.countRecord{margin-top:20px;padding-right:10px;}

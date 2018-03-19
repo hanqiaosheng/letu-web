@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+    http://code.alibabatech.com/schema/dubbo
+    http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+
+	
+	<!-- 声明需要暴露的服务接口 -->
+		<dubbo:service interface="org.service.weixin.write.UserServiceWeixinWrite" ref="userServiceWeixinWrite" />
+		<dubbo:service interface="org.service.weixin.write.BikeWxServiceWrite" ref="bikeWxServiceWrite" />
+		<dubbo:service interface="org.service.weixin.write.BikeRentInfoWxServiceWrite" ref="bikeRentInfoWxServiceWrite" />
+		<dubbo:service interface="org.service.weixin.write.FeedBackWxServiceWrite" ref="feedBackWxServiceWrite" />
+		<dubbo:service interface="org.service.weixin.write.ExceptionWxServiceWrite" ref="exceptionWxServiceWrite" />
+		<dubbo:service interface="org.service.weixin.write.RechargeWxServiceWrite" ref="rechargeWxServiceWrite" />
+	    <dubbo:service interface="org.service.weixin.write.RefundWxServiceWrite" ref="refundWxServiceWrite" />
+		<dubbo:service interface="org.service.weixin.write.MoneyLogWxServiceWrite" ref="moneyLogWxServiceWrite"  />
+		<dubbo:service interface="org.service.weixin.write.AccountWxServiceWrite" ref="accountWxServiceWrite"  />
+		<dubbo:service interface="org.service.weixin.write.MessageWxServiceWrite" ref="messageWxServiceWrite"  />
+		<dubbo:service interface="org.service.weixin.write.CodeServiceWxWrite" ref="codeServiceWxWrite"  />
+		<dubbo:service interface="org.service.weixin.write.InsuranceWxServiceWrite" ref="insuranceWxServiceWrite"  />
+		<dubbo:service interface="org.service.weixin.write.BikeLockInfoWxServiceWrite" ref="bikeLockInfoWxServiceWrite"  />
+		<dubbo:service interface="org.service.weixin.write.FixedReturnWxServiceWrite" ref="fixedReturnWxServiceWrite"  />
+		<dubbo:service interface="org.service.weixin.write.InvoiceWxServiceWrite" ref="invoiceWxServiceWrite"  />
+		<dubbo:service interface="org.service.weixin.write.TrOrderWxServiceWrite" ref="trOrderWxServiceWrite"  />
+		<dubbo:service interface="org.service.weixin.write.UserCouponServiceWxWrite" ref="userCouponServiceWxWrite"  />
+		<dubbo:service interface="org.service.weixin.write.UserRedeemPlanServiceWxWrite" ref="userRedeemPlanServiceWxWrite"  />
+		<dubbo:service interface="org.service.weixin.write.RedeemPlanServiceWxWrite" ref="redeemPlanServiceWxWrite"  />
+		<dubbo:service interface="org.service.weixin.write.OrbitServiceWxWrite" ref="orbitServiceWxWrite"  />
+		<dubbo:service interface="org.service.weixin.write.GradeWxServiceWrite" ref="gradeWxServiceWrite"  />
+		<dubbo:service interface="org.service.weixin.write.UserToTaskWxServiceWrite" ref="userToTaskWxServiceWrite"  />
+<!-- 	具体的实现bean -->
+		<bean id="userServiceWeixinWrite" class="org.service.weixin.impl.write.UserServiceWeixinImplWrite" />
+		<bean id="bikeWxServiceWrite" class="org.service.weixin.impl.write.BikeWxServiceWriteImpl" />
+		<bean id="bikeRentInfoWxServiceWrite" class="org.service.weixin.impl.write.BikeRentInfoWxServiceWriteImpl" />
+		<bean id="feedBackWxServiceWrite" class="org.service.weixin.impl.write.FeedBackWxServiceWriteImpl" />
+		<bean id="exceptionWxServiceWrite" class="org.service.weixin.impl.write.ExceptionWxServiceWriteImpl" />
+	    <bean id="rechargeWxServiceWrite" class="org.service.weixin.impl.write.RechargeWxServiceWriteImpl" />
+	    <bean id="refundWxServiceWrite" class="org.service.weixin.impl.write.RefundWxServiceWriteImpl" />
+	    <bean id="moneyLogWxServiceWrite" class="org.service.weixin.impl.write.MoneyLogWxServiceWriteImpl" />
+	    <bean id="accountWxServiceWrite" class="org.service.weixin.impl.write.AccountWxServiceWriteImpl" />
+	    <bean id="messageWxServiceWrite" class="org.service.weixin.impl.write.MessageWxServiceWriteImpl" />
+	    <bean id="codeServiceWxWrite" class="org.service.weixin.impl.write.CodeServiceWxWriteImpl" />
+	    <bean id="insuranceWxServiceWrite" class="org.service.weixin.impl.write.InsuranceWxServiceWriteImpl" />
+	    <bean id="bikeLockInfoWxServiceWrite" class="org.service.weixin.impl.write.BikeLockInfoWxServiceWriteImpl" />
+	    <bean id="fixedReturnWxServiceWrite" class="org.service.weixin.impl.write.FixedReturnWxServiceWriteImpl" />
+	    <bean id="invoiceWxServiceWrite" class="org.service.weixin.impl.write.InvoiceWxServiceWriteImpl" />
+	    <bean id="trOrderWxServiceWrite" class="org.service.weixin.impl.write.TrOrderWxServiceWriteImpl" />
+	    <bean id="userCouponServiceWxWrite" class="org.service.weixin.impl.write.UserCouponServiceWxWriteImpl" />
+	    <bean id="userRedeemPlanServiceWxWrite" class="org.service.weixin.impl.write.UserRedeemPlanServiceWxWriteImpl" />
+	    <bean id="redeemPlanServiceWxWrite" class="org.service.weixin.impl.write.RedeemPlanServiceWxWriteImpl" />
+	    <bean id="orbitServiceWxWrite" class="org.service.weixin.impl.write.OrbitServiceWxWriteImpl" />
+	    <bean id="gradeWxServiceWrite" class="org.service.weixin.impl.write.GradeWxServiceWriteImpl" />
+	    <bean id="userToTaskWxServiceWrite" class="org.service.weixin.impl.write.UserToTaskWxServiceWriteImpl" />
+</beans>

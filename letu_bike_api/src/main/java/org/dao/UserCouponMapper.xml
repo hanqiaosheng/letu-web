@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.dao.UserCouponMapper" >
+  <resultMap id="BaseResultMap" type="org.entity.dto.UserCoupon" >
+    <id column="user_to_coupon_id" property="userToCouponId" jdbcType="BIGINT" />
+    <result column="uuser_id" property="uuserId" jdbcType="BIGINT" />
+    <result column="ucoupon_id" property="ucouponId" jdbcType="BIGINT" />
+    <result column="u_create_time" property="uCreateTime" jdbcType="TIMESTAMP" />
+    <result column="ustate" property="ustate" jdbcType="INTEGER" />
+    <result column="u_redeem_code_end_time" property="uRedeemCodeEndTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <resultMap id="BaseUnionResultMap" type="org.entity.dto.UserCoupon" extends="BaseResultMap">
+  <association property="cashCoupon" javaType="org.entity.dto.CashCoupon">
+    <id column="coupon_id" property="couponId" jdbcType="BIGINT" />
+    <result column="coupon_name" property="couponName" jdbcType="VARCHAR" />
+    <result column="coupon_money" property="couponMoney" jdbcType="DECIMAL" />
+    <result column="coupon_start_time" property="couponStartTime" jdbcType="TIMESTAMP" />
+    <result column="coupon_create_time" property="couponCreateTime" jdbcType="TIMESTAMP" />
+    <result column="coupon_is_validity" property="couponIsValidity" jdbcType="INTEGER" />
+    <result column="coupon_validity_time" property="couponValidityTime" jdbcType="INTEGER" />
+    <result column="coupon_state" property="couponState" jdbcType="INTEGER" />
+    <result column="coupon_end_time" property="couponEndTime" jdbcType="TIMESTAMP" />
+    <result column="coupon_is_condition" property="couponIsCondition" jdbcType="INTEGER" />
+    <result column="coupon_start_money" property="couponStartMoney" jdbcType="DECIMAL" />
+  </association>
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    user_to_coupon_id, uuser_id, ucoupon_id, u_create_time, ustate, u_redeem_code_end_time
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="org.entity.dto.UserCouponExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from user_coupon
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="limitStart != null and limitStart>=0" >
+      limit #{limitStart} , #{limitEnd}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from user_coupon
+    where user_to_coupon_id = #{userToCouponId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from user_coupon
+    where user_to_coupon_id = #{userToCouponId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="org.entity.dto.UserCouponExample" >
+    delete from user_coupon
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="org.entity.dto.UserCoupon" >
+    insert into user_coupon (user_to_coupon_id, uuser_id, ucoupon_id, 
+      u_create_time, ustate, u_redeem_code_end_time
+      )
+    values (#{userToCouponId,jdbcType=BIGINT}, #{uuserId,jdbcType=BIGINT}, #{ucouponId,jdbcType=BIGINT}, 
+      #{uCreateTime,jdbcType=TIMESTAMP}, #{ustate,jdbcType=INTEGER}, #{uRedeemCodeEndTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="org.entity.dto.UserCoupon" >
+    insert into user_coupon
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="userToCouponId != null" >
+        user_to_coupon_id,
+      </if>
+      <if test="uuserId != null" >
+        uuser_id,
+      </if>
+      <if test="ucouponId != null" >
+        ucoupon_id,
+      </if>
+      <if test="uCreateTime != null" >
+        u_create_time,
+      </if>
+      <if test="ustate != null" >
+        ustate,
+      </if>
+      <if test="uRedeemCodeEndTime != null" >
+        u_redeem_code_end_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="userToCouponId != null" >
+        #{userToCouponId,jdbcType=BIGINT},
+      </if>
+      <if test="uuserId != null" >
+        #{uuserId,jdbcType=BIGINT},
+      </if>
+      <if test="ucouponId != null" >
+        #{ucouponId,jdbcType=BIGINT},
+      </if>
+      <if test="uCreateTime != null" >
+        #{uCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ustate != null" >
+        #{ustate,jdbcType=INTEGER},
+      </if>
+      <if test="uRedeemCodeEndTime != null" >
+        #{uRedeemCodeEndTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="org.entity.dto.UserCouponExample" resultType="java.lang.Integer" >
+    select count(*) from user_coupon
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update user_coupon
+    <set >
+      <if test="record.userToCouponId != null" >
+        user_to_coupon_id = #{record.userToCouponId,jdbcType=BIGINT},
+      </if>
+      <if test="record.uuserId != null" >
+        uuser_id = #{record.uuserId,jdbcType=BIGINT},
+      </if>
+      <if test="record.ucouponId != null" >
+        ucoupon_id = #{record.ucouponId,jdbcType=BIGINT},
+      </if>
+      <if test="record.uCreateTime != null" >
+        u_create_time = #{record.uCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.ustate != null" >
+        ustate = #{record.ustate,jdbcType=INTEGER},
+      </if>
+      <if test="record.uRedeemCodeEndTime != null" >
+        u_redeem_code_end_time = #{record.uRedeemCodeEndTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update user_coupon
+    set user_to_coupon_id = #{record.userToCouponId,jdbcType=BIGINT},
+      uuser_id = #{record.uuserId,jdbcType=BIGINT},
+      ucoupon_id = #{record.ucouponId,jdbcType=BIGINT},
+      u_create_time = #{record.uCreateTime,jdbcType=TIMESTAMP},
+      ustate = #{record.ustate,jdbcType=INTEGER},
+      u_redeem_code_end_time = #{record.uRedeemCodeEndTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="org.entity.dto.UserCoupon" >
+    update user_coupon
+    <set >
+      <if test="uuserId != null" >
+        uuser_id = #{uuserId,jdbcType=BIGINT},
+      </if>
+      <if test="ucouponId != null" >
+        ucoupon_id = #{ucouponId,jdbcType=BIGINT},
+      </if>
+      <if test="uCreateTime != null" >
+        u_create_time = #{uCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ustate != null" >
+        ustate = #{ustate,jdbcType=INTEGER},
+      </if>
+      <if test="uRedeemCodeEndTime != null" >
+        u_redeem_code_end_time = #{uRedeemCodeEndTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where user_to_coupon_id = #{userToCouponId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.entity.dto.UserCoupon" >
+    update user_coupon
+    set uuser_id = #{uuserId,jdbcType=BIGINT},
+      ucoupon_id = #{ucouponId,jdbcType=BIGINT},
+      u_create_time = #{uCreateTime,jdbcType=TIMESTAMP},
+      ustate = #{ustate,jdbcType=INTEGER},
+      u_redeem_code_end_time = #{uRedeemCodeEndTime,jdbcType=TIMESTAMP}
+    where user_to_coupon_id = #{userToCouponId,jdbcType=BIGINT}
+  </update>
+  
+  <select id="selectUnionByExample" resultMap="BaseUnionResultMap" parameterType="org.entity.dto.UserCouponExample" >
+    select * from user_coupon uc left join cash_coupon cc on uc.ucoupon_id = cc.coupon_id
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="limitStart != null and limitStart>=0" >
+      limit #{limitStart} , #{limitEnd}
+    </if>
+  </select>
+</mapper>

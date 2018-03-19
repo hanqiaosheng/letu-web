@@ -1,0 +1,403 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.dao.DiscountPackageMapper" >
+  <resultMap id="BaseResultMap" type="org.entity.dto.DiscountPackage" >
+    <id column="discount_package_id" property="discountPackageId" jdbcType="BIGINT" />
+    <result column="discount_package_name" property="discountPackageName" jdbcType="VARCHAR" />
+    <result column="discount_package_price" property="discountPackagePrice" jdbcType="DECIMAL" />
+    <result column="discount_package_preferential_price" property="discountPackagePreferentialPrice" jdbcType="DECIMAL" />
+    <result column="discount_package_tag" property="discountPackageTag" jdbcType="VARCHAR" />
+    <result column="discount_package_state" property="discountPackageState" jdbcType="INTEGER" />
+    <result column="discount_package_create_time" property="discountPackageCreateTime" jdbcType="TIMESTAMP" />
+    <result column="discount_package_buy_limit" property="discountPackageBuyLimit" jdbcType="INTEGER" />
+    <result column="discount_package_channel_id" property="discountPackageChannelId" jdbcType="BIGINT" />
+    <result column="discount_package_scenic_spot_id" property="discountPackageScenicSpotId" jdbcType="BIGINT" />
+    <result column="discount_package_update_time" property="discountPackageUpdateTime" jdbcType="TIMESTAMP" />
+    <result column="discount_package_top_num" property="discountPackageTopNum" jdbcType="INTEGER" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="org.entity.dto.DiscountPackage" extends="BaseResultMap" >
+    <result column="discount_package_detail" property="discountPackageDetail" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    discount_package_id, discount_package_name, discount_package_price, discount_package_preferential_price, 
+    discount_package_tag, discount_package_state, discount_package_create_time, discount_package_buy_limit, 
+    discount_package_channel_id, discount_package_scenic_spot_id, discount_package_update_time, 
+    discount_package_top_num
+  </sql>
+  <sql id="Blob_Column_List" >
+    discount_package_detail
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="org.entity.dto.DiscountPackageExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from discount_package
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="org.entity.dto.DiscountPackageExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from discount_package
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="limitStart != null and limitStart>=0" >
+      limit #{limitStart} , #{limitEnd}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from discount_package
+    where discount_package_id = #{discountPackageId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from discount_package
+    where discount_package_id = #{discountPackageId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="org.entity.dto.DiscountPackageExample" >
+    delete from discount_package
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="org.entity.dto.DiscountPackage" >
+    insert into discount_package (discount_package_id, discount_package_name, 
+      discount_package_price, discount_package_preferential_price, 
+      discount_package_tag, discount_package_state, 
+      discount_package_create_time, discount_package_buy_limit, 
+      discount_package_channel_id, discount_package_scenic_spot_id, 
+      discount_package_update_time, discount_package_top_num, 
+      discount_package_detail)
+    values (#{discountPackageId,jdbcType=BIGINT}, #{discountPackageName,jdbcType=VARCHAR}, 
+      #{discountPackagePrice,jdbcType=DECIMAL}, #{discountPackagePreferentialPrice,jdbcType=DECIMAL}, 
+      #{discountPackageTag,jdbcType=VARCHAR}, #{discountPackageState,jdbcType=INTEGER}, 
+      #{discountPackageCreateTime,jdbcType=TIMESTAMP}, #{discountPackageBuyLimit,jdbcType=INTEGER}, 
+      #{discountPackageChannelId,jdbcType=BIGINT}, #{discountPackageScenicSpotId,jdbcType=BIGINT}, 
+      #{discountPackageUpdateTime,jdbcType=TIMESTAMP}, #{discountPackageTopNum,jdbcType=INTEGER}, 
+      #{discountPackageDetail,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="org.entity.dto.DiscountPackage" >
+    insert into discount_package
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="discountPackageId != null" >
+        discount_package_id,
+      </if>
+      <if test="discountPackageName != null" >
+        discount_package_name,
+      </if>
+      <if test="discountPackagePrice != null" >
+        discount_package_price,
+      </if>
+      <if test="discountPackagePreferentialPrice != null" >
+        discount_package_preferential_price,
+      </if>
+      <if test="discountPackageTag != null" >
+        discount_package_tag,
+      </if>
+      <if test="discountPackageState != null" >
+        discount_package_state,
+      </if>
+      <if test="discountPackageCreateTime != null" >
+        discount_package_create_time,
+      </if>
+      <if test="discountPackageBuyLimit != null" >
+        discount_package_buy_limit,
+      </if>
+      <if test="discountPackageChannelId != null" >
+        discount_package_channel_id,
+      </if>
+      <if test="discountPackageScenicSpotId != null" >
+        discount_package_scenic_spot_id,
+      </if>
+      <if test="discountPackageUpdateTime != null" >
+        discount_package_update_time,
+      </if>
+      <if test="discountPackageTopNum != null" >
+        discount_package_top_num,
+      </if>
+      <if test="discountPackageDetail != null" >
+        discount_package_detail,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="discountPackageId != null" >
+        #{discountPackageId,jdbcType=BIGINT},
+      </if>
+      <if test="discountPackageName != null" >
+        #{discountPackageName,jdbcType=VARCHAR},
+      </if>
+      <if test="discountPackagePrice != null" >
+        #{discountPackagePrice,jdbcType=DECIMAL},
+      </if>
+      <if test="discountPackagePreferentialPrice != null" >
+        #{discountPackagePreferentialPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="discountPackageTag != null" >
+        #{discountPackageTag,jdbcType=VARCHAR},
+      </if>
+      <if test="discountPackageState != null" >
+        #{discountPackageState,jdbcType=INTEGER},
+      </if>
+      <if test="discountPackageCreateTime != null" >
+        #{discountPackageCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="discountPackageBuyLimit != null" >
+        #{discountPackageBuyLimit,jdbcType=INTEGER},
+      </if>
+      <if test="discountPackageChannelId != null" >
+        #{discountPackageChannelId,jdbcType=BIGINT},
+      </if>
+      <if test="discountPackageScenicSpotId != null" >
+        #{discountPackageScenicSpotId,jdbcType=BIGINT},
+      </if>
+      <if test="discountPackageUpdateTime != null" >
+        #{discountPackageUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="discountPackageTopNum != null" >
+        #{discountPackageTopNum,jdbcType=INTEGER},
+      </if>
+      <if test="discountPackageDetail != null" >
+        #{discountPackageDetail,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="org.entity.dto.DiscountPackageExample" resultType="java.lang.Integer" >
+    select count(*) from discount_package
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update discount_package
+    <set >
+      <if test="record.discountPackageId != null" >
+        discount_package_id = #{record.discountPackageId,jdbcType=BIGINT},
+      </if>
+      <if test="record.discountPackageName != null" >
+        discount_package_name = #{record.discountPackageName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.discountPackagePrice != null" >
+        discount_package_price = #{record.discountPackagePrice,jdbcType=DECIMAL},
+      </if>
+      <if test="record.discountPackagePreferentialPrice != null" >
+        discount_package_preferential_price = #{record.discountPackagePreferentialPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="record.discountPackageTag != null" >
+        discount_package_tag = #{record.discountPackageTag,jdbcType=VARCHAR},
+      </if>
+      <if test="record.discountPackageState != null" >
+        discount_package_state = #{record.discountPackageState,jdbcType=INTEGER},
+      </if>
+      <if test="record.discountPackageCreateTime != null" >
+        discount_package_create_time = #{record.discountPackageCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.discountPackageBuyLimit != null" >
+        discount_package_buy_limit = #{record.discountPackageBuyLimit,jdbcType=INTEGER},
+      </if>
+      <if test="record.discountPackageChannelId != null" >
+        discount_package_channel_id = #{record.discountPackageChannelId,jdbcType=BIGINT},
+      </if>
+      <if test="record.discountPackageScenicSpotId != null" >
+        discount_package_scenic_spot_id = #{record.discountPackageScenicSpotId,jdbcType=BIGINT},
+      </if>
+      <if test="record.discountPackageUpdateTime != null" >
+        discount_package_update_time = #{record.discountPackageUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.discountPackageTopNum != null" >
+        discount_package_top_num = #{record.discountPackageTopNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.discountPackageDetail != null" >
+        discount_package_detail = #{record.discountPackageDetail,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update discount_package
+    set discount_package_id = #{record.discountPackageId,jdbcType=BIGINT},
+      discount_package_name = #{record.discountPackageName,jdbcType=VARCHAR},
+      discount_package_price = #{record.discountPackagePrice,jdbcType=DECIMAL},
+      discount_package_preferential_price = #{record.discountPackagePreferentialPrice,jdbcType=DECIMAL},
+      discount_package_tag = #{record.discountPackageTag,jdbcType=VARCHAR},
+      discount_package_state = #{record.discountPackageState,jdbcType=INTEGER},
+      discount_package_create_time = #{record.discountPackageCreateTime,jdbcType=TIMESTAMP},
+      discount_package_buy_limit = #{record.discountPackageBuyLimit,jdbcType=INTEGER},
+      discount_package_channel_id = #{record.discountPackageChannelId,jdbcType=BIGINT},
+      discount_package_scenic_spot_id = #{record.discountPackageScenicSpotId,jdbcType=BIGINT},
+      discount_package_update_time = #{record.discountPackageUpdateTime,jdbcType=TIMESTAMP},
+      discount_package_top_num = #{record.discountPackageTopNum,jdbcType=INTEGER},
+      discount_package_detail = #{record.discountPackageDetail,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update discount_package
+    set discount_package_id = #{record.discountPackageId,jdbcType=BIGINT},
+      discount_package_name = #{record.discountPackageName,jdbcType=VARCHAR},
+      discount_package_price = #{record.discountPackagePrice,jdbcType=DECIMAL},
+      discount_package_preferential_price = #{record.discountPackagePreferentialPrice,jdbcType=DECIMAL},
+      discount_package_tag = #{record.discountPackageTag,jdbcType=VARCHAR},
+      discount_package_state = #{record.discountPackageState,jdbcType=INTEGER},
+      discount_package_create_time = #{record.discountPackageCreateTime,jdbcType=TIMESTAMP},
+      discount_package_buy_limit = #{record.discountPackageBuyLimit,jdbcType=INTEGER},
+      discount_package_channel_id = #{record.discountPackageChannelId,jdbcType=BIGINT},
+      discount_package_scenic_spot_id = #{record.discountPackageScenicSpotId,jdbcType=BIGINT},
+      discount_package_update_time = #{record.discountPackageUpdateTime,jdbcType=TIMESTAMP},
+      discount_package_top_num = #{record.discountPackageTopNum,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="org.entity.dto.DiscountPackage" >
+    update discount_package
+    <set >
+      <if test="discountPackageName != null" >
+        discount_package_name = #{discountPackageName,jdbcType=VARCHAR},
+      </if>
+      <if test="discountPackagePrice != null" >
+        discount_package_price = #{discountPackagePrice,jdbcType=DECIMAL},
+      </if>
+      <if test="discountPackagePreferentialPrice != null" >
+        discount_package_preferential_price = #{discountPackagePreferentialPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="discountPackageTag != null" >
+        discount_package_tag = #{discountPackageTag,jdbcType=VARCHAR},
+      </if>
+      <if test="discountPackageState != null" >
+        discount_package_state = #{discountPackageState,jdbcType=INTEGER},
+      </if>
+      <if test="discountPackageCreateTime != null" >
+        discount_package_create_time = #{discountPackageCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="discountPackageBuyLimit != null" >
+        discount_package_buy_limit = #{discountPackageBuyLimit,jdbcType=INTEGER},
+      </if>
+      <if test="discountPackageChannelId != null" >
+        discount_package_channel_id = #{discountPackageChannelId,jdbcType=BIGINT},
+      </if>
+      <if test="discountPackageScenicSpotId != null" >
+        discount_package_scenic_spot_id = #{discountPackageScenicSpotId,jdbcType=BIGINT},
+      </if>
+      <if test="discountPackageUpdateTime != null" >
+        discount_package_update_time = #{discountPackageUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="discountPackageTopNum != null" >
+        discount_package_top_num = #{discountPackageTopNum,jdbcType=INTEGER},
+      </if>
+      <if test="discountPackageDetail != null" >
+        discount_package_detail = #{discountPackageDetail,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where discount_package_id = #{discountPackageId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="org.entity.dto.DiscountPackage" >
+    update discount_package
+    set discount_package_name = #{discountPackageName,jdbcType=VARCHAR},
+      discount_package_price = #{discountPackagePrice,jdbcType=DECIMAL},
+      discount_package_preferential_price = #{discountPackagePreferentialPrice,jdbcType=DECIMAL},
+      discount_package_tag = #{discountPackageTag,jdbcType=VARCHAR},
+      discount_package_state = #{discountPackageState,jdbcType=INTEGER},
+      discount_package_create_time = #{discountPackageCreateTime,jdbcType=TIMESTAMP},
+      discount_package_buy_limit = #{discountPackageBuyLimit,jdbcType=INTEGER},
+      discount_package_channel_id = #{discountPackageChannelId,jdbcType=BIGINT},
+      discount_package_scenic_spot_id = #{discountPackageScenicSpotId,jdbcType=BIGINT},
+      discount_package_update_time = #{discountPackageUpdateTime,jdbcType=TIMESTAMP},
+      discount_package_top_num = #{discountPackageTopNum,jdbcType=INTEGER},
+      discount_package_detail = #{discountPackageDetail,jdbcType=LONGVARCHAR}
+    where discount_package_id = #{discountPackageId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.entity.dto.DiscountPackage" >
+    update discount_package
+    set discount_package_name = #{discountPackageName,jdbcType=VARCHAR},
+      discount_package_price = #{discountPackagePrice,jdbcType=DECIMAL},
+      discount_package_preferential_price = #{discountPackagePreferentialPrice,jdbcType=DECIMAL},
+      discount_package_tag = #{discountPackageTag,jdbcType=VARCHAR},
+      discount_package_state = #{discountPackageState,jdbcType=INTEGER},
+      discount_package_create_time = #{discountPackageCreateTime,jdbcType=TIMESTAMP},
+      discount_package_buy_limit = #{discountPackageBuyLimit,jdbcType=INTEGER},
+      discount_package_channel_id = #{discountPackageChannelId,jdbcType=BIGINT},
+      discount_package_scenic_spot_id = #{discountPackageScenicSpotId,jdbcType=BIGINT},
+      discount_package_update_time = #{discountPackageUpdateTime,jdbcType=TIMESTAMP},
+      discount_package_top_num = #{discountPackageTopNum,jdbcType=INTEGER}
+    where discount_package_id = #{discountPackageId,jdbcType=BIGINT}
+  </update>
+</mapper>
